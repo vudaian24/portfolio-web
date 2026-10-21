@@ -61,7 +61,7 @@ Pipeline lives in `.github/workflows/`. Note: production is on Vercel. The VPS p
 
 ## Rules
 
-- Branch from `main`. Use conventional commits (`feat`, `fix`, `chore`, `docs`, `perf`).
+- Commit on `main` and push directly; do not open pull requests. Use conventional commits (`feat`, `fix`, `chore`, `docs`, `perf`).
 - Never commit `.env*` files, tokens, or chat IDs. `.gitignore` covers `.env*` except `.env.example`.
 - Never commit `.next/`, `node_modules/`, or `*.tsbuildinfo`.
 - Keep `en.json` and `vi.json` key-identical. Add every new UI string to both files in the same change.
@@ -69,9 +69,9 @@ Pipeline lives in `.github/workflows/`. Note: production is on Vercel. The VPS p
 - Lint rules to respect: no `console.log` (only `warn` and `error`); avoid `any` (warning); prefix intentionally unused variables with `_`.
 - Use the `@/` alias for `src/*`.
 - Do not switch the build to `--turbopack` in Docker or CI.
-- Do not push to `main` directly. Do not deploy, merge, or change deploy secrets without the user's approval.
+- Do not deploy or change deploy secrets without the user's approval.
 - This repo is also checked out as a submodule of the `portfolio` workspace repo. Push changes here first; the workspace records the new commit afterwards.
 
 ## Parent docs
 
-AWS migration design (Amazon EKS behind an ALB and the Cloudflare proxy; Argo CD deploys the Helm chart planned in `deploy/helm/portfolio-web/`; CI pushes images to ECR with OIDC and commits the image tag) is described in `../docs/` (architecture, `adr/`, `runbooks/`). Read it before changing deployment or hosting.
+AWS migration design (Amazon EKS behind an ALB and the Cloudflare proxy; Argo CD deploys the app chart from the `portfolio-gitops` repository; CI pushes images to ECR with OIDC and commits the image tag to `portfolio-gitops`) is described in `../docs/` (architecture, `adr/`, `runbooks/`). Read it before changing deployment or hosting.

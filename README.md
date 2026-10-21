@@ -11,7 +11,7 @@ Versions are taken from `package.json`.
 - `next-intl` ^4.3.5 for routing and translations
 - `framer-motion` ^12.23.12, `lucide-react` ^0.542.0, `next-themes` ^0.4.6
 - `react-hook-form` ^7.62.0 with `zod` ^4.1.8 and `@hookform/resolvers` ^5.2.2
-- `sharp` ^0.34.2 (image processing), `@vercel/analytics` ^2.0.1
+- `sharp` ^0.34.2 (image processing)
 - Tooling: ESLint 9, Prettier 3, Husky 9, lint-staged 16
 - Package manager: Yarn 1 (`yarn.lock` is the source of truth)
 
@@ -58,6 +58,7 @@ src/
       [locale]/          localized routes: home, projects/[id]
       layout.tsx         root layout and globals.css
     web-api/contact/     POST route: validates with zod, sends to Telegram
+    web-api/health/      GET route: health check for probes, returns the app version
     robots.ts, sitemap.ts
   components/            sections/, ui/, Navbar, Footer, and other shared components
   config/site.ts         site-level configuration
@@ -77,7 +78,7 @@ docs/superpowers/        dated plans and specs for the CV redesign
 
 ## Docker
 
-The Dockerfile is multi-stage on `node:20-alpine`. It builds with `next build` and runs the standalone server as a non-root user on port 3000, with a health check.
+The Dockerfile is multi-stage on `node:24-alpine`. It builds with `next build` and runs the standalone server as a non-root user on port 3000, with a health check on `/web-api/health`. Pass the git SHA as `--build-arg APP_VERSION=<sha>`; every response then carries it in the `x-app-version` header.
 
 ```bash
 docker build -t portfolio-web .
@@ -90,7 +91,7 @@ The `-e NAME` form passes the values from your current shell, so no secret is wr
 
 - Production is served by Vercel at [portfolio.anvd.io.vn](https://portfolio.anvd.io.vn).
 - The GitHub Actions pipeline (`.github/workflows/`) is legacy. `main.yml` runs `ci.yml` (lint and type check) on push and pull request to `main`. On push to `main`, `cd.yml` builds and pushes the image to GHCR, then `deploy.yml` deploys it over SSH to a VPS. The deploy step currently fails because the VPS SSH endpoint is unreachable.
-- Planned: move hosting to Amazon EKS for about 44 days, behind an ALB and the Cloudflare proxy. Argo CD will deploy the Helm chart in `deploy/helm/portfolio-web/` (planned). CI will build the `linux/arm64` image, push it to ECR with OIDC, and commit the new image tag. Before that, the Dockerfile and CI move to Node 24, `@vercel/analytics` is removed, and responses carry the git SHA in an `x-app-version` header. The design records are kept in the private workspace repository.
+- Planned: move hosting to Amazon EKS for about 44 days, behind an ALB and the Cloudflare proxy. Argo CD will deploy the app chart from the [portfolio-gitops](https://github.com/vudaian24/portfolio-gitops) repository. CI will build the `linux/arm64` image, push it to ECR with OIDC, and commit the new image tag to `portfolio-gitops`. The app side is ready: Node 24, no `@vercel/analytics`, `x-app-version` header, `/web-api/health`. The design records are kept in the private workspace repository.
 
 ## AI usage policy (ISMS-AI-01)
 

@@ -7,9 +7,9 @@ Personal portfolio site for Dai An. Next.js App Router, bilingual (en, vi). Publ
 - Next.js 15.5.9 (`output: "standalone"`), React 19.1.0, TypeScript 5 (`strict`).
 - Tailwind CSS 4 via `@tailwindcss/postcss`; `tailwind-merge`, `clsx`, `tailwindcss-animate`.
 - `next-intl` 4 (locales `en` default and `vi`, `localePrefix: as-needed`, `localeDetection: false`).
-- `framer-motion`, `lucide-react`, `next-themes`, `react-hook-form` with `zod` 4, `@vercel/analytics`, `sharp`.
+- `framer-motion`, `lucide-react`, `next-themes`, `react-hook-form` with `zod` 4, `sharp`.
 - Package manager: Yarn 1 (`yarn.lock` is the source of truth). Do not add `package-lock.json` or `pnpm-lock.yaml`.
-- Node 20 in CI and Docker. Local Node 25 was seen; prefer Node 20 to match CI.
+- Node 24 in CI and Docker. Use Node 24 locally to match.
 
 ## Commands
 
@@ -32,6 +32,7 @@ Before reporting a change as done, run `yarn lint` and `yarn type-check`.
 - `src/app/(frontend)/[locale]/` — localized routes: `page.tsx` (home), `projects/[id]/page.tsx`, `layout.tsx`.
 - `src/app/(frontend)/layout.tsx`, `globals.css` — root layout and global styles.
 - `src/app/web-api/contact/route.ts` — POST contact endpoint. Validates with zod, then sends to Telegram.
+- `src/app/web-api/health/route.ts` — GET health endpoint for Kubernetes probes and the ALB health check. Returns `{status, version}` and checks no dependencies.
 - `src/app/robots.ts`, `sitemap.ts`, `favicon.ico`.
 - `src/middleware.ts` — next-intl middleware. Skips `/web-api`, `/_next`, and any path containing a dot.
 - `src/i18n/` — `routing.ts`, `request.ts`, `navigation.ts`.
@@ -46,16 +47,16 @@ Before reporting a change as done, run `yarn lint` and `yarn type-check`.
 ## Configuration facts
 
 - Server env vars: `TELEGRAM_BOT_TOKEN`, `TELEGRAM_CHAT_ID`, read by the contact route. Values live in a local, git-ignored `.env` file or in the deploy environment. Never open `.env*`.
-- `next.config.ts` sets security headers on all routes: HSTS, `X-Content-Type-Options`, `Referrer-Policy`, `X-Frame-Options: DENY`, `Permissions-Policy`. Keep them unless the user asks to change them.
+- `next.config.ts` sets security headers on all routes: HSTS, `X-Content-Type-Options`, `Referrer-Policy`, `X-Frame-Options: DENY`, `Permissions-Policy`, plus `x-app-version` from `APP_VERSION` at build time (`dev` when unset). Keep them unless the user asks to change them. Deploy CI reads `x-app-version` to tell when a release is live.
 - Image config: `remotePatterns` allows `https://placehold.co` only. `dangerouslyAllowSVG` is on.
-- `Dockerfile` (`node:20-alpine`, multi-stage) uses `HUSKY=0`, `CI=true`, `yarn install --frozen-lockfile`, and `yarn next build` (webpack). Its runner copies `src/locales` because next-intl loads locale JSON at runtime.
+- `Dockerfile` (`node:24-alpine`, multi-stage, build arg `APP_VERSION` = git SHA) uses `HUSKY=0`, `CI=true`, `yarn install --frozen-lockfile`, and `yarn next build` (webpack). Its runner copies `src/locales` because next-intl loads locale JSON at runtime.
 
 ## CI/CD as it is today
 
 Pipeline lives in `.github/workflows/`. Note: production is on Vercel. The VPS path below is legacy and its host is unreachable.
 
 - `main.yml` ("Pipeline") — triggers on push and PR to `main`, and on `workflow_dispatch` with a `rollback_tag` input. Workflow-level permissions: `contents: read`, `packages: write`. Keep permissions at workflow level, not job level; job-level settings broke the run.
-- `ci.yml` — composite action `.github/actions/setup-node` (Node 20, Yarn cache, Next.js cache, `yarn install --frozen-lockfile`), then `yarn lint` and `yarn type-check`.
+- `ci.yml` — composite action `.github/actions/setup-node` (Node 24, Yarn cache, Next.js cache, `yarn install --frozen-lockfile`), then `yarn lint` and `yarn type-check`.
 - `cd.yml` — on push to `main` after CI: buildx build and push to `ghcr.io/<owner>/portfolio-web` tagged `latest` and the commit SHA, then calls `deploy.yml`.
 - `deploy.yml` — legacy. SSHes to a VPS as user `ci`, sets `APP_VERSION` in the server's `.env`, runs `docker compose pull` and `up -d --wait`, health-checks `https://portfolio.anvd.io.vn`, and sends a Telegram message. The SSH host key is pinned in the file. Do not edit or run it without the user's explicit instruction.
 

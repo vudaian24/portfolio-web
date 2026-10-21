@@ -33,7 +33,7 @@ jobs:
 
       # ghcr.io (không phải Docker Hub) — image PRIVATE theo mặc định của
       # GHCR khi repo private, và ta ép private rõ ràng ngay sau lần push
-      # đầu tiên (xem docs/registry.md). Dùng GITHUB_TOKEN, không cần tạo
+      # đầu tiên. Dùng GITHUB_TOKEN, không cần tạo
       # hay xoay vòng secret riêng cho việc build/push.
       - name: Login to GitHub Container Registry
         uses: docker/login-action@v4

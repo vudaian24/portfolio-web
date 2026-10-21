@@ -41,7 +41,7 @@ Before reporting a change as done, run `yarn lint` and `yarn type-check`.
 - `src/lib/` — `contact.ts` (zod schema, `escapeTelegramHtml`), `utils.ts`, `animation.ts`, `types.ts`.
 - `public/` — `avatar.jpg`, `cv.pdf`, `cv-devops.pdf`.
 - `docs/superpowers/` — dated plans and specs for the CV redesign.
-- `README.md` is create-next-app boilerplate. Its paths (`app/page.tsx`) and Vercel text are outdated. Do not follow them.
+- `README.md` is the project overview: stack, commands, environment variable names, Docker, and deployment status. Keep it in sync when scripts, env vars, or deployment change.
 
 ## Configuration facts
 

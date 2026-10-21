@@ -1,34 +1,96 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app)
+# portfolio-web
 
-## Getting Started
+Personal portfolio and live CV of Dai An, in English and Vietnamese. Live at [portfolio.anvd.io.vn](https://portfolio.anvd.io.vn).
 
-First, run the development server:
+## Tech stack
+
+Versions are taken from `package.json`.
+
+- Next.js 15.5.9 (App Router, `output: "standalone"`), React 19.1.0, TypeScript 5 (strict)
+- Tailwind CSS 4 (`@tailwindcss/postcss`), `tailwind-merge`, `clsx`, `tailwindcss-animate`
+- `next-intl` ^4.3.5 for routing and translations
+- `framer-motion` ^12.23.12, `lucide-react` ^0.542.0, `next-themes` ^0.4.6
+- `react-hook-form` ^7.62.0 with `zod` ^4.1.8 and `@hookform/resolvers` ^5.2.2
+- `sharp` ^0.34.2 (image processing), `@vercel/analytics` ^2.0.1
+- Tooling: ESLint 9, Prettier 3, Husky 9, lint-staged 16
+- Package manager: Yarn 1 (`yarn.lock` is the source of truth)
+
+## Getting started
+
+Requirements: Node.js 20 (same as the Dockerfile and CI) and Yarn 1.
 
 ```bash
-npm run dev
-# or
+yarn install --frozen-lockfile
 yarn dev
+```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open [http://localhost:3000](http://localhost:3000). The `postinstall` hook installs Husky git hooks.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+| Command | Purpose |
+| ------- | ------- |
+| `yarn dev` | Development server (`next dev --turbopack`) |
+| `yarn build` | Production build (`next build`, webpack) |
+| `yarn start` | Serve the production build |
+| `yarn build:turbo` | Turbopack production build (not used in CI or Docker) |
+| `yarn lint` | ESLint with zero warnings allowed |
+| `yarn type-check` | TypeScript check (`tsc --noEmit`) |
+| `yarn lint-staged` | ESLint `--fix` and Prettier on staged files (run by the pre-commit hook) |
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+Prettier has no config file in this repo, so its defaults apply: `yarn prettier --write <files>`.
 
-## Learn More
+## Environment variables
 
-To learn more about Next.js, take a look at the following resources:
+Used by the server-side contact route `POST /web-api/contact`. Set them in your local shell or deploy environment. Never commit them.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+| Name | Purpose |
+| ---- | ------- |
+| `TELEGRAM_BOT_TOKEN` | Telegram bot token used to send contact form messages |
+| `TELEGRAM_CHAT_ID` | Telegram chat that receives the messages |
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+Without both values the endpoint returns a server configuration error.
 
-## Deploy on Vercel
+## Project structure
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+```text
+src/
+  app/
+    (frontend)/
+      [locale]/          localized routes: home, projects/[id]
+      layout.tsx         root layout and globals.css
+    web-api/contact/     POST route: validates with zod, sends to Telegram
+    robots.ts, sitemap.ts
+  components/            sections/, ui/, Navbar, Footer, and other shared components
+  config/site.ts         site-level configuration
+  i18n/                  next-intl routing, request config, navigation
+  lib/                   contact schema, utilities, animation helpers, types
+  locales/               en.json and vi.json (UI strings)
+  middleware.ts          next-intl middleware
+public/                  avatar, CV PDFs, static assets
+docs/superpowers/        dated plans and specs for the CV redesign
+```
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## Internationalization
+
+- Locales: `en` (default, no URL prefix) and `vi` (`/vi/...`). Locale detection is off, so the URL decides the locale.
+- The middleware skips `/web-api`, `/_next`, and any path containing a dot.
+- `src/locales/en.json` and `src/locales/vi.json` must have the same keys. Add every new UI string to both files in the same change.
+
+## Docker
+
+The Dockerfile is multi-stage on `node:20-alpine`. It builds with `next build` and runs the standalone server as a non-root user on port 3000, with a health check.
+
+```bash
+docker build -t portfolio-web .
+docker run --rm -p 3000:3000 -e TELEGRAM_BOT_TOKEN -e TELEGRAM_CHAT_ID portfolio-web
+```
+
+The `-e NAME` form passes the values from your current shell, so no secret is written to the command line.
+
+## Deployment
+
+- Production is served by Vercel at [portfolio.anvd.io.vn](https://portfolio.anvd.io.vn).
+- The GitHub Actions pipeline (`.github/workflows/`) is legacy. `main.yml` runs `ci.yml` (lint and type check) on push and pull request to `main`. On push to `main`, `cd.yml` builds and pushes the image to GHCR, then `deploy.yml` deploys it over SSH to a VPS. The deploy step currently fails because the VPS SSH endpoint is unreachable.
+- Planned: move hosting to AWS (CloudFront, S3 for static assets, and a Lambda container image run through the Lambda Web Adapter). The design records are kept in the private workspace repository.
 
 ## AI usage policy (ISMS-AI-01)
 

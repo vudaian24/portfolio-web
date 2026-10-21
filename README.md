@@ -90,7 +90,7 @@ The `-e NAME` form passes the values from your current shell, so no secret is wr
 
 - Production is served by Vercel at [portfolio.anvd.io.vn](https://portfolio.anvd.io.vn).
 - The GitHub Actions pipeline (`.github/workflows/`) is legacy. `main.yml` runs `ci.yml` (lint and type check) on push and pull request to `main`. On push to `main`, `cd.yml` builds and pushes the image to GHCR, then `deploy.yml` deploys it over SSH to a VPS. The deploy step currently fails because the VPS SSH endpoint is unreachable.
-- Planned: move hosting to AWS for a run of 2 to 3 months. One EC2 instance in a VPC runs this image with Docker Compose, behind Caddy and the Cloudflare proxy. Deploys will push the image to ECR and restart it through SSM Run Command, from GitHub Actions with OIDC. Before that, the Dockerfile and CI move to Node 24, `@vercel/analytics` is removed, and the image is built for `linux/arm64`. The design records are kept in the private workspace repository.
+- Planned: move hosting to Amazon EKS for about 44 days, behind an ALB and the Cloudflare proxy. Argo CD will deploy the Helm chart in `deploy/helm/portfolio-web/` (planned). CI will build the `linux/arm64` image, push it to ECR with OIDC, and commit the new image tag. Before that, the Dockerfile and CI move to Node 24, `@vercel/analytics` is removed, and responses carry the git SHA in an `x-app-version` header. The design records are kept in the private workspace repository.
 
 ## AI usage policy (ISMS-AI-01)
 

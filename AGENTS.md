@@ -74,4 +74,4 @@ Pipeline lives in `.github/workflows/`. Note: production is on Vercel. The VPS p
 
 ## Parent docs
 
-AWS migration design (one EC2 instance with Docker Compose in a VPC, behind the Cloudflare proxy; GitHub Actions with OIDC, ECR and SSM Run Command deploys) is described in `../docs/` (architecture, `adr/`, `runbooks/`). Read it before changing deployment or hosting.
+AWS migration design (Amazon EKS behind an ALB and the Cloudflare proxy; Argo CD deploys the Helm chart planned in `deploy/helm/portfolio-web/`; CI pushes images to ECR with OIDC and commits the image tag) is described in `../docs/` (architecture, `adr/`, `runbooks/`). Read it before changing deployment or hosting.

@@ -230,7 +230,7 @@ export const PROJECTS: readonly ProjectConfig[] = [
   },
   {
     id: "portfolio",
-    href: "https://github.com/vudaian24/my-portfolio",
+    href: "https://github.com/vudaian24/portfolio-web",
     external: true,
     tags: [
       "Next.js",

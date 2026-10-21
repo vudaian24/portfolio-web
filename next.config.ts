@@ -2,6 +2,9 @@ import { NextConfig } from "next";
 import createNextIntlPlugin from "next-intl/plugin";
 
 const withNextIntl = createNextIntlPlugin();
+// Git SHA of the build, set by the Docker build arg APP_VERSION.
+// CI reads it from the x-app-version header to tell when a deploy is live.
+const appVersion = process.env.APP_VERSION || "dev";
 const nextConfig: NextConfig = {
   output: "standalone",
   images: {
@@ -24,6 +27,7 @@ const nextConfig: NextConfig = {
             key: "Permissions-Policy",
             value: "camera=(), microphone=(), geolocation=()",
           },
+          { key: "x-app-version", value: appVersion },
         ],
       },
     ];

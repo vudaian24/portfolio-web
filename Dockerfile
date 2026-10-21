@@ -1,7 +1,7 @@
 # syntax=docker/dockerfile:1
 
 # Next.js 15 standalone — https://nextjs.org/docs/app/building-your-application/deploying#docker-image
-FROM node:20-alpine AS base
+FROM node:24-alpine AS base
 RUN apk add --no-cache libc6-compat
 WORKDIR /app
 
@@ -15,7 +15,10 @@ RUN --mount=type=cache,target=/root/.cache/yarn \
 
 # --- Build (webpack; avoid --turbopack in Docker/CI) ---
 FROM base AS builder
-ENV NEXT_TELEMETRY_DISABLED=1 \
+# Git SHA of the build. next.config.ts bakes it into the x-app-version header.
+ARG APP_VERSION=dev
+ENV APP_VERSION=${APP_VERSION} \
+    NEXT_TELEMETRY_DISABLED=1 \
     HUSKY=0 \
     CI=true
 COPY --from=deps /app/node_modules ./node_modules
@@ -24,7 +27,9 @@ RUN yarn next build
 
 # --- Production runner (standalone output) ---
 FROM base AS runner
-ENV NODE_ENV=production \
+ARG APP_VERSION=dev
+ENV APP_VERSION=${APP_VERSION} \
+    NODE_ENV=production \
     PORT=3000 \
     HOSTNAME=0.0.0.0 \
     NEXT_TELEMETRY_DISABLED=1
@@ -42,6 +47,6 @@ USER nextjs
 EXPOSE 3000
 
 HEALTHCHECK --interval=30s --timeout=10s --start-period=40s --retries=3 \
-  CMD node -e "fetch('http://127.0.0.1:3000').then((r)=>process.exit(r.ok?0:1)).catch(()=>process.exit(1))"
+  CMD node -e "fetch('http://127.0.0.1:3000/web-api/health').then((r)=>process.exit(r.ok?0:1)).catch(()=>process.exit(1))"
 
 CMD ["node", "server.js"]

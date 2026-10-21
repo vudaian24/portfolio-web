@@ -74,4 +74,4 @@ Pipeline lives in `.github/workflows/`. Note: production is on Vercel. The VPS p
 
 ## Parent docs
 
-AWS migration design (CloudFront, Lambda with Lambda Web Adapter, S3, GitHub Actions OIDC) is described in `../docs/` (architecture, `adr/`, `runbooks/`). Read it before changing deployment or hosting.
+AWS migration design (one EC2 instance with Docker Compose in a VPC, behind the Cloudflare proxy; GitHub Actions with OIDC, ECR and SSM Run Command deploys) is described in `../docs/` (architecture, `adr/`, `runbooks/`). Read it before changing deployment or hosting.

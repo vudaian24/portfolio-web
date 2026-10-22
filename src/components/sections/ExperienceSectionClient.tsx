@@ -1,7 +1,8 @@
 "use client";
 
-import { motion, useReducedMotion } from "framer-motion";
-import type { Variants } from "framer-motion";
+import { useReducedMotion } from "motion/react";
+import * as m from "motion/react-m";
+import type { Variants } from "motion/react";
 import { Section, SectionHeader } from "@/components/ui/Section";
 import { EASE_OUT, timelineLine } from "@/lib/animation";
 import { SECTION_IDS } from "@/config/site";
@@ -57,7 +58,7 @@ export default function ExperienceSectionClient({
           {reduceMotion ? (
             <div className="h-full w-px bg-brand/50" />
           ) : (
-            <motion.div
+            <m.div
               className="h-full w-px origin-top bg-brand/50"
               initial="hidden"
               whileInView="visible"
@@ -69,7 +70,7 @@ export default function ExperienceSectionClient({
 
         <ol className="flex flex-col gap-10">
           {content.items.map((item, index) => (
-            <motion.li
+            <m.li
               key={item.id}
               custom={index}
               initial={reduceMotion ? false : "hidden"}
@@ -85,7 +86,7 @@ export default function ExperienceSectionClient({
                 {item.current ? (
                   <>
                     {!reduceMotion ? (
-                      <motion.span
+                      <m.span
                         className="absolute h-full w-full rounded-full bg-brand/40"
                         animate={{ scale: [1, 1.8], opacity: [0.6, 0] }}
                         transition={{
@@ -122,7 +123,7 @@ export default function ExperienceSectionClient({
                 </div>
                 <ul className="mt-4 list-disc space-y-2 pl-5 text-sm leading-relaxed text-muted-foreground md:text-base">
                   {item.bullets.map((bullet, bi) => (
-                    <motion.li
+                    <m.li
                       key={bullet.slice(0, 48)}
                       initial={reduceMotion ? false : { opacity: 0, y: 8 }}
                       whileInView={{ opacity: 1, y: 0 }}
@@ -134,7 +135,7 @@ export default function ExperienceSectionClient({
                       }}
                     >
                       {bullet}
-                    </motion.li>
+                    </m.li>
                   ))}
                 </ul>
                 {item.tags?.length ? (
@@ -149,7 +150,7 @@ export default function ExperienceSectionClient({
                   </ul>
                 ) : null}
               </div>
-            </motion.li>
+            </m.li>
           ))}
         </ol>
       </div>

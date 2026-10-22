@@ -2,20 +2,31 @@ import { z } from "zod";
 
 export const contactErrorKeys = [
   "nameMin",
+  "nameMax",
   "emailInvalid",
+  "emailMax",
   "messageMin",
+  "messageMax",
 ] as const;
 
 export type ContactErrorKey = (typeof contactErrorKeys)[number];
 
+// Limits keep the Telegram message under the 4096-character sendMessage cap
+// (counted after entity parsing), with room for the fixed template text.
+export const CONTACT_MAX_BODY_BYTES = 16 * 1024;
+
 export const ContactSchema = z.object({
-  name: z.string().min(2, { message: "nameMin" satisfies ContactErrorKey }),
+  name: z
+    .string({ error: "nameMin" satisfies ContactErrorKey })
+    .min(2, { error: "nameMin" satisfies ContactErrorKey })
+    .max(100, { error: "nameMax" satisfies ContactErrorKey }),
   email: z
-    .string()
-    .email({ message: "emailInvalid" satisfies ContactErrorKey }),
+    .email({ error: "emailInvalid" satisfies ContactErrorKey })
+    .max(254, { error: "emailMax" satisfies ContactErrorKey }),
   message: z
-    .string()
-    .min(10, { message: "messageMin" satisfies ContactErrorKey }),
+    .string({ error: "messageMin" satisfies ContactErrorKey })
+    .min(10, { error: "messageMin" satisfies ContactErrorKey })
+    .max(2000, { error: "messageMax" satisfies ContactErrorKey }),
 });
 
 export type ContactForm = z.infer<typeof ContactSchema>;

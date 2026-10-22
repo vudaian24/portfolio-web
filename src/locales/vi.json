@@ -108,8 +108,11 @@
       },
       "errors": {
         "nameMin": "Vui lòng nhập ít nhất 2 ký tự.",
+        "nameMax": "Vui lòng nhập tối đa 100 ký tự.",
         "emailInvalid": "Vui lòng nhập email hợp lệ.",
-        "messageMin": "Vui lòng nhập ít nhất 10 ký tự."
+        "emailMax": "Vui lòng nhập tối đa 254 ký tự.",
+        "messageMin": "Vui lòng nhập ít nhất 10 ký tự.",
+        "messageMax": "Vui lòng nhập tối đa 2000 ký tự."
       },
       "note": "Thông tin chỉ dùng để phản hồi (không spam)."
     },
@@ -235,11 +238,11 @@
           "period": "09/2025 – Hiện tại",
           "role": "Independent Developer",
           "team": "Dự án cá nhân",
-          "summary": "Portfolio cá nhân đa ngôn ngữ giới thiệu dự án và hồ sơ nghề nghiệp, self-host với CI/CD tự động.",
+          "summary": "Portfolio cá nhân đa ngôn ngữ giới thiệu dự án và hồ sơ nghề nghiệp, với CI/CD tự động và hạ tầng dưới dạng code.",
           "bullets": [
-            "Xây portfolio đa ngôn ngữ (EN/VI) với Next.js, TypeScript, Tailwind CSS, next-intl và Framer Motion.",
-            "Deploy trên VPS với Docker Compose (Next.js standalone + Nginx reverse proxy HTTPS) và Watchtower tự cập nhật từ Docker Hub.",
-            "Tự động hóa CI/CD qua GitHub Actions (lint, type-check, build/push image) kèm cảnh báo Telegram cho deploy và form liên hệ."
+            "Xây portfolio đa ngôn ngữ (EN/VI) với Next.js, TypeScript, Tailwind CSS, next-intl và Motion.",
+            "Định nghĩa hạ tầng AWS bằng Terraform (VPC, ECR, IAM OIDC role cho GitHub Actions, SSM parameter) và tầng Kubernetes theo GitOps với Argo CD, Helm chart, External Secrets và Prometheus/Grafana.",
+            "Tự động hóa CI/CD với GitHub Actions: lint, type-check và build cho mỗi pull request; image arm64 đẩy lên Amazon ECR qua OIDC và triển khai qua repo GitOps kèm smoke test và tự động rollback; cảnh báo Telegram cho form liên hệ."
           ]
         }
       }

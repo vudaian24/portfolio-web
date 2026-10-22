@@ -1,8 +1,13 @@
 "use client";
 
-import { motion, useReducedMotion } from "framer-motion";
+import { useReducedMotion } from "motion/react";
+import * as m from "motion/react-m";
 import { cn } from "@/lib/utils";
-import { sectionHeaderContainer, sectionHeaderItem, viewportOnce } from "@/lib/animation";
+import {
+  sectionHeaderContainer,
+  sectionHeaderItem,
+  viewportOnce,
+} from "@/lib/animation";
 
 type SectionHeaderProps = {
   eyebrow: string;
@@ -24,13 +29,13 @@ export function SectionHeader({
 
   const body = (
     <>
-      <motion.p
+      <m.p
         variants={reduceMotion ? undefined : sectionHeaderItem}
         className="section-label mb-3"
       >
         {eyebrow}
-      </motion.p>
-      <motion.h2
+      </m.p>
+      <m.h2
         variants={reduceMotion ? undefined : sectionHeaderItem}
         className={cn(
           "font-display text-3xl font-semibold tracking-tight text-foreground md:text-4xl",
@@ -38,9 +43,9 @@ export function SectionHeader({
         )}
       >
         {title}
-      </motion.h2>
+      </m.h2>
       {description ? (
-        <motion.p
+        <m.p
           variants={reduceMotion ? undefined : sectionHeaderItem}
           className={cn(
             "mt-4 text-base text-muted-foreground md:text-lg",
@@ -48,7 +53,7 @@ export function SectionHeader({
           )}
         >
           {description}
-        </motion.p>
+        </m.p>
       ) : null}
     </>
   );
@@ -86,7 +91,7 @@ export function SectionHeader({
   }
 
   return (
-    <motion.div
+    <m.div
       className={cn(
         centered && "text-center",
         !centered && "max-w-2xl",
@@ -98,6 +103,6 @@ export function SectionHeader({
       variants={sectionHeaderContainer}
     >
       {body}
-    </motion.div>
+    </m.div>
   );
 }

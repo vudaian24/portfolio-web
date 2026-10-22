@@ -1,7 +1,8 @@
 "use client";
 
-import { motion, useReducedMotion } from "framer-motion";
-import type { Variants } from "framer-motion";
+import { useReducedMotion } from "motion/react";
+import * as m from "motion/react-m";
+import type { Variants } from "motion/react";
 import { ArrowUpRight } from "lucide-react";
 import { Section, SectionHeader } from "@/components/ui/Section";
 import { EASE_OUT } from "@/lib/animation";
@@ -58,7 +59,7 @@ export default function ProjectsSectionClient({
           const hasPublicLink = Boolean(project.href);
 
           return (
-            <motion.article
+            <m.article
               key={project.id}
               id={projectAnchorId(project.id)}
               custom={index}
@@ -78,7 +79,7 @@ export default function ProjectsSectionClient({
                   </p>
                 </div>
                 {hasPublicLink ? (
-                  <motion.a
+                  <m.a
                     href={project.href}
                     target="_blank"
                     rel="noopener noreferrer"
@@ -87,7 +88,7 @@ export default function ProjectsSectionClient({
                   >
                     {project.linkLabel}
                     <ArrowUpRight size={16} strokeWidth={2} aria-hidden />
-                  </motion.a>
+                  </m.a>
                 ) : (
                   <p className="text-sm font-medium text-text-muted">
                     {content.noPublicLink}
@@ -119,7 +120,7 @@ export default function ProjectsSectionClient({
                   ))}
                 </ul>
               ) : null}
-            </motion.article>
+            </m.article>
           );
         })}
       </div>

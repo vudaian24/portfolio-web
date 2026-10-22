@@ -1,6 +1,7 @@
 "use client";
 
-import { motion, useReducedMotion } from "framer-motion";
+import { useReducedMotion } from "motion/react";
+import * as m from "motion/react-m";
 import type { ReactNode } from "react";
 import { fadeUp, fadeUpTransition, viewportOnce } from "@/lib/animation";
 import { cn } from "@/lib/utils";
@@ -25,7 +26,7 @@ export function MotionReveal({
   }
 
   return (
-    <motion.div
+    <m.div
       initial="hidden"
       whileInView="visible"
       viewport={{ once: true, amount: viewportAmount }}
@@ -34,6 +35,6 @@ export function MotionReveal({
       className={cn(className)}
     >
       {children}
-    </motion.div>
+    </m.div>
   );
 }

@@ -1,6 +1,7 @@
 "use client";
 
-import { motion, useReducedMotion } from "framer-motion";
+import { useReducedMotion } from "motion/react";
+import * as m from "motion/react-m";
 import Link from "next/link";
 import { MotionReveal } from "@/components/ui/MotionReveal";
 import { Section } from "@/components/ui/Section";
@@ -41,7 +42,7 @@ export default function AboutSectionClient({
           <p className="mt-6 text-base leading-relaxed text-muted-foreground md:text-lg">
             {content.description}
           </p>
-          <motion.div
+          <m.div
             whileHover={reduceMotion ? undefined : { x: 4 }}
             className="mt-8 inline-block"
           >
@@ -51,7 +52,7 @@ export default function AboutSectionClient({
             >
               {content.cta}
             </Link>
-          </motion.div>
+          </m.div>
         </MotionReveal>
 
         <MotionReveal delay={0.08} className="lg:col-span-7">
@@ -68,7 +69,7 @@ export default function AboutSectionClient({
                   {group.skills.map((skill) => {
                     const index = chipIndex++;
                     return (
-                      <motion.li
+                      <m.li
                         key={skill.key}
                         custom={index}
                         initial={reduceMotion ? false : "hidden"}
@@ -88,7 +89,7 @@ export default function AboutSectionClient({
                         <span className="inline-flex items-center rounded-md border border-border/80 bg-background/80 px-3 py-1.5 text-xs font-medium text-foreground transition-colors duration-300 hover:border-brand/40 hover:text-brand md:text-sm">
                           {skill.label}
                         </span>
-                      </motion.li>
+                      </m.li>
                     );
                   })}
                 </ul>

@@ -2,7 +2,8 @@
 
 import { useState } from "react";
 import { useTranslations } from "next-intl";
-import { motion, AnimatePresence } from "framer-motion";
+import { AnimatePresence } from "motion/react";
+import * as m from "motion/react-m";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Send, CheckCircle2, AlertCircle } from "lucide-react";
@@ -154,7 +155,7 @@ export default function ContactSection() {
             </div>
 
             <div className="flex flex-col gap-4 pt-2 sm:flex-row sm:items-center sm:justify-between">
-              <motion.button
+              <m.button
                 type="submit"
                 disabled={isSubmitting}
                 whileHover={isSubmitting ? undefined : { scale: 1.02 }}
@@ -182,11 +183,11 @@ export default function ContactSection() {
                   <Send className="h-4 w-4" strokeWidth={2} aria-hidden />
                 )}
                 {isSubmitting ? t("status.sending") : t("form.button")}
-              </motion.button>
+              </m.button>
 
               <AnimatePresence mode="wait">
                 {submitStatus === "success" && (
-                  <motion.div
+                  <m.div
                     initial={{ opacity: 0, x: -8 }}
                     animate={{ opacity: 1, x: 0 }}
                     exit={{ opacity: 0 }}
@@ -194,10 +195,10 @@ export default function ContactSection() {
                   >
                     <CheckCircle2 className="h-5 w-5 shrink-0" aria-hidden />
                     {t("status.success")}
-                  </motion.div>
+                  </m.div>
                 )}
                 {submitStatus === "error" && (
-                  <motion.div
+                  <m.div
                     initial={{ opacity: 0, x: -8 }}
                     animate={{ opacity: 1, x: 0 }}
                     exit={{ opacity: 0 }}
@@ -205,7 +206,7 @@ export default function ContactSection() {
                   >
                     <AlertCircle className="h-5 w-5 shrink-0" aria-hidden />
                     {t("status.error")}
-                  </motion.div>
+                  </m.div>
                 )}
               </AnimatePresence>
             </div>

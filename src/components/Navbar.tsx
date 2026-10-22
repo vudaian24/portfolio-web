@@ -3,7 +3,8 @@
 import Link from "next/link";
 import { Menu, X } from "lucide-react";
 import { useState, useEffect } from "react";
-import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
+import { AnimatePresence, useReducedMotion } from "motion/react";
+import * as m from "motion/react-m";
 import { cn } from "@/lib/utils";
 import { useTranslations } from "next-intl";
 import LanguageSelector from "./LanguageSelector";
@@ -32,7 +33,7 @@ export default function Navbar() {
 
   return (
     <>
-      <motion.header
+      <m.header
         className={cn(
           "fixed top-0 left-0 right-0 z-50",
           scrolled
@@ -117,7 +118,7 @@ export default function Navbar() {
 
         <AnimatePresence>
           {isOpen ? (
-            <motion.div
+            <m.div
               id="mobile-nav"
               key="mobile-nav"
               initial={reduceMotion ? false : { opacity: 0, y: -8 }}
@@ -129,7 +130,7 @@ export default function Navbar() {
               <div className="section-shell max-h-[min(70vh,calc(100dvh-4rem))] overflow-y-auto py-6">
                 <ul className="flex flex-col gap-1">
                   {NAV_ITEMS.map((item, i) => (
-                    <motion.li
+                    <m.li
                       key={item.href}
                       initial={reduceMotion ? false : { opacity: 0, x: -10 }}
                       animate={{ opacity: 1, x: 0 }}
@@ -151,7 +152,7 @@ export default function Navbar() {
                         />
                         {t(item.labelKey)}
                       </Link>
-                    </motion.li>
+                    </m.li>
                   ))}
                 </ul>
                 <div className="mt-6 flex justify-center gap-4 border-t border-border pt-6">
@@ -169,14 +170,14 @@ export default function Navbar() {
                   ))}
                 </div>
               </div>
-            </motion.div>
+            </m.div>
           ) : null}
         </AnimatePresence>
-      </motion.header>
+      </m.header>
 
       <AnimatePresence>
         {isOpen ? (
-          <motion.button
+          <m.button
             key="nav-overlay"
             type="button"
             initial={reduceMotion ? false : { opacity: 0 }}

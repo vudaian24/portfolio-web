@@ -1,6 +1,7 @@
 "use client";
 
-import { motion, useReducedMotion } from "framer-motion";
+import { useReducedMotion } from "motion/react";
+import * as m from "motion/react-m";
 import type { ReactNode } from "react";
 import { pageEnter, staggerContainer, staggerItem } from "@/lib/animation";
 
@@ -17,7 +18,7 @@ export function CaseStudyMotion({ children }: CaseStudyMotionProps) {
   }
 
   return (
-    <motion.div
+    <m.div
       initial="hidden"
       animate="visible"
       variants={{
@@ -34,7 +35,7 @@ export function CaseStudyMotion({ children }: CaseStudyMotionProps) {
       }}
     >
       {children}
-    </motion.div>
+    </m.div>
   );
 }
 
@@ -52,9 +53,9 @@ export function CaseStudyBlock({
   }
 
   return (
-    <motion.div variants={staggerItem} className={className}>
+    <m.div variants={staggerItem} className={className}>
       {children}
-    </motion.div>
+    </m.div>
   );
 }
 

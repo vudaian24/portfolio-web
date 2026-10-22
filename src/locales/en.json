@@ -108,8 +108,11 @@
       },
       "errors": {
         "nameMin": "Please enter at least 2 characters.",
+        "nameMax": "Please enter at most 100 characters.",
         "emailInvalid": "Please enter a valid email address.",
-        "messageMin": "Please enter at least 10 characters."
+        "emailMax": "Please enter at most 254 characters.",
+        "messageMin": "Please enter at least 10 characters.",
+        "messageMax": "Please enter at most 2000 characters."
       },
       "note": "Your information will only be used to reply (no spam)."
     },
@@ -235,11 +238,11 @@
           "period": "Sep 2025 – Present",
           "role": "Independent Developer",
           "team": "Solo project",
-          "summary": "Multilingual personal portfolio showcasing projects and professional profile, self-hosted with automated CI/CD.",
+          "summary": "Multilingual personal portfolio showcasing projects and professional profile, with automated CI/CD and infrastructure as code.",
           "bullets": [
-            "Built a multilingual portfolio (EN/VI) with Next.js, TypeScript, Tailwind CSS, next-intl, and Framer Motion.",
-            "Deployed on a VPS with Docker Compose (Next.js standalone + Nginx HTTPS reverse proxy) and Watchtower auto-updates from Docker Hub.",
-            "Automated CI/CD via GitHub Actions (lint, type-check, image build/push) with Telegram alerts for deploys and contact form submissions."
+            "Built a multilingual portfolio (EN/VI) with Next.js, TypeScript, Tailwind CSS, next-intl, and Motion.",
+            "Defined the AWS infrastructure in Terraform (VPC, ECR, IAM OIDC role for GitHub Actions, SSM parameters) and the Kubernetes layer as Argo CD GitOps with Helm charts, External Secrets and Prometheus/Grafana.",
+            "Automated CI/CD with GitHub Actions: lint, type-check and build on every pull request; arm64 images pushed to Amazon ECR through OIDC and promoted via the GitOps repo with smoke tests and automatic rollback; Telegram alerts for contact form submissions."
           ]
         }
       }

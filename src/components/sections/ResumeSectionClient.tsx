@@ -1,6 +1,6 @@
 "use client";
 
-import { motion } from "framer-motion";
+import * as m from "motion/react-m";
 import { Download } from "lucide-react";
 import { MotionReveal } from "@/components/ui/MotionReveal";
 import { Section } from "@/components/ui/Section";
@@ -34,7 +34,7 @@ export default function ResumeSectionClient({
           </p>
 
           <div className="mt-8 flex flex-col items-center justify-center gap-3 sm:flex-row">
-            <motion.a
+            <m.a
               href={CV_PATH}
               target="_blank"
               rel="noopener noreferrer"
@@ -44,8 +44,8 @@ export default function ResumeSectionClient({
             >
               <Download className="h-4 w-4" strokeWidth={2} aria-hidden />
               {content.buttonFullstack}
-            </motion.a>
-            <motion.a
+            </m.a>
+            <m.a
               href={CV_DEVOPS_PATH}
               target="_blank"
               rel="noopener noreferrer"
@@ -55,7 +55,7 @@ export default function ResumeSectionClient({
             >
               <Download className="h-4 w-4" strokeWidth={2} aria-hidden />
               {content.buttonDevops}
-            </motion.a>
+            </m.a>
           </div>
         </div>
       </MotionReveal>

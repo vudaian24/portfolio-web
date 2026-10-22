@@ -1,5 +1,3 @@
-"use client";
-
 import { useTranslations } from "next-intl";
 import Link from "next/link";
 import { MotionReveal } from "@/components/ui/MotionReveal";
@@ -74,7 +72,6 @@ export default function Footer() {
         <div className="mt-12 border-t border-border/80 pt-8 text-center text-xs text-text-muted sm:text-left">
           <p>
             © {new Date().getFullYear()} {t("brand")} &mdash; Built with Next.js
-            &amp; deployed on VPS
           </p>
         </div>
       </div>

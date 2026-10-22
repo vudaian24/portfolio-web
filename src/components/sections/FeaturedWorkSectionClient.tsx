@@ -1,6 +1,7 @@
 "use client";
 
-import { motion, useReducedMotion } from "framer-motion";
+import { useReducedMotion } from "motion/react";
+import * as m from "motion/react-m";
 import { Section, SectionHeader } from "@/components/ui/Section";
 import { SECTION_IDS, projectAnchorId, type ProjectId } from "@/config/site";
 import { staggerContainer, staggerItem } from "@/lib/animation";
@@ -34,7 +35,7 @@ export default function FeaturedWorkSectionClient({
   return (
     <Section id="featured">
       <SectionHeader eyebrow={content.eyebrow} title={content.title} />
-      <motion.div
+      <m.div
         className="mt-10 border-t border-border pt-10"
         initial={reduceMotion ? false : "hidden"}
         whileInView="visible"
@@ -50,29 +51,29 @@ export default function FeaturedWorkSectionClient({
               }
         }
       >
-        <motion.p
+        <m.p
           variants={reduceMotion ? undefined : staggerItem}
           className="font-display text-2xl font-semibold md:text-3xl"
         >
           {project.title}
-        </motion.p>
-        <motion.p
+        </m.p>
+        <m.p
           variants={reduceMotion ? undefined : staggerItem}
           className="mt-2 text-sm text-muted-foreground"
         >
           {project.role} · {project.period}
-        </motion.p>
-        <motion.p
+        </m.p>
+        <m.p
           variants={reduceMotion ? undefined : staggerItem}
           className="mt-4 max-w-3xl text-base text-muted-foreground md:text-lg"
         >
           {project.summary}
-        </motion.p>
-        <motion.div
+        </m.p>
+        <m.div
           variants={reduceMotion ? undefined : staggerItem}
           className="mt-8 flex flex-wrap gap-3"
         >
-          <motion.div
+          <m.div
             whileHover={reduceMotion ? undefined : { scale: 1.03 }}
             whileTap={{ scale: 0.98 }}
           >
@@ -82,9 +83,9 @@ export default function FeaturedWorkSectionClient({
             >
               {content.cta}
             </a>
-          </motion.div>
+          </m.div>
           {project.href ? (
-            <motion.div
+            <m.div
               whileHover={reduceMotion ? undefined : { scale: 1.03 }}
               whileTap={{ scale: 0.98 }}
             >
@@ -96,7 +97,7 @@ export default function FeaturedWorkSectionClient({
               >
                 {content.live}
               </a>
-            </motion.div>
+            </m.div>
           ) : null}
           <a
             href={`#${SECTION_IDS.projects}`}
@@ -104,8 +105,8 @@ export default function FeaturedWorkSectionClient({
           >
             {content.projectsLabel} →
           </a>
-        </motion.div>
-      </motion.div>
+        </m.div>
+      </m.div>
     </Section>
   );
 }

@@ -4,7 +4,8 @@ Personal portfolio site for Dai An. Next.js App Router, bilingual (en, vi). Publ
 
 ## Stack (from package.json, next.config.ts)
 
-- Next.js 15.5.28 (`output: "standalone"`), React 19.1.10, TypeScript 5 (`strict`). Next.js 16 is not adopted yet.
+- Next.js 15.5.28 (`output: "standalone"`), React 19.1.10, TypeScript 5 (`strict`).
+- Stay on Next.js 15 (owner decision, 2026-10-22). Do not upgrade to Next.js 16 or `eslint-config-next` 16. Keep `next` and `eslint-config-next` pinned to the same exact 15.5.x version, and take new 15.5.x patch releases for security fixes. Next.js 15 is in Maintenance LTS, which by the [support policy](https://nextjs.org/support-policy) ends about two years after its 2024-10-21 release. Before each release, check GitHub advisories for the pinned version (`gh api -X GET /advisories -f ecosystem=npm -f affects=next@<version>`).
 - Tailwind CSS 4 via `@tailwindcss/postcss`; `tailwind-merge`, `clsx`.
 - `next-intl` 4 (locales `en` default and `vi`, `localePrefix: as-needed`, `localeDetection: false`).
 - `motion` 14 (`LazyMotion` with `domAnimation` in `src/components/MotionProvider.tsx`; components use `m.*` from `motion/react-m`), `lucide-react`, `next-themes`, `react-hook-form` with `zod` 4, `sharp`.

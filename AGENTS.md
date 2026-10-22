@@ -4,10 +4,10 @@ Personal portfolio site for Dai An. Next.js App Router, bilingual (en, vi). Publ
 
 ## Stack (from package.json, next.config.ts)
 
-- Next.js 15.5.9 (`output: "standalone"`), React 19.1.0, TypeScript 5 (`strict`).
-- Tailwind CSS 4 via `@tailwindcss/postcss`; `tailwind-merge`, `clsx`, `tailwindcss-animate`.
+- Next.js 15.5.28 (`output: "standalone"`), React 19.1.10, TypeScript 5 (`strict`). Next.js 16 is not adopted yet.
+- Tailwind CSS 4 via `@tailwindcss/postcss`; `tailwind-merge`, `clsx`.
 - `next-intl` 4 (locales `en` default and `vi`, `localePrefix: as-needed`, `localeDetection: false`).
-- `framer-motion`, `lucide-react`, `next-themes`, `react-hook-form` with `zod` 4, `sharp`.
+- `motion` 14 (`LazyMotion` with `domAnimation` in `src/components/MotionProvider.tsx`; components use `m.*` from `motion/react-m`), `lucide-react`, `next-themes`, `react-hook-form` with `zod` 4, `sharp`.
 - Package manager: Yarn 1 (`yarn.lock` is the source of truth). Do not add `package-lock.json` or `pnpm-lock.yaml`.
 - Node 24 in CI and Docker. Use Node 24 locally to match.
 
@@ -47,18 +47,22 @@ Before reporting a change as done, run `yarn lint` and `yarn type-check`.
 ## Configuration facts
 
 - Server env vars: `TELEGRAM_BOT_TOKEN`, `TELEGRAM_CHAT_ID`, read by the contact route. Values live in a local, git-ignored `.env` file or in the deploy environment. Never open `.env*`.
-- `next.config.ts` sets security headers on all routes: HSTS, `X-Content-Type-Options`, `Referrer-Policy`, `X-Frame-Options: DENY`, `Permissions-Policy`, plus `x-app-version` from `APP_VERSION` at build time (`dev` when unset). Keep them unless the user asks to change them. Deploy CI reads `x-app-version` to tell when a release is live.
-- Image config: `remotePatterns` allows `https://placehold.co` only. `dangerouslyAllowSVG` is on.
+- `next.config.ts` sets security headers on all routes: HSTS, `X-Content-Type-Options`, `Referrer-Policy`, `X-Frame-Options: DENY`, `Permissions-Policy`, a Content-Security-Policy, plus `x-app-version` from `APP_VERSION` at build time (`dev` when unset). `poweredByHeader` is off. Keep them unless the user asks to change them. The deploy workflow reads `x-app-version` to tell when a release is live.
+- The CSP allows `'unsafe-inline'` for scripts and styles, because the pages are static (nonces would force dynamic rendering). `'unsafe-eval'` is added only in development. If a new external origin is loaded (script, style, image, font, or fetch), add it to the CSP in `next.config.ts`.
+- There is no `images` config: no remote image hosts and no SVG optimization.
 - `Dockerfile` (`node:24-alpine`, multi-stage, build arg `APP_VERSION` = git SHA) uses `HUSKY=0`, `CI=true`, `yarn install --frozen-lockfile`, and `yarn next build` (webpack). Its runner copies `src/locales` because next-intl loads locale JSON at runtime.
 
 ## CI/CD as it is today
 
-Pipeline lives in `.github/workflows/`. Note: production is on Vercel. The VPS path below is legacy and its host is unreachable.
+Pipeline lives in `.github/workflows/`. Production is still served by Vercel. The AWS deploy is gated by the repository variable `AWS_DEPLOY_ENABLED` (job-level `if`; while it is not `true`, no `aws-production` deployment is created). The legacy GHCR and VPS path (`cd.yml`, `deploy.yml`) has been removed.
 
-- `main.yml` ("Pipeline") — triggers on push and PR to `main`, and on `workflow_dispatch` with a `rollback_tag` input. Workflow-level permissions: `contents: read`, `packages: write`. Keep permissions at workflow level, not job level; job-level settings broke the run.
-- `ci.yml` — composite action `.github/actions/setup-node` (Node 24, Yarn cache, Next.js cache, `yarn install --frozen-lockfile`), then `yarn lint` and `yarn type-check`.
-- `cd.yml` — on push to `main` after CI: buildx build and push to `ghcr.io/<owner>/portfolio-web` tagged `latest` and the commit SHA, then calls `deploy.yml`.
-- `deploy.yml` — legacy. SSHes to a VPS as user `ci`, sets `APP_VERSION` in the server's `.env`, runs `docker compose pull` and `up -d --wait`, health-checks `https://portfolio.anvd.io.vn`, and sends a Telegram message. The SSH host key is pinned in the file. Do not edit or run it without the user's explicit instruction.
+- `main.yml` ("Pipeline") — pull requests run CI only. A push to `main` runs CI, then the `deploy` job when `AWS_DEPLOY_ENABLED` is `true`. `workflow_dispatch` takes `image_tag` (a full 40-character SHA already in ECR) and redeploys it as a rollback. Job `deploy` uses `environment: aws-production` and `ubuntu-24.04-arm`. It builds the `linux/arm64` image, pushes it to ECR repository `portfolio-prod-web` with the full SHA as the tag (immutable, no `latest`), and sets `image.tag` in `portfolio-gitops` through a GitHub App token. It then waits for `x-app-version`, smoke-tests the site, and reverts the gitops tag on failure. Helper: `.github/scripts/set-image-tag.sh`.
+- `ci.yml` — composite action `.github/actions/setup-node` (Node 24, Yarn cache, `.next/cache`, `yarn install --frozen-lockfile`), then `yarn lint`, `yarn type-check` and `yarn build`.
+- Names used by the deploy job: repository variable `AWS_DEPLOY_ENABLED`. Environment `aws-production` (deployment branches: `main` only; required reviewer; separate from Vercel's `Production`, because environment names are case insensitive) holds secrets `AWS_ROLE_ARN`, `GITOPS_APP_PRIVATE_KEY`, variables `GITOPS_APP_CLIENT_ID` and optional `SITE_URL` (default `https://portfolio-aws.anvd.io.vn`).
+- Permissions: top-level `permissions` is `contents: read`. Only the `deploy` job raises `id-token: write`, for OIDC. Keep elevation at job level.
+- The first deploy has no previous tag in `portfolio-gitops`. If its smoke test fails, the run errors out and nothing is reverted; follow `../docs/runbooks/rollback.md`.
+- Actions are pinned to full commit SHAs with a `# vX.Y.Z` comment. Update them the same way.
+- The design is in `../docs/architecture/aws-eks.md` (Deploy path). Rollback is in `../docs/runbooks/rollback.md`.
 
 ## Rules
 

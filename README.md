@@ -6,10 +6,10 @@ Personal portfolio and live CV of Dai An, in English and Vietnamese. Live at [po
 
 Versions are taken from `package.json`.
 
-- Next.js 15.5.9 (App Router, `output: "standalone"`), React 19.1.0, TypeScript 5 (strict)
-- Tailwind CSS 4 (`@tailwindcss/postcss`), `tailwind-merge`, `clsx`, `tailwindcss-animate`
-- `next-intl` ^4.3.5 for routing and translations
-- `framer-motion` ^12.23.12, `lucide-react` ^0.542.0, `next-themes` ^0.4.6
+- Next.js 15.5.28 (App Router, `output: "standalone"`), React 19.1.10, TypeScript 5 (strict)
+- Tailwind CSS 4 (`@tailwindcss/postcss`), `tailwind-merge`, `clsx`
+- `next-intl` ^4.14.9 for routing and translations
+- `motion` ^14.5.0 (animations), `lucide-react` ^0.542.0, `next-themes` ^0.4.6
 - `react-hook-form` ^7.62.0 with `zod` ^4.1.8 and `@hookform/resolvers` ^5.2.2
 - `sharp` ^0.34.2 (image processing)
 - Tooling: ESLint 9, Prettier 3, Husky 9, lint-staged 16
@@ -17,7 +17,7 @@ Versions are taken from `package.json`.
 
 ## Getting started
 
-Requirements: Node.js 20 (same as the Dockerfile and CI) and Yarn 1.
+Requirements: Node.js 24 (same as the Dockerfile and CI) and Yarn 1.
 
 ```bash
 yarn install --frozen-lockfile
@@ -90,7 +90,7 @@ The `-e NAME` form passes the values from your current shell, so no secret is wr
 ## Deployment
 
 - Production is served by Vercel at [portfolio.anvd.io.vn](https://portfolio.anvd.io.vn).
-- The GitHub Actions pipeline (`.github/workflows/`) is legacy. `main.yml` runs `ci.yml` (lint and type check) on push and pull request to `main`. On push to `main`, `cd.yml` builds and pushes the image to GHCR, then `deploy.yml` deploys it over SSH to a VPS. The deploy step currently fails because the VPS SSH endpoint is unreachable.
+- GitHub Actions (`.github/workflows/main.yml`) runs `ci.yml` (lint, type check, build) on pull requests and pushes to `main`. On push to `main`, the `deploy` job runs only when the repository variable `AWS_DEPLOY_ENABLED` is `true`; the `aws-production` environment then requires reviewer approval. It builds a `linux/arm64` image on a native arm64 runner, pushes it to ECR (`portfolio-prod-web`, tagged with the git SHA), and sets the tag in `portfolio-gitops`. It then waits for `x-app-version`, smoke-tests the site, and reverts the tag on failure. `workflow_dispatch` with `image_tag` redeploys an existing image.
 - Planned: move hosting to Amazon EKS for about 44 days, behind an ALB and the Cloudflare proxy. Argo CD will deploy the app chart from the [portfolio-gitops](https://github.com/vudaian24/portfolio-gitops) repository. CI will build the `linux/arm64` image, push it to ECR with OIDC, and commit the new image tag to `portfolio-gitops`. The app side is ready: Node 24, no `@vercel/analytics`, `x-app-version` header, `/web-api/health`. The design records are kept in the private workspace repository.
 
 ## AI usage policy (ISMS-AI-01)

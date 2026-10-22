@@ -1,5 +1,19 @@
 name: Pipeline
 
+# Pull requests run CI only. A push to main runs CI, then deploys to AWS when
+# the repository variable AWS_DEPLOY_ENABLED is "true". While it is unset or
+# not "true", no production deployment is created and Vercel serves production.
+#
+# Deploy flow (docs: ../docs/architecture/aws-eks.md, "Deploy path"):
+#   1. Build a linux/arm64 image on a native arm64 runner and push it to ECR
+#      with the git SHA as the tag. ECR tags are immutable, so there is no `latest`.
+#   2. Commit the new SHA to image.tag in portfolio-gitops. Argo CD deploys it.
+#   3. Wait until x-app-version shows the SHA, then smoke-test the site.
+#      On failure, restore the previous tag in portfolio-gitops and fail.
+#      A first deploy has no previous tag; then the run fails for manual action.
+#
+# workflow_dispatch redeploys an image that already exists in ECR (rollback).
+
 on:
   push:
     branches: ["main"]
@@ -7,53 +21,222 @@ on:
     branches: ["main"]
   workflow_dispatch:
     inputs:
-      rollback_tag:
+      image_tag:
         description: >-
-          Rollback: tag image đã có trên ghcr.io (vd: git SHA của lần
-          deploy trước). Điền vào đây để deploy LẠI tag cũ, KHÔNG build
-          lại. Để trống nếu chỉ muốn chạy CI/CD bình thường.
-        required: false
+          Full 40-character git SHA of an image already in ECR. Redeploys it
+          without a build (rollback).
+        required: true
         type: string
 
-concurrency:
-  group: ${{ github.workflow }}-${{ github.ref }}
-  cancel-in-progress: true
+env:
+  AWS_REGION: ap-southeast-1
+  ECR_REPOSITORY: portfolio-prod-web
+  GITOPS_REPOSITORY: vudaian24/portfolio-gitops
 
-# Quyền của GITHUB_TOKEN cho CẢ workflow — bắt buộc khai báo Ở ĐÂY (workflow
-# gốc, không phải reusable workflow), không phải trong cd.yml.
-#
-# Đã thử job-level `permissions:` trong cd.yml trước: GitHub từ chối chạy
-# toàn bộ pipeline với lỗi "startup_failure" (không rõ nguyên nhân qua UI,
-# phải test thực nghiệm bằng cách bỏ đi mới xác định được). Sau khi bỏ,
-# pipeline chạy được nhưng bước push lên ghcr.io báo
-# "denied: installation not allowed to Create organization package" — vì
-# tổ chức/repo đặt default_workflow_permissions=read, và quyền không tự
-# cascade lên từ job con của reusable workflow lồng nhau (main.yml gọi
-# cd.yml gọi deploy.yml). Phải khai báo elevated permission ở ĐÚNG workflow
-# gốc (workflow-level, không phải job-level, không phải trong file được
-# gọi) để nó áp dụng cho mọi job — kể cả job trong reusable workflow được
-# gọi qua `uses:`.
+# Read-only by default. The deploy job asks for id-token: write itself.
 permissions:
   contents: read
-  packages: write
+
+# Only one run per ref. Newer runs cancel older ones off main. Main runs queue.
+concurrency:
+  group: pipeline-${{ github.ref }}
+  cancel-in-progress: ${{ github.ref != 'refs/heads/main' }}
 
 jobs:
   ci:
-    if: github.event_name != 'workflow_dispatch' || inputs.rollback_tag == ''
+    name: CI
+    if: github.event_name != 'workflow_dispatch'
     uses: ./.github/workflows/ci.yml
 
-  cd:
+  deploy:
+    name: Deploy to production
     needs: ci
+    # Job-level if reads repository variables only. Environment variables are
+    # not resolved until the job starts, so the switch cannot be scoped to the
+    # environment. When the switch is off, no deployment is created.
+    # aws-production, not Vercel's "Production": environment names are case
+    # insensitive, and the AWS role trusts only this environment's OIDC subject.
     if: >-
-      github.event_name == 'push' && github.ref == 'refs/heads/main'
-    uses: ./.github/workflows/cd.yml
-    with:
-      image_tag: ${{ github.sha }}
-    secrets: inherit
+      vars.AWS_DEPLOY_ENABLED == 'true' &&
+      always() && !cancelled() && needs.ci.result != 'failure' &&
+      ((github.event_name == 'push' && github.ref == 'refs/heads/main') ||
+        github.event_name == 'workflow_dispatch')
+    runs-on: ubuntu-24.04-arm
+    environment: aws-production
+    concurrency:
+      group: deploy-production
+      cancel-in-progress: false
+    permissions:
+      contents: read
+      id-token: write
+    env:
+      EVENT_NAME: ${{ github.event_name }}
+      INPUT_IMAGE_TAG: ${{ inputs.image_tag }}
+      GITHUB_SHA_VALUE: ${{ github.sha }}
+      SITE_URL: ${{ vars.SITE_URL || 'https://portfolio-aws.anvd.io.vn' }}
+    steps:
+      # Checked out from the workflow's own ref (main, enforced by the
+      # environment's deployment branch policy). The scripts come from here,
+      # never from the image's commit.
+      - name: Checkout
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
 
-  rollback:
-    if: github.event_name == 'workflow_dispatch' && inputs.rollback_tag != ''
-    uses: ./.github/workflows/deploy.yml
-    with:
-      image_tag: ${{ inputs.rollback_tag }}
-    secrets: inherit
+      - name: Resolve target commit
+        id: target
+        env:
+          TARGET_SHA: ${{ github.event_name == 'workflow_dispatch' && env.INPUT_IMAGE_TAG || env.GITHUB_SHA_VALUE }}
+        run: |
+          if [[ ! "$TARGET_SHA" =~ ^[0-9a-f]{40}$ ]]; then
+            echo "::error::image_tag must be a full 40-character lowercase git SHA"
+            exit 1
+          fi
+          echo "sha=$TARGET_SHA" >> "$GITHUB_OUTPUT"
+          if [ "$EVENT_NAME" = "push" ]; then
+            echo "build=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "build=false" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@e1253824e5c10ff9df46874f81ed3ec929e19cfd # v6.3.0
+        with:
+          role-to-assume: ${{ secrets.AWS_ROLE_ARN }}
+          aws-region: ${{ env.AWS_REGION }}
+
+      - name: Check whether the image already exists in ECR
+        id: exists
+        env:
+          TARGET_SHA: ${{ steps.target.outputs.sha }}
+        run: |
+          # Only ImageNotFoundException means "missing". Any other failure
+          # (AccessDenied, throttling, unknown repository) stops the run.
+          if output="$(aws ecr describe-images --repository-name "$ECR_REPOSITORY" \
+            --image-ids imageTag="$TARGET_SHA" 2>&1 >/dev/null)"; then
+            echo "exists=true" >> "$GITHUB_OUTPUT"
+          elif [[ "$output" == *ImageNotFoundException* ]]; then
+            echo "exists=false" >> "$GITHUB_OUTPUT"
+          else
+            echo "::error::ecr describe-images failed for $ECR_REPOSITORY:$TARGET_SHA: ${output//$'\n'/ }"
+            exit 1
+          fi
+
+      - name: Fail a redeploy whose image is missing
+        if: steps.target.outputs.build == 'false' && steps.exists.outputs.exists == 'false'
+        env:
+          TARGET_SHA: ${{ steps.target.outputs.sha }}
+        run: |
+          echo "::error::no image tagged $TARGET_SHA in ECR, nothing to redeploy"
+          exit 1
+
+      - name: Login to Amazon ECR
+        id: ecr
+        if: steps.target.outputs.build == 'true' && steps.exists.outputs.exists == 'false'
+        uses: aws-actions/amazon-ecr-login@03f1aad4c6c7ffd436567f42f9384779290529bd # v2.1.7
+
+      - name: Set up Docker Buildx
+        if: steps.target.outputs.build == 'true' && steps.exists.outputs.exists == 'false'
+        uses: docker/setup-buildx-action@f87e5991a6d7451dcb8d9637bfbc97413f497069 # v4.4.1
+
+      - name: Build and push linux/arm64 image
+        if: steps.target.outputs.build == 'true' && steps.exists.outputs.exists == 'false'
+        uses: docker/build-push-action@c3c9e263c25d99ce0380d002d59b67737d91b0dc # v7.4.0
+        with:
+          context: .
+          platforms: linux/arm64
+          push: true
+          provenance: false
+          # Immutable tags: the SHA tag is written once. Re-runs skip this step
+          # when the image already exists (see "Check whether the image...").
+          tags: ${{ steps.ecr.outputs.registry }}/${{ env.ECR_REPOSITORY }}:${{ github.sha }}
+          build-args: |
+            APP_VERSION=${{ github.sha }}
+          cache-from: type=gha,scope=web-arm64
+          cache-to: type=gha,mode=max,scope=web-arm64
+
+      - name: Create GitHub App token for portfolio-gitops
+        id: app-token
+        uses: actions/create-github-app-token@64ab729a6294000f5aa4a4bc0b73d1f32bc45510 # v3.3.0
+        with:
+          client-id: ${{ vars.GITOPS_APP_CLIENT_ID }}
+          private-key: ${{ secrets.GITOPS_APP_PRIVATE_KEY }}
+          owner: ${{ github.repository_owner }}
+          repositories: portfolio-gitops
+
+      - name: Checkout portfolio-gitops
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          repository: ${{ env.GITOPS_REPOSITORY }}
+          ref: main
+          token: ${{ steps.app-token.outputs.token }}
+          path: gitops
+          # Needed: the push in set-image-tag.sh uses these credentials.
+          persist-credentials: true
+
+      - name: Set git identity to the GitHub App bot
+        id: identity
+        env:
+          GH_TOKEN: ${{ steps.app-token.outputs.token }}
+          APP_SLUG: ${{ steps.app-token.outputs.app-slug }}
+        run: |
+          bot_id="$(gh api "/users/${APP_SLUG}[bot]" --jq .id)"
+          git -C gitops config user.name "${APP_SLUG}[bot]"
+          git -C gitops config user.email "${bot_id}+${APP_SLUG}[bot]@users.noreply.github.com"
+
+      - name: Record the tag currently live
+        id: previous
+        run: |
+          previous="$(sed -n 's/^  tag: "\(.*\)"$/\1/p' gitops/charts/portfolio-web/values-prod.yaml)"
+          echo "tag=$previous" >> "$GITHUB_OUTPUT"
+
+      - name: Point portfolio-gitops at the new image
+        id: gitops
+        env:
+          GITOPS_DIR: ${{ github.workspace }}/gitops
+          SOURCE_REPO: ${{ github.repository }}
+          TARGET_SHA: ${{ steps.target.outputs.sha }}
+        run: |
+          "$GITHUB_WORKSPACE/.github/scripts/set-image-tag.sh" \
+            "$TARGET_SHA" "chore: deploy portfolio-web ${TARGET_SHA:0:7}"
+
+      - name: Wait for the site to report the new version
+        env:
+          TARGET_SHA: ${{ steps.target.outputs.sha }}
+        run: |
+          deadline=$((SECONDS + 600))
+          until [ "$(curl -sS --max-time 15 -o /dev/null -D - -H 'Cache-Control: no-cache' "$SITE_URL/" \
+            | tr -d '\r' | awk -F': ' 'tolower($1) == "x-app-version" {print $2}')" = "$TARGET_SHA" ]; do
+            if [ "$SECONDS" -ge "$deadline" ]; then
+              echo "::error::$SITE_URL did not report x-app-version $TARGET_SHA within 10 minutes"
+              exit 1
+            fi
+            sleep 15
+          done
+          echo "$SITE_URL reports $TARGET_SHA"
+
+      - name: Smoke test
+        run: |
+          for path in / /vi /sitemap.xml /robots.txt /cv.pdf; do
+            if ! curl -fsS --max-time 20 -o /dev/null "$SITE_URL$path"; then
+              echo "::error::smoke test failed for $path"
+              exit 1
+            fi
+            echo "ok $path"
+          done
+
+      - name: Revert portfolio-gitops to the previous tag
+        if: failure() && steps.gitops.outcome == 'success' && steps.previous.outputs.tag != ''
+        env:
+          GITOPS_DIR: ${{ github.workspace }}/gitops
+          SOURCE_REPO: ${{ github.repository }}
+          PREVIOUS_TAG: ${{ steps.previous.outputs.tag }}
+        run: |
+          "$GITHUB_WORKSPACE/.github/scripts/set-image-tag.sh" \
+            "$PREVIOUS_TAG" "chore: revert portfolio-web to ${PREVIOUS_TAG:0:7}"
+
+      - name: Report a failed first deploy with no previous tag
+        if: failure() && steps.gitops.outcome == 'success' && steps.previous.outputs.tag == ''
+        run: |
+          echo "::error::no previous tag to restore in portfolio-gitops (first deploy). The new tag stays live; manual action is needed. See ../docs/runbooks/rollback.md"
+          exit 1

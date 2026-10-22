@@ -2,7 +2,7 @@ name: Pipeline
 
 # Pull requests run CI only. A push to main runs CI, then deploys to AWS when
 # the repository variable AWS_DEPLOY_ENABLED is "true". While it is unset or
-# not "true", no production deployment is created and Vercel serves production.
+# not "true", no production deployment is created.
 #
 # Deploy flow (docs: ../docs/architecture/aws-eks.md, "Deploy path"):
 #   1. Build a linux/arm64 image on a native arm64 runner and push it to ECR

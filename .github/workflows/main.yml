@@ -10,9 +10,14 @@ name: Pipeline
 #   2. Commit the new SHA to image.tag in portfolio-gitops. Argo CD deploys it.
 #   3. Wait until x-app-version shows the SHA, then smoke-test the site.
 #      On failure, restore the previous tag in portfolio-gitops and fail.
-#      A first deploy has no previous tag; then the run fails for manual action.
 #
-# workflow_dispatch redeploys an image that already exists in ECR (rollback).
+# workflow_dispatch has two modes, chosen by exactly one input:
+#   - image_tag: redeploys an image that already exists in ECR (rollback).
+#     Steps 1 and 3 run as on a push, but the build is skipped.
+#   - bootstrap: first deploy only (runbook: ../docs/runbooks/rollback.md,
+#     "First deploy"). Builds the dispatched main commit if needed, sets image.tag
+#     in portfolio-gitops, and skips the wait, the smoke test and the revert. It
+#     is refused unless image.tag in portfolio-gitops is still empty.
 
 on:
   push:
@@ -23,10 +28,19 @@ on:
     inputs:
       image_tag:
         description: >-
-          Full 40-character git SHA of an image already in ECR. Redeploys it
-          without a build (rollback).
-        required: true
+          Redeploy mode. Full 40-character git SHA of an image already in ECR.
+          Redeploys it without a build (rollback). Leave empty when bootstrap is true.
+        required: false
+        default: ""
         type: string
+      bootstrap:
+        description: >-
+          First deploy mode, from main only. Builds main if needed, sets image.tag
+          in portfolio-gitops and skips the smoke test and the revert. Refused
+          unless image.tag is empty. Leave image_tag empty.
+        required: false
+        default: false
+        type: boolean
 
 env:
   AWS_REGION: ap-southeast-1
@@ -37,9 +51,11 @@ env:
 permissions:
   contents: read
 
-# Only one run per ref. Newer runs cancel older ones off main. Main runs queue.
+# Off main, a newer run cancels the older one on the same ref. On main every run
+# gets its own group, so a deploy waiting for approval does not hold back CI or
+# a rollback dispatch; the deploy job's own group serializes deploys.
 concurrency:
-  group: pipeline-${{ github.ref }}
+  group: ${{ github.ref == 'refs/heads/main' && format('pipeline-main-{0}', github.run_id) || format('pipeline-{0}', github.ref) }}
   cancel-in-progress: ${{ github.ref != 'refs/heads/main' }}
 
 jobs:
@@ -71,7 +87,9 @@ jobs:
       id-token: write
     env:
       EVENT_NAME: ${{ github.event_name }}
+      GITHUB_REF_VALUE: ${{ github.ref }}
       INPUT_IMAGE_TAG: ${{ inputs.image_tag }}
+      INPUT_BOOTSTRAP: ${{ inputs.bootstrap == true }}
       GITHUB_SHA_VALUE: ${{ github.sha }}
       SITE_URL: ${{ vars.SITE_URL || 'https://portfolio-aws.anvd.io.vn' }}
     steps:
@@ -83,20 +101,49 @@ jobs:
         with:
           persist-credentials: false
 
-      - name: Resolve target commit
+      - name: Resolve target commit and mode
         id: target
-        env:
-          TARGET_SHA: ${{ github.event_name == 'workflow_dispatch' && env.INPUT_IMAGE_TAG || env.GITHUB_SHA_VALUE }}
         run: |
-          if [[ ! "$TARGET_SHA" =~ ^[0-9a-f]{40}$ ]]; then
+          case "$EVENT_NAME" in
+            push)
+              mode=push
+              target="$GITHUB_SHA_VALUE"
+              ;;
+            workflow_dispatch)
+              if [ "$INPUT_BOOTSTRAP" = "true" ] && [ -n "$INPUT_IMAGE_TAG" ]; then
+                echo "::error::set either image_tag (redeploy) or bootstrap (first deploy), not both"
+                exit 1
+              fi
+              if [ "$INPUT_BOOTSTRAP" = "true" ]; then
+                if [ "$GITHUB_REF_VALUE" != "refs/heads/main" ]; then
+                  echo "::error::bootstrap must run from main, not $GITHUB_REF_VALUE"
+                  exit 1
+                fi
+                mode=bootstrap
+                target="$GITHUB_SHA_VALUE"
+              elif [ -n "$INPUT_IMAGE_TAG" ]; then
+                mode=redeploy
+                target="$INPUT_IMAGE_TAG"
+              else
+                echo "::error::workflow_dispatch needs image_tag (redeploy) or bootstrap = true"
+                exit 1
+              fi
+              ;;
+            *)
+              echo "::error::unexpected event $EVENT_NAME"
+              exit 1
+              ;;
+          esac
+          if [[ ! "$target" =~ ^[0-9a-f]{40}$ ]]; then
             echo "::error::image_tag must be a full 40-character lowercase git SHA"
             exit 1
           fi
-          echo "sha=$TARGET_SHA" >> "$GITHUB_OUTPUT"
-          if [ "$EVENT_NAME" = "push" ]; then
-            echo "build=true" >> "$GITHUB_OUTPUT"
-          else
+          echo "mode=$mode" >> "$GITHUB_OUTPUT"
+          echo "sha=$target" >> "$GITHUB_OUTPUT"
+          if [ "$mode" = "redeploy" ]; then
             echo "build=false" >> "$GITHUB_OUTPUT"
+          else
+            echo "build=true" >> "$GITHUB_OUTPUT"
           fi
 
       - name: Configure AWS credentials
@@ -104,56 +151,6 @@ jobs:
         with:
           role-to-assume: ${{ secrets.AWS_ROLE_ARN }}
           aws-region: ${{ env.AWS_REGION }}
-
-      - name: Check whether the image already exists in ECR
-        id: exists
-        env:
-          TARGET_SHA: ${{ steps.target.outputs.sha }}
-        run: |
-          # Only ImageNotFoundException means "missing". Any other failure
-          # (AccessDenied, throttling, unknown repository) stops the run.
-          if output="$(aws ecr describe-images --repository-name "$ECR_REPOSITORY" \
-            --image-ids imageTag="$TARGET_SHA" 2>&1 >/dev/null)"; then
-            echo "exists=true" >> "$GITHUB_OUTPUT"
-          elif [[ "$output" == *ImageNotFoundException* ]]; then
-            echo "exists=false" >> "$GITHUB_OUTPUT"
-          else
-            echo "::error::ecr describe-images failed for $ECR_REPOSITORY:$TARGET_SHA: ${output//$'\n'/ }"
-            exit 1
-          fi
-
-      - name: Fail a redeploy whose image is missing
-        if: steps.target.outputs.build == 'false' && steps.exists.outputs.exists == 'false'
-        env:
-          TARGET_SHA: ${{ steps.target.outputs.sha }}
-        run: |
-          echo "::error::no image tagged $TARGET_SHA in ECR, nothing to redeploy"
-          exit 1
-
-      - name: Login to Amazon ECR
-        id: ecr
-        if: steps.target.outputs.build == 'true' && steps.exists.outputs.exists == 'false'
-        uses: aws-actions/amazon-ecr-login@03f1aad4c6c7ffd436567f42f9384779290529bd # v2.1.7
-
-      - name: Set up Docker Buildx
-        if: steps.target.outputs.build == 'true' && steps.exists.outputs.exists == 'false'
-        uses: docker/setup-buildx-action@f87e5991a6d7451dcb8d9637bfbc97413f497069 # v4.4.1
-
-      - name: Build and push linux/arm64 image
-        if: steps.target.outputs.build == 'true' && steps.exists.outputs.exists == 'false'
-        uses: docker/build-push-action@c3c9e263c25d99ce0380d002d59b67737d91b0dc # v7.4.0
-        with:
-          context: .
-          platforms: linux/arm64
-          push: true
-          provenance: false
-          # Immutable tags: the SHA tag is written once. Re-runs skip this step
-          # when the image already exists (see "Check whether the image...").
-          tags: ${{ steps.ecr.outputs.registry }}/${{ env.ECR_REPOSITORY }}:${{ github.sha }}
-          build-args: |
-            APP_VERSION=${{ github.sha }}
-          cache-from: type=gha,scope=web-arm64
-          cache-to: type=gha,mode=max,scope=web-arm64
 
       - name: Create GitHub App token for portfolio-gitops
         id: app-token
@@ -184,11 +181,83 @@ jobs:
           git -C gitops config user.name "${APP_SLUG}[bot]"
           git -C gitops config user.email "${bot_id}+${APP_SLUG}[bot]@users.noreply.github.com"
 
+      # Runs before any build, so a refused bootstrap pushes no image.
       - name: Record the tag currently live
         id: previous
+        env:
+          GITOPS_DIR: ${{ github.workspace }}/gitops
         run: |
-          previous="$(sed -n 's/^  tag: "\(.*\)"$/\1/p' gitops/charts/portfolio-web/values-prod.yaml)"
+          previous="$("$GITHUB_WORKSPACE/.github/scripts/set-image-tag.sh" --read)"
           echo "tag=$previous" >> "$GITHUB_OUTPUT"
+
+      # bootstrap needs an empty image.tag; push and redeploy need a set one.
+      # A push before the first deploy would otherwise write the tag, fail its
+      # wait (no ALB or DNS yet) and leave bootstrap refused.
+      - name: Check the deploy mode against image.tag
+        if: success()
+        env:
+          CURRENT_TAG: ${{ steps.previous.outputs.tag }}
+          MODE: ${{ steps.target.outputs.mode }}
+        run: |
+          if [ "$MODE" = "bootstrap" ] && [ -n "$CURRENT_TAG" ]; then
+            echo "::error::bootstrap is for the first deploy only: image.tag is already $CURRENT_TAG in portfolio-gitops. Use image_tag to redeploy, or the rollback runbook."
+            exit 1
+          fi
+          if [ "$MODE" != "bootstrap" ] && [ -z "$CURRENT_TAG" ]; then
+            echo "::error::image.tag is still empty in portfolio-gitops. Run the Pipeline with bootstrap = true first (runbook: ../docs/runbooks/cluster-operations.md, Bootstrap)."
+            exit 1
+          fi
+          echo "mode $MODE matches image.tag '${CURRENT_TAG}'"
+
+      - name: Check whether the image already exists in ECR
+        id: exists
+        env:
+          TARGET_SHA: ${{ steps.target.outputs.sha }}
+        run: |
+          # Only ImageNotFoundException means "missing". Any other failure
+          # (AccessDenied, throttling, unknown repository) stops the run.
+          if output="$(aws ecr describe-images --repository-name "$ECR_REPOSITORY" \
+            --image-ids imageTag="$TARGET_SHA" 2>&1 >/dev/null)"; then
+            echo "exists=true" >> "$GITHUB_OUTPUT"
+          elif [[ "$output" == *ImageNotFoundException* ]]; then
+            echo "exists=false" >> "$GITHUB_OUTPUT"
+          else
+            echo "::error::ecr describe-images failed for $ECR_REPOSITORY:$TARGET_SHA: ${output//$'\n'/ }"
+            exit 1
+          fi
+
+      - name: Fail a redeploy whose image is missing
+        if: success() && steps.target.outputs.build == 'false' && steps.exists.outputs.exists == 'false'
+        env:
+          TARGET_SHA: ${{ steps.target.outputs.sha }}
+        run: |
+          echo "::error::no image tagged $TARGET_SHA in ECR, nothing to redeploy"
+          exit 1
+
+      - name: Login to Amazon ECR
+        id: ecr
+        if: success() && steps.target.outputs.build == 'true' && steps.exists.outputs.exists == 'false'
+        uses: aws-actions/amazon-ecr-login@03f1aad4c6c7ffd436567f42f9384779290529bd # v2.1.7
+
+      - name: Set up Docker Buildx
+        if: success() && steps.target.outputs.build == 'true' && steps.exists.outputs.exists == 'false'
+        uses: docker/setup-buildx-action@f87e5991a6d7451dcb8d9637bfbc97413f497069 # v4.4.1
+
+      - name: Build and push linux/arm64 image
+        if: success() && steps.target.outputs.build == 'true' && steps.exists.outputs.exists == 'false'
+        uses: docker/build-push-action@c3c9e263c25d99ce0380d002d59b67737d91b0dc # v7.4.0
+        with:
+          context: .
+          platforms: linux/arm64
+          push: true
+          provenance: false
+          # Immutable tags: the SHA tag is written once. Re-runs skip this step
+          # when the image already exists (see "Check whether the image...").
+          tags: ${{ steps.ecr.outputs.registry }}/${{ env.ECR_REPOSITORY }}:${{ github.sha }}
+          build-args: |
+            APP_VERSION=${{ github.sha }}
+          cache-from: type=gha,scope=web-arm64
+          cache-to: type=gha,mode=max,scope=web-arm64
 
       - name: Point portfolio-gitops at the new image
         id: gitops
@@ -200,7 +269,10 @@ jobs:
           "$GITHUB_WORKSPACE/.github/scripts/set-image-tag.sh" \
             "$TARGET_SHA" "chore: deploy portfolio-web ${TARGET_SHA:0:7}"
 
+      # Skipped for bootstrap: the Ingress, the ALB and the DNS record do not
+      # exist yet, so SITE_URL cannot report the version. Verify by hand.
       - name: Wait for the site to report the new version
+        if: success() && steps.target.outputs.mode != 'bootstrap'
         env:
           TARGET_SHA: ${{ steps.target.outputs.sha }}
         run: |
@@ -216,6 +288,7 @@ jobs:
           echo "$SITE_URL reports $TARGET_SHA"
 
       - name: Smoke test
+        if: success() && steps.target.outputs.mode != 'bootstrap'
         run: |
           for path in / /vi /sitemap.xml /robots.txt /cv.pdf; do
             if ! curl -fsS --max-time 20 -o /dev/null "$SITE_URL$path"; then
@@ -225,8 +298,9 @@ jobs:
             echo "ok $path"
           done
 
+      # Also on cancel: a run cancelled during the wait must not leave the new tag live.
       - name: Revert portfolio-gitops to the previous tag
-        if: failure() && steps.gitops.outcome == 'success' && steps.previous.outputs.tag != ''
+        if: (failure() || cancelled()) && steps.gitops.outcome == 'success' && steps.previous.outputs.tag != ''
         env:
           GITOPS_DIR: ${{ github.workspace }}/gitops
           SOURCE_REPO: ${{ github.repository }}
@@ -236,7 +310,7 @@ jobs:
             "$PREVIOUS_TAG" "chore: revert portfolio-web to ${PREVIOUS_TAG:0:7}"
 
       - name: Report a failed first deploy with no previous tag
-        if: failure() && steps.gitops.outcome == 'success' && steps.previous.outputs.tag == ''
+        if: (failure() || cancelled()) && steps.gitops.outcome == 'success' && steps.previous.outputs.tag == ''
         run: |
           echo "::error::no previous tag to restore in portfolio-gitops (first deploy). The new tag stays live; manual action is needed. See ../docs/runbooks/rollback.md"
           exit 1

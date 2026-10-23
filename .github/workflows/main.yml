@@ -91,7 +91,7 @@ jobs:
       INPUT_IMAGE_TAG: ${{ inputs.image_tag }}
       INPUT_BOOTSTRAP: ${{ inputs.bootstrap == true }}
       GITHUB_SHA_VALUE: ${{ github.sha }}
-      SITE_URL: ${{ vars.SITE_URL || 'https://portfolio-aws.anvd.io.vn' }}
+      SITE_URL: ${{ vars.SITE_URL || 'https://portfolio.anvd.io.vn' }}
     steps:
       # Checked out from the workflow's own ref (main, enforced by the
       # environment's deployment branch policy). The scripts come from here,

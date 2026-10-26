@@ -1,3 +1,4 @@
+import net from "node:net";
 import { NextResponse } from "next/server";
 import {
   CONTACT_MAX_BODY_BYTES,
@@ -6,6 +7,17 @@ import {
 } from "@/lib/contact";
 
 const TELEGRAM_TIMEOUT_MS = 10_000;
+
+// api.telegram.org publishes an AAAA record that is unreachable from the
+// cluster, so Node spends its first Happy Eyeballs attempt on IPv6 and the IPv4
+// attempt is the only one that can succeed. Each attempt gets 250 ms by
+// default, while the IPv4 round trip from ap-southeast-1 measures 159-292 ms,
+// so a healthy connection was aborted as ETIMEDOUT about four times in ten. The
+// IPv6 attempt still fails within a few milliseconds with ENETUNREACH, so a
+// larger budget costs nothing in the common case.
+const FAMILY_ATTEMPT_TIMEOUT_MS = 5_000;
+
+net.setDefaultAutoSelectFamilyAttemptTimeout(FAMILY_ATTEMPT_TIMEOUT_MS);
 
 class BodyTooLargeError extends Error {}
 
@@ -32,6 +44,16 @@ async function readBodyText(req: Request, maxBytes: number): Promise<string> {
     text += decoder.decode(value, { stream: true });
   }
   return text + decoder.decode();
+}
+
+// Pulls the error code off a fetch failure. The message is left alone on
+// purpose: it can carry the request URL, and that URL holds the bot token.
+function causeCode(error: unknown): string {
+  const cause = error instanceof Error ? error.cause : undefined;
+  if (cause && typeof cause === "object" && "code" in cause) {
+    return String((cause as { code: unknown }).code);
+  }
+  return error instanceof Error ? error.name : "unknown";
 }
 
 export async function POST(req: Request) {
@@ -107,7 +129,16 @@ export async function POST(req: Request) {
           { status: 504 },
         );
       }
-      throw error;
+      // A socket-level failure arrives as TypeError("fetch failed") with the
+      // real reason on `cause`, long before AbortSignal.timeout can fire. That
+      // is an upstream reachability problem, so report it as 504 instead of
+      // letting it fall through to the catch-all 500. Log only the error code:
+      // the request URL carries the bot token.
+      console.error("Telegram API unreachable:", causeCode(error));
+      return NextResponse.json(
+        { error: "Telegram API unreachable" },
+        { status: 504 },
+      );
     }
 
     if (!response.ok) {

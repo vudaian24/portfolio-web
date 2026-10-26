@@ -1,6 +1,6 @@
 # AGENTS.md — portfolio-web
 
-Personal portfolio site for Dai An. Next.js App Router, bilingual (en, vi). Public repo: github.com/vudaian24/portfolio-web. Workspace context (AWS migration, cross-repo rules) lives in the parent `../docs/`; this file covers this repo only.
+Personal portfolio site for Dai An. Next.js App Router, bilingual (en, vi). Public repo: github.com/vudaian24/portfolio-web. Workspace context (AWS migration, cross-repo rules) lives in the private `portfolio` workspace repository under `docs/`, which is not part of this clone; this file covers this repo only.
 
 ## Stack (from package.json, next.config.ts)
 
@@ -62,9 +62,9 @@ Pipeline lives in `.github/workflows/`. Production runs on EKS. The AWS deploy i
 - `ci.yml` — composite action `.github/actions/setup-node` (Node 24, Yarn cache, `.next/cache`, `yarn install --frozen-lockfile`), then `yarn lint`, `yarn type-check` and `yarn build`.
 - Names used by the deploy job: repository variable `AWS_DEPLOY_ENABLED`. Environment `aws-production` (deployment branches: `main` only; required reviewer; separate from Vercel's `Production`, because environment names are case insensitive) holds secrets `AWS_ROLE_ARN`, `GITOPS_APP_PRIVATE_KEY`, variables `GITOPS_APP_CLIENT_ID` and optional `SITE_URL` (default `https://portfolio.anvd.io.vn`; the deploy waits for `x-app-version` there and smoke-tests it).
 - Permissions: top-level `permissions` is `contents: read`. Only the `deploy` job raises `id-token: write`, for OIDC. Keep elevation at job level.
-- The first deploy has no previous tag in `portfolio-gitops`, so it runs as `workflow_dispatch` with `bootstrap: true`, not as a push (see `../docs/runbooks/rollback.md`, "First deploy"). Until that run sets the first tag, a push or an `image_tag` redeploy is refused before any build. A deploy that fails or is cancelled after writing the tag restores the previous tag.
+- The first deploy has no previous tag in `portfolio-gitops`, so it runs as `workflow_dispatch` with `bootstrap: true`, not as a push (workspace `docs/runbooks/rollback.md`, "First deploy"). Until that run sets the first tag, a push or an `image_tag` redeploy is refused before any build. A deploy that fails or is cancelled after writing the tag restores the previous tag.
 - Actions are pinned to full commit SHAs with a `# vX.Y.Z` comment. Update them the same way.
-- The design is in `../docs/architecture/aws-eks.md` (Deploy path). Rollback is in `../docs/runbooks/rollback.md`.
+- The design is in the workspace `docs/architecture/aws-eks.md` (Deploy path); rollback in `docs/runbooks/rollback.md`.
 
 ## Rules
 
@@ -79,6 +79,6 @@ Pipeline lives in `.github/workflows/`. Production runs on EKS. The AWS deploy i
 - Do not deploy or change deploy secrets without the user's approval.
 - This repo is also checked out as a submodule of the `portfolio` workspace repo. Push changes here first; the workspace records the new commit afterwards.
 
-## Parent docs
+## Workspace docs
 
-AWS migration design (Amazon EKS behind an ALB and the Cloudflare proxy; Argo CD deploys the app chart from the `portfolio-gitops` repository; CI pushes images to ECR with OIDC and commits the image tag to `portfolio-gitops`) is described in `../docs/` (architecture, `adr/`, `runbooks/`). Read it before changing deployment or hosting.
+The hosting and deployment design, the ADRs and the runbooks live in the private `portfolio` workspace repository, under `docs/architecture/`, `docs/adr/` and `docs/runbooks/`. They are the source of truth and are deliberately not repeated here, so a path to them resolves only inside that workspace. Read them before changing deployment or hosting; if something about them needs to be true in this repo, encode it in the workflow or the code, not as prose here.

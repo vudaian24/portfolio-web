@@ -4,7 +4,7 @@ name: Pipeline
 # the repository variable AWS_DEPLOY_ENABLED is "true". While it is unset or
 # not "true", no production deployment is created.
 #
-# Deploy flow (docs: ../docs/architecture/aws-eks.md, "Deploy path"):
+# Deploy flow (workspace docs/architecture/aws-eks.md, "Deploy path"):
 #   1. Build a linux/arm64 image on a native arm64 runner and push it to ECR
 #      with the git SHA as the tag. ECR tags are immutable, so there is no `latest`.
 #   2. Commit the new SHA to image.tag in portfolio-gitops. Argo CD deploys it.
@@ -14,7 +14,7 @@ name: Pipeline
 # workflow_dispatch has two modes, chosen by exactly one input:
 #   - image_tag: redeploys an image that already exists in ECR (rollback).
 #     Steps 1 and 3 run as on a push, but the build is skipped.
-#   - bootstrap: first deploy only (runbook: ../docs/runbooks/rollback.md,
+#   - bootstrap: first deploy only (workspace docs/runbooks/rollback.md,
 #     "First deploy"). Builds the dispatched main commit if needed, sets image.tag
 #     in portfolio-gitops, and skips the wait, the smoke test and the revert. It
 #     is refused unless image.tag in portfolio-gitops is still empty.
@@ -206,7 +206,7 @@ jobs:
             exit 1
           fi
           if [ "$MODE" != "bootstrap" ] && [ -z "$CURRENT_TAG" ]; then
-            echo "::error::image.tag is still empty in portfolio-gitops. Run the Pipeline with bootstrap = true first (runbook: ../docs/runbooks/cluster-operations.md, Bootstrap)."
+            echo "::error::image.tag is still empty in portfolio-gitops. Run the Pipeline with bootstrap = true first (workspace docs/runbooks/cluster-operations.md, Bootstrap)."
             exit 1
           fi
           echo "mode $MODE matches image.tag '${CURRENT_TAG}'"
@@ -319,5 +319,5 @@ jobs:
       - name: Report a failed first deploy with no previous tag
         if: (failure() || cancelled()) && steps.gitops.outcome == 'success' && steps.previous.outputs.tag == ''
         run: |
-          echo "::error::no previous tag to restore in portfolio-gitops (first deploy). The new tag stays live; manual action is needed. See ../docs/runbooks/rollback.md"
+          echo "::error::no previous tag to restore in portfolio-gitops (first deploy). The new tag stays live; manual action is needed. See workspace docs/runbooks/rollback.md"
           exit 1

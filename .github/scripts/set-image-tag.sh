@@ -3,7 +3,7 @@
 # Usage: set-image-tag.sh <40-char-sha> <commit subject>
 #        set-image-tag.sh --read    print the current image.tag (no change, no push)
 # Env:   GITOPS_DIR    checkout of portfolio-gitops (git identity already set)
-#        SOURCE_REPO   source repository (owner/name), for the Argocd-reference-commit-* trailers (ADR 0007)
+#        SOURCE_REPO   source repository (owner/name), for the Argocd-reference-commit-* trailers (ADR 0008)
 set -euo pipefail
 
 file="charts/portfolio-web/values-prod.yaml"

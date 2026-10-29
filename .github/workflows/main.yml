@@ -162,6 +162,8 @@ jobs:
           private-key: ${{ secrets.GITOPS_APP_PRIVATE_KEY }}
           owner: ${{ github.repository_owner }}
           repositories: portfolio-gitops
+          # Pushing the image tag needs Contents write and nothing else.
+          permission-contents: write
 
       - name: Checkout portfolio-gitops
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1

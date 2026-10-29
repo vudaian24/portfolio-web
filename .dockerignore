@@ -33,3 +33,6 @@ playwright
 .eslintrc*
 .prettierrc*
 jest.config*
+# Checkout of portfolio-gitops made by the deploy job; its .git/config holds the App token.
+gitops
+**/.git

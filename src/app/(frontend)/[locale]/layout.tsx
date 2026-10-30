@@ -77,11 +77,11 @@ export default async function LocaleLayout({ params, children }: LayoutProps) {
             <MotionProvider>
               <div className="relative min-h-screen">
                 <div
-                  className="pointer-events-none fixed inset-0 z-0 opacity-[0.25]"
+                  className="pointer-events-none fixed inset-0 z-0 opacity-40"
                   aria-hidden
                 >
-                  <div className="absolute -left-1/4 top-0 h-[min(70vh,520px)] w-[min(70vw,520px)] rounded-full bg-brand-muted blur-3xl" />
-                  <div className="absolute bottom-0 right-0 h-[min(50vh,400px)] w-[min(60vw,480px)] rounded-full bg-brand-subtle blur-3xl" />
+                  <div className="absolute -left-1/4 top-0 h-[min(70vh,520px)] w-[min(70vw,520px)] rounded-full bg-brand/25 blur-3xl" />
+                  <div className="absolute bottom-0 right-0 h-[min(50vh,400px)] w-[min(60vw,480px)] rounded-full bg-brand-light/20 blur-3xl" />
                 </div>
                 <Navbar />
                 <main className="relative z-10 pt-[4.5rem] md:pt-24">

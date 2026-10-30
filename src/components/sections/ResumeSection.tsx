@@ -8,8 +8,7 @@ export default async function ResumeSection() {
     eyebrow: t("eyebrow"),
     title: t("title"),
     description: t("description"),
-    buttonFullstack: t("buttonFullstack"),
-    buttonDevops: t("buttonDevops"),
+    button: t("button"),
   };
 
   return <ResumeSectionClient content={content} />;

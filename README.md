@@ -66,7 +66,7 @@ src/
   lib/                   contact schema, utilities, animation helpers, types
   locales/               en.json and vi.json (UI strings)
   middleware.ts          next-intl middleware
-public/                  avatar, CV PDFs, static assets
+public/                  avatar, the DevOps CV (cv.pdf), static assets
 docs/superpowers/        dated plans and specs for the CV redesign
 ```
 

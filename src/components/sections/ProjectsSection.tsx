@@ -13,6 +13,7 @@ export default async function ProjectsSection() {
     description: t("description"),
     approach: t("approach"),
     noPublicLink: t("noPublicLink"),
+    viewCaseStudy: t("viewCaseStudy"),
     items: PROJECTS.map((project) => ({
       id: project.id,
       href: project.href,

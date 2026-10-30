@@ -1,91 +1,97 @@
 @import "tailwindcss";
 
-/* Engineer studio — cool ink surfaces, single steel/teal accent */
+/* Cloud blue — cool surfaces, a single saturated blue accent */
 :root {
   color-scheme: light;
-  --background: oklch(0.985 0.008 220);
-  --foreground: oklch(0.2 0.02 240);
+  --background: oklch(0.985 0.006 250);
+  --foreground: oklch(0.21 0.03 260);
   --card: oklch(1 0 0);
-  --card-foreground: oklch(0.2 0.02 240);
+  --card-foreground: oklch(0.21 0.03 260);
   --popover: oklch(1 0 0);
-  --popover-foreground: oklch(0.2 0.02 240);
-  --primary: oklch(0.22 0.03 240);
-  --primary-foreground: oklch(0.985 0.008 220);
-  --secondary: oklch(0.96 0.01 220);
-  --secondary-foreground: oklch(0.22 0.03 240);
-  --muted: oklch(0.94 0.01 220);
-  --muted-foreground: oklch(0.45 0.02 240);
-  --accent: oklch(0.94 0.015 220);
-  --accent-foreground: oklch(0.22 0.03 240);
+  --popover-foreground: oklch(0.21 0.03 260);
+  --primary: oklch(0.52 0.2 260);
+  --primary-foreground: oklch(0.99 0.005 250);
+  --secondary: oklch(0.96 0.012 250);
+  --secondary-foreground: oklch(0.24 0.04 260);
+  --muted: oklch(0.95 0.01 250);
+  --muted-foreground: oklch(0.47 0.03 258);
+  --accent: oklch(0.94 0.025 255);
+  --accent-foreground: oklch(0.24 0.04 260);
   --destructive: oklch(0.55 0.22 25);
   --destructive-foreground: oklch(0.985 0 0);
-  --border: oklch(0.9 0.01 220);
-  --input: oklch(0.9 0.01 220);
-  --ring: oklch(0.55 0.08 220);
-  --radius: 0.75rem;
+  --border: oklch(0.9 0.015 252);
+  --input: oklch(0.9 0.015 252);
+  --ring: oklch(0.58 0.18 258);
+  --radius: 0.85rem;
 
-  --brand: oklch(0.48 0.09 220);
-  --brand-foreground: oklch(0.99 0.01 220);
-  --brand-muted: oklch(0.48 0.09 220 / 0.12);
-  --brand-subtle: oklch(0.48 0.09 220 / 0.06);
+  --brand: oklch(0.53 0.2 260);
+  --brand-strong: oklch(0.45 0.21 264);
+  --brand-light: oklch(0.66 0.16 232);
+  --brand-foreground: oklch(0.99 0.005 250);
+  --brand-muted: oklch(0.53 0.2 260 / 0.13);
+  --brand-subtle: oklch(0.53 0.2 260 / 0.06);
+  --brand-glow: oklch(0.58 0.2 258 / 0.35);
 
-  --text-primary: oklch(0.2 0.02 240);
-  --text-secondary: oklch(0.42 0.02 240);
-  --text-muted: oklch(0.55 0.015 240);
+  --text-primary: oklch(0.21 0.03 260);
+  --text-secondary: oklch(0.42 0.03 258);
+  --text-muted: oklch(0.56 0.02 255);
 
-  --surface: oklch(0.97 0.008 220);
+  --surface: oklch(0.97 0.01 250);
   --surface-elevated: oklch(1 0 0);
-  --grid-dot: oklch(0.5 0.02 220 / 0.1);
+  --grid-dot: oklch(0.5 0.08 258 / 0.12);
 
-  --accent-green: oklch(0.55 0.17 150);
-  --accent-teal: oklch(0.55 0.1 195);
-  --accent-blue: oklch(0.5 0.1 250);
+  --accent-green: oklch(0.58 0.16 155);
+  --accent-teal: oklch(0.6 0.11 210);
+  --accent-blue: oklch(0.53 0.2 260);
   --accent-orange: oklch(0.65 0.18 55);
 
-  --success: oklch(0.55 0.17 150);
+  --success: oklch(0.58 0.16 155);
   --warning: oklch(0.75 0.15 85);
-  --info: oklch(0.55 0.1 195);
+  --info: oklch(0.6 0.13 235);
   --error: oklch(0.55 0.22 25);
 }
 
 .dark {
   color-scheme: dark;
-  --background: oklch(0.15 0.02 240);
-  --foreground: oklch(0.96 0.01 220);
-  --card: oklch(0.18 0.02 240);
-  --card-foreground: oklch(0.96 0.01 220);
-  --popover: oklch(0.18 0.02 240);
-  --popover-foreground: oklch(0.96 0.01 220);
-  --primary: oklch(0.96 0.01 220);
-  --primary-foreground: oklch(0.18 0.02 240);
-  --secondary: oklch(0.24 0.025 240);
-  --secondary-foreground: oklch(0.96 0.01 220);
-  --muted: oklch(0.24 0.025 240);
-  --muted-foreground: oklch(0.68 0.02 220);
-  --accent: oklch(0.24 0.03 240);
-  --accent-foreground: oklch(0.96 0.01 220);
-  --destructive: oklch(0.5 0.2 25);
+  --background: oklch(0.15 0.03 262);
+  --foreground: oklch(0.96 0.01 250);
+  --card: oklch(0.19 0.035 262);
+  --card-foreground: oklch(0.96 0.01 250);
+  --popover: oklch(0.19 0.035 262);
+  --popover-foreground: oklch(0.96 0.01 250);
+  --primary: oklch(0.7 0.15 255);
+  --primary-foreground: oklch(0.15 0.03 262);
+  --secondary: oklch(0.24 0.04 262);
+  --secondary-foreground: oklch(0.96 0.01 250);
+  --muted: oklch(0.24 0.04 262);
+  --muted-foreground: oklch(0.72 0.03 252);
+  --accent: oklch(0.26 0.05 262);
+  --accent-foreground: oklch(0.96 0.01 250);
+  --destructive: oklch(0.6 0.2 25);
   --destructive-foreground: oklch(0.96 0 0);
-  --border: oklch(0.28 0.025 240);
-  --input: oklch(0.28 0.025 240);
-  --ring: oklch(0.7 0.08 220);
+  --border: oklch(0.3 0.04 262);
+  --input: oklch(0.3 0.04 262);
+  --ring: oklch(0.7 0.15 255);
 
-  --brand: oklch(0.72 0.08 220);
-  --brand-foreground: oklch(0.15 0.02 240);
-  --brand-muted: oklch(0.72 0.08 220 / 0.18);
-  --brand-subtle: oklch(0.72 0.08 220 / 0.08);
+  --brand: oklch(0.7 0.15 255);
+  --brand-strong: oklch(0.62 0.19 262);
+  --brand-light: oklch(0.8 0.12 225);
+  --brand-foreground: oklch(0.14 0.03 262);
+  --brand-muted: oklch(0.7 0.15 255 / 0.18);
+  --brand-subtle: oklch(0.7 0.15 255 / 0.08);
+  --brand-glow: oklch(0.68 0.17 258 / 0.4);
 
-  --text-primary: oklch(0.96 0.01 220);
-  --text-secondary: oklch(0.72 0.02 220);
-  --text-muted: oklch(0.55 0.015 220);
+  --text-primary: oklch(0.96 0.01 250);
+  --text-secondary: oklch(0.76 0.03 252);
+  --text-muted: oklch(0.6 0.025 255);
 
-  --surface: oklch(0.2 0.02 240);
-  --surface-elevated: oklch(0.22 0.025 240);
-  --grid-dot: oklch(0.85 0.02 220 / 0.07);
+  --surface: oklch(0.19 0.035 262);
+  --surface-elevated: oklch(0.22 0.04 262);
+  --grid-dot: oklch(0.85 0.06 255 / 0.08);
 
-  --accent-green: oklch(0.72 0.16 150);
-  --accent-teal: oklch(0.7 0.1 195);
-  --accent-blue: oklch(0.72 0.1 250);
+  --accent-green: oklch(0.74 0.15 155);
+  --accent-teal: oklch(0.75 0.11 210);
+  --accent-blue: oklch(0.7 0.15 255);
   --accent-orange: oklch(0.78 0.16 75);
 }
 
@@ -110,6 +116,8 @@
   --color-input: var(--input);
   --color-ring: var(--ring);
   --color-brand: var(--brand);
+  --color-brand-strong: var(--brand-strong);
+  --color-brand-light: var(--brand-light);
   --color-brand-foreground: var(--brand-foreground);
   --color-brand-muted: var(--brand-muted);
   --color-brand-subtle: var(--brand-subtle);
@@ -169,11 +177,186 @@ body::before {
   opacity: 0.5;
 }
 
+/* Animated blue gradient for display text */
 .text-gradient-brand {
+  background-image: linear-gradient(
+    100deg,
+    var(--brand-strong) 0%,
+    var(--brand) 35%,
+    var(--brand-light) 60%,
+    var(--brand) 85%,
+    var(--brand-strong) 100%
+  );
+  background-size: 220% auto;
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  animation: gradient-pan 7s linear infinite;
+}
+
+@keyframes gradient-pan {
+  to {
+    background-position: -220% center;
+  }
+}
+
+/* Blinking terminal caret */
+.caret::after {
+  content: "";
+  display: inline-block;
+  width: 0.55ch;
+  height: 1em;
+  margin-left: 2px;
+  vertical-align: -0.12em;
+  background: currentColor;
+  animation: caret-blink 1s steps(1) infinite;
+}
+
+@keyframes caret-blink {
+  50% {
+    opacity: 0;
+  }
+}
+
+/* Buttons: lift, glow and a light sweep on hover */
+.btn {
+  @apply relative isolate inline-flex h-12 items-center justify-center gap-2 overflow-hidden rounded-xl px-6 text-sm font-semibold whitespace-nowrap;
+  font-family: var(--font-outfit), ui-sans-serif, system-ui, sans-serif;
+  transition:
+    transform 0.25s cubic-bezier(0.22, 1, 0.36, 1),
+    box-shadow 0.25s ease,
+    border-color 0.25s ease,
+    color 0.25s ease,
+    background-color 0.25s ease;
+}
+
+.btn:hover {
+  transform: translateY(-2px);
+}
+
+.btn:active {
+  transform: translateY(0) scale(0.98);
+}
+
+.btn:focus-visible {
+  @apply outline-none ring-2 ring-ring ring-offset-2 ring-offset-background;
+}
+
+.btn:disabled {
+  @apply cursor-not-allowed opacity-50;
+  transform: none;
+}
+
+.btn .btn-icon {
+  transition: transform 0.25s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.btn:hover .btn-icon {
+  transform: translateX(3px);
+}
+
+.btn:hover .btn-icon-up {
+  transform: translate(2px, -2px);
+}
+
+.btn:hover .btn-icon-down {
+  transform: translateY(2px);
+}
+
+.btn-primary {
+  color: var(--brand-foreground);
+  background-image: linear-gradient(
+    135deg,
+    var(--brand-strong),
+    var(--brand) 55%,
+    var(--brand-light)
+  );
+  box-shadow: 0 6px 18px -8px var(--brand-glow);
+}
+
+.btn-primary::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: linear-gradient(
+    110deg,
+    transparent 20%,
+    oklch(1 0 0 / 0.35) 50%,
+    transparent 80%
+  );
+  transform: translateX(-120%);
+  transition: transform 0.7s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.btn-primary:hover {
+  box-shadow: 0 14px 30px -10px var(--brand-glow);
+}
+
+.btn-primary:hover::before {
+  transform: translateX(120%);
+}
+
+.btn-outline {
+  @apply border border-border text-foreground;
+  background-color: color-mix(
+    in oklch,
+    var(--surface-elevated) 70%,
+    transparent
+  );
+}
+
+.btn-outline::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: var(--brand-muted);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.35s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.btn-outline:hover {
+  border-color: color-mix(in oklch, var(--brand) 55%, transparent);
   color: var(--brand);
-  background: none;
-  -webkit-background-clip: unset;
-  background-clip: unset;
+  box-shadow: 0 10px 24px -14px var(--brand-glow);
+}
+
+.btn-outline:hover::before {
+  transform: scaleX(1);
+}
+
+.btn-sm {
+  @apply h-10 rounded-lg px-4;
+}
+
+/* Cards: border lights up and the card lifts on hover */
+.card-glow {
+  @apply relative rounded-2xl border border-border bg-surface-elevated/70 backdrop-blur-sm;
+  transition:
+    transform 0.35s cubic-bezier(0.22, 1, 0.36, 1),
+    border-color 0.35s ease,
+    box-shadow 0.35s ease;
+}
+
+.card-glow:hover {
+  transform: translateY(-4px);
+  border-color: color-mix(in oklch, var(--brand) 45%, transparent);
+  box-shadow: 0 20px 40px -24px var(--brand-glow);
+}
+
+/* Underline that grows from the left on hover */
+.link-underline {
+  background-image: linear-gradient(currentColor, currentColor);
+  background-size: 0% 1px;
+  background-position: 0 100%;
+  background-repeat: no-repeat;
+  transition: background-size 0.3s ease;
+}
+
+.link-underline:hover {
+  background-size: 100% 1px;
 }
 
 /* Section rhythm */

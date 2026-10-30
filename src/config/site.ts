@@ -26,7 +26,7 @@ export const SECTION_IDS = {
 
 export type SectionId = (typeof SECTION_IDS)[keyof typeof SECTION_IDS];
 
-/** Matches homepage scroll order (featured is not in nav) */
+/** Matches homepage scroll order */
 export const NAV_ITEMS = [
   { href: `#${SECTION_IDS.home}`, labelKey: "home" as const, icon: Home },
   {
@@ -79,44 +79,43 @@ export const SOCIAL_LINKS = [
 
 export const SKILL_GROUPS = [
   {
-    id: "languages",
-    keys: ["typescript", "javascript", "sql"],
+    id: "containers",
+    keys: ["kubernetes", "helm", "argocd", "kubectl", "docker", "compose"],
   },
   {
-    id: "frontend",
-    keys: ["nextjs", "react", "vue", "tailwind", "shadcn", "vite"],
+    id: "cicd",
+    keys: ["githubActions", "gitlabCi", "jenkins", "liquibase"],
   },
   {
-    id: "backend",
-    keys: ["nestjs", "node", "express", "openapi", "socketio", "langchain"],
-  },
-  {
-    id: "data",
-    keys: ["postgresql", "mongodb", "mysql", "redis"],
+    id: "iac",
+    keys: ["terraform", "bash", "python", "jq"],
   },
   {
     id: "cloud",
     keys: [
-      "aws",
-      "terraform",
-      "docker",
-      "nginx",
-      "githubActions",
-      "linux",
-      "grafana",
+      "eks",
+      "ecsFargate",
+      "vpc",
+      "aurora",
+      "elasticache",
+      "cloudfrontWaf",
+      "sqsSes",
+      "iam",
+      "secretsManager",
+      "cloudflare",
     ],
   },
   {
-    id: "practices",
-    keys: [
-      "scrum",
-      "gitflow",
-      "codeReview",
-      "jira",
-      "postman",
-      "figma",
-      "turborepo",
-    ],
+    id: "linux",
+    keys: ["linux", "systemd", "nginx", "proxmox"],
+  },
+  {
+    id: "observability",
+    keys: ["prometheus", "grafana", "cloudwatch"],
+  },
+  {
+    id: "data",
+    keys: ["postgresql", "mysql", "mongodb", "redis"],
   },
 ] as const;
 
@@ -127,17 +126,9 @@ export const SKILL_KEYS = SKILL_GROUPS.flatMap((g) => [
   ...g.keys,
 ]) as unknown as readonly SkillKey[];
 
-export const PROJECT_IDS = [
-  "kotae",
-  "starlive",
-  "ercBooking",
-  "hrm",
-  "portfolio",
-] as const;
+export const PROJECT_IDS = ["portfolio", "ercBooking", "kotae"] as const;
 
 export type ProjectId = (typeof PROJECT_IDS)[number];
-
-export const FEATURED_PROJECT_ID: ProjectId = "kotae";
 
 export function projectAnchorId(id: ProjectId) {
   return `project-${id}`;
@@ -157,64 +148,50 @@ export type ProjectConfig = {
 
 export const PROJECTS: readonly ProjectConfig[] = [
   {
-    id: "kotae",
-    href: "https://kotae.ai/",
+    id: "portfolio",
+    href: "https://github.com/vudaian24/portfolio-web",
     external: true,
     tags: [
-      "Next.js",
-      "Nest.js",
-      "TypeScript",
-      "MongoDB",
-      "LangChain",
-      "OpenAI",
-      "AWS",
-    ],
-  },
-  {
-    id: "starlive",
-    tags: [
-      "Next.js",
-      "Nest.js",
-      "TypeScript",
-      "PostgreSQL",
-      "Redis",
-      "Tencent RTC",
-      "AWS",
+      "Amazon EKS",
+      "Terraform",
+      "Argo CD",
+      "Helm",
+      "Cloudflare",
+      "GitHub Actions",
+      "Prometheus",
     ],
   },
   {
     id: "ercBooking",
     tags: [
-      "React",
-      "Nest.js",
-      "TypeScript",
       "Terraform",
-      "AWS",
-      "PostgreSQL",
+      "ECS Fargate",
+      "Aurora PostgreSQL",
+      "ElastiCache",
+      "CloudFront + WAF",
+      "SQS / SES",
       "GitHub Actions",
+      "Liquibase",
     ],
   },
   {
-    id: "hrm",
-    tags: ["Vue 3", "TypeScript", "Nest.js", "MySQL"],
-  },
-  {
-    id: "portfolio",
-    href: "https://github.com/vudaian24/portfolio-web",
+    id: "kotae",
+    href: "https://kotae.ai/",
     external: true,
     tags: [
-      "Next.js",
-      "TypeScript",
+      "Kubernetes",
+      "Helm",
       "Docker",
-      "Nginx",
+      "kubectl",
+      "AWS Bedrock",
+      "Terraform",
       "GitHub Actions",
-      "Telegram",
     ],
   },
 ] as const;
 
+/** DevOps CV, the only CV the site offers */
 export const CV_PATH = "/cv.pdf";
-export const CV_DEVOPS_PATH = "/cv-devops.pdf";
 
 export const CONTACT_API_PATH = "/web-api/contact";
 
@@ -234,16 +211,17 @@ export const EXPERIENCE_ITEMS: readonly ExperienceConfig[] = [
     id: "softwareEngineer",
     current: true,
     tags: [
-      "Next.js",
-      "Nest.js",
-      "TypeScript",
-      "AWS",
+      "Kubernetes",
+      "Helm",
       "Terraform",
+      "AWS",
+      "Jenkins",
+      "GitLab CI",
       "GitHub Actions",
+      "Bash",
     ],
   },
   {
     id: "softwareIntern",
-    tags: ["Vue 3", "TypeScript", "Nest.js", "MongoDB"],
   },
 ] as const;

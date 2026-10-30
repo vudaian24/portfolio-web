@@ -68,7 +68,7 @@ export default function ExperienceSectionClient({
           )}
         </div>
 
-        <ol className="flex flex-col gap-10">
+        <ol className="flex flex-col gap-8">
           {content.items.map((item, index) => (
             <m.li
               key={item.id}
@@ -80,7 +80,7 @@ export default function ExperienceSectionClient({
               className="relative"
             >
               <span
-                className="absolute -left-8 top-1.5 flex h-3.5 w-3.5 items-center justify-center md:-left-10"
+                className="absolute -left-8 top-8 flex h-3.5 w-3.5 items-center justify-center md:-left-10"
                 aria-hidden
               >
                 {item.current ? (
@@ -103,13 +103,13 @@ export default function ExperienceSectionClient({
                 )}
               </span>
 
-              <div className="pb-1">
+              <div className="card-glow p-6 md:p-8">
                 <div className="flex flex-wrap items-center gap-x-3 gap-y-1">
                   <h3 className="font-display text-lg font-semibold text-foreground md:text-xl">
                     {item.role}
                   </h3>
                   {item.current ? (
-                    <span className="inline-flex items-center rounded-md bg-brand-muted/60 px-2.5 py-0.5 text-xs font-medium text-brand">
+                    <span className="inline-flex items-center rounded-full bg-brand-muted px-2.5 py-0.5 text-xs font-medium text-brand">
                       {content.current}
                     </span>
                   ) : null}
@@ -121,7 +121,7 @@ export default function ExperienceSectionClient({
                   <span aria-hidden>•</span>
                   <span>{item.period}</span>
                 </div>
-                <ul className="mt-4 list-disc space-y-2 pl-5 text-sm leading-relaxed text-muted-foreground md:text-base">
+                <ul className="mt-4 list-disc space-y-2 pl-5 text-sm marker:text-brand leading-relaxed text-muted-foreground md:text-base">
                   {item.bullets.map((bullet, bi) => (
                     <m.li
                       key={bullet.slice(0, 48)}
@@ -142,7 +142,7 @@ export default function ExperienceSectionClient({
                   <ul className="mt-5 flex flex-wrap gap-2">
                     {item.tags.map((tag) => (
                       <li key={tag}>
-                        <span className="inline-flex items-center rounded-md border border-border/80 bg-background/80 px-2.5 py-1 text-xs font-medium text-foreground">
+                        <span className="inline-flex items-center rounded-full border border-brand/20 bg-brand-subtle px-3 py-1 text-xs font-medium text-brand">
                           {tag}
                         </span>
                       </li>

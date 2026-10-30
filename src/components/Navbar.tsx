@@ -57,7 +57,7 @@ export default function Navbar() {
         >
           <Link
             href="/"
-            className="font-display text-lg font-semibold tracking-tight text-foreground transition-colors hover:text-brand md:text-xl"
+            className="font-display text-gradient-brand text-lg font-semibold tracking-tight transition-opacity hover:opacity-80 md:text-xl"
           >
             {t("brand")}
           </Link>

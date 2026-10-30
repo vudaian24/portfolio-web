@@ -11,6 +11,7 @@ export default async function AboutSection() {
     description: t("description"),
     cta: t("cta"),
     skillsTitle: t("skillsTitle"),
+    stats: t.raw("stats") as AboutContent["stats"],
     groups: SKILL_GROUPS.map((group) => ({
       id: group.id,
       label: t(`groups.${group.id}`),

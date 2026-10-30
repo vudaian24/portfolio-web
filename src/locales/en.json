@@ -2,7 +2,7 @@
   "Common": {
     "Metadata": {
       "title": "Dai An | Portfolio",
-      "description": "Dai An — full-stack software engineer shipping production web apps in TypeScript, Next.js, and Nest.js, with AWS DevOps. Explore featured projects, experience, and get in touch."
+      "description": "Dai An — DevOps engineer running containerized workloads on Kubernetes and AWS, with Terraform infrastructure and CI/CD pipelines in Jenkins, GitLab CI and GitHub Actions."
     },
     "Languages": {
       "vi": "Tiếng Việt",
@@ -27,74 +27,97 @@
   "HomePage": {
     "HeroSection": {
       "brand": "Dai An",
-      "eyebrow": "Full-stack Software Engineer · Web · Cloud & DevOps",
-      "title": "Shipping production web products end to end",
-      "description": "Full-stack engineer with 2.5 years in TypeScript, Next.js, and Nest.js — and primary DevOps on client work (Terraform, Docker, GitHub Actions, AWS). I deliver features across AI/RAG, real-time streaming, and scheduling products with overseas partners in English.",
+      "eyebrow": "DevOps Engineer · Cloud & Infrastructure",
+      "title": "Building and running the infrastructure that ships software",
+      "focusPrefix": "Hands-on with",
+      "focus": [
+        "Kubernetes & Helm",
+        "Terraform on AWS",
+        "CI/CD pipelines",
+        "GitOps with Argo CD"
+      ],
+      "description": "DevOps engineer with 2+ years delivering and operating containerized workloads on managed cloud and self-managed Linux. I own Terraform infrastructure, Kubernetes deployments and delivery pipelines for client products, working with overseas teams in English.",
+      "availability": "Open to DevOps and platform roles",
       "ctaProjects": "View projects",
       "ctaContact": "Get in touch",
-      "ctaResume": "Open CV",
+      "ctaResume": "Download CV",
       "photoAlt": "Portrait of Dai An"
-    },
-    "FeaturedWork": {
-      "eyebrow": "Featured",
-      "title": "Selected highlight",
-      "cta": "Jump to project",
-      "live": "Visit live site"
     },
     "AboutSection": {
       "eyebrow": "Introduction",
       "title": "About Me",
-      "description": "Full-stack software engineer with 2.5 years shipping production web applications in TypeScript, Next.js, and Nest.js, and primary DevOps engineer on client projects (Terraform, Docker, GitHub Actions, AWS). Delivered features end-to-end on three concurrent client products—an AI/RAG chatbot, real-time streaming with per-minute billing, and clinic scheduling—in teams of 5–15 engineers, working directly with overseas product owners and designers in English.",
-      "cta": "See selected work",
-      "skillsTitle": "Tech Skills",
+      "description": "DevOps engineer with 2+ years delivering and operating containerized workloads across managed cloud and self-managed Linux. I operate the Kubernetes and Helm deployment of a production LLM-backed service across four environments, own a multi-tenant AWS platform built from 22 reusable Terraform modules, and build delivery pipelines in Jenkins, GitLab CI and GitHub Actions. I also support development and release teams through build and deployment failures, and write the runbooks they follow.",
+      "cta": "See the projects",
+      "skillsTitle": "Tech skills",
+      "stats": [
+        {
+          "value": "2+",
+          "label": "years in DevOps and infrastructure"
+        },
+        {
+          "value": "151",
+          "label": "Terraform resources in 22 reusable modules"
+        },
+        {
+          "value": "4",
+          "label": "Kubernetes environments operated with Helm"
+        },
+        {
+          "value": "3",
+          "label": "CI systems: Jenkins, GitLab CI, GitHub Actions"
+        }
+      ],
       "groups": {
-        "languages": "Languages",
-        "frontend": "Frontend",
-        "backend": "Backend",
-        "data": "Databases & Cache",
-        "cloud": "Cloud & DevOps",
-        "practices": "Practices & Tools"
+        "containers": "Containers & Orchestration",
+        "cicd": "CI/CD",
+        "iac": "Infrastructure as Code & Scripting",
+        "cloud": "Cloud (AWS) & Edge",
+        "linux": "Linux & On-Premises",
+        "observability": "Monitoring & Observability",
+        "data": "Databases"
       },
       "skills": {
-        "typescript": "TypeScript",
-        "javascript": "JavaScript",
-        "sql": "SQL",
-        "nextjs": "Next.js",
-        "react": "React",
-        "vue": "Vue 3",
-        "tailwind": "Tailwind CSS",
-        "shadcn": "Shadcn UI",
-        "vite": "Vite",
-        "nestjs": "Nest.js",
-        "node": "Node.js",
-        "express": "Express.js",
-        "openapi": "REST/OpenAPI",
-        "socketio": "Socket.io",
-        "langchain": "LangChain",
-        "postgresql": "PostgreSQL",
-        "mongodb": "MongoDB",
-        "mysql": "MySQL",
-        "redis": "Redis",
-        "aws": "AWS",
-        "terraform": "Terraform",
+        "kubernetes": "Kubernetes",
+        "helm": "Helm",
+        "argocd": "Argo CD",
+        "kubectl": "kubectl",
         "docker": "Docker",
-        "nginx": "Nginx",
+        "compose": "Docker Compose",
         "githubActions": "GitHub Actions",
+        "gitlabCi": "GitLab CI",
+        "jenkins": "Jenkins",
+        "liquibase": "Liquibase",
+        "terraform": "Terraform",
+        "bash": "Bash",
+        "python": "Python",
+        "jq": "jq",
+        "eks": "EKS",
+        "ecsFargate": "ECS Fargate",
+        "vpc": "VPC",
+        "aurora": "Aurora",
+        "elasticache": "ElastiCache",
+        "cloudfrontWaf": "CloudFront / WAF",
+        "sqsSes": "SQS / SES",
+        "iam": "IAM",
+        "secretsManager": "Secrets Manager",
+        "cloudflare": "Cloudflare",
         "linux": "Linux",
+        "systemd": "systemd",
+        "nginx": "Nginx",
+        "proxmox": "Proxmox (VM/LXC)",
+        "prometheus": "Prometheus",
         "grafana": "Grafana",
-        "scrum": "Agile Scrum",
-        "gitflow": "Gitflow",
-        "codeReview": "Code Review",
-        "jira": "Jira",
-        "postman": "Postman",
-        "figma": "Figma",
-        "turborepo": "Turborepo"
+        "cloudwatch": "CloudWatch",
+        "postgresql": "PostgreSQL",
+        "mysql": "MySQL",
+        "mongodb": "MongoDB",
+        "redis": "Redis"
       }
     },
     "ContactSection": {
       "eyebrow": "Contact",
       "title": "Get in touch",
-      "description": "Open to full-time or contract roles and to project collaboration. Send a message — I usually reply within 24–48 hours.",
+      "description": "Open to full-time or contract DevOps, platform and cloud infrastructure roles. Send a message and I usually reply within 24–48 hours.",
       "form": {
         "name": "Your name",
         "email": "Your email",
@@ -118,27 +141,26 @@
     },
     "ResumeSection": {
       "eyebrow": "Resume",
-      "title": "CV",
-      "description": "A concise overview of experience, skills, and selected work — aligned with this site.",
-      "buttonFullstack": "Full-Stack CV",
-      "buttonDevops": "DevOps CV"
+      "title": "DevOps CV",
+      "description": "Experience, infrastructure projects and skills on one page, in line with this site.",
+      "button": "Download CV"
     },
     "ExperienceSection": {
       "eyebrow": "Experience",
       "title": "Work Journey",
-      "description": "Milestones from shipping client products and owning DevOps delivery.",
+      "description": "Owning infrastructure and delivery pipelines for client products.",
       "current": "Present",
       "items": {
         "softwareEngineer": {
-          "role": "Software Engineer",
+          "role": "Software Engineer — DevOps & Infrastructure",
           "company": "Tokyo Tech Lab Viet Nam",
           "period": "Oct 2024 — Present",
           "bullets": [
-            "Promoted from intern within six months; now deliver features end-to-end on three concurrent client products in teams of 5–15 engineers, from technical design through code review to AWS release.",
-            "Serve as primary DevOps engineer across client work, standardizing Terraform infrastructure-as-code and GitHub Actions pipelines into reusable templates now shared across client projects and environments.",
-            "Eliminated a recurring class of frontend–backend integration defects by introducing type-safe API contracts generated from OpenAPI as a team-wide standard.",
-            "Uphold release quality through Gitflow code review, and own the architecture documentation that shortened new-joiner ramp-up.",
-            "Work directly with overseas product owners and designers in English, turning business requirements into sprint-level technical plans."
+            "Primary DevOps and infrastructure engineer across three concurrent client products: own the infrastructure and delivery pipelines of a multi-tenant clinic-booking platform, and support releases and environments for Kotae (AI chatbot) and StarLive (real-time streaming) in teams of 14–15.",
+            "Built and maintained delivery pipelines across three CI systems: Jenkins (Jenkinsfile pipelines for container build and publishing behind test and quality gates, plus administration of agents, credentials and plugins), GitLab CI and GitHub Actions.",
+            "Restructured an internal HR platform's GitHub Actions CI into reusable workflow_call components gated on lint and type-check, replacing a workflow_run setup that silently skipped every pull request's first run.",
+            "Closed the gap between local, CI and production by replacing MinIO with LocalStack so tests hit the same S3 API as the deployed service, and enforced commit and pull-request conventions as an automated gate.",
+            "Wrote Bash automation for deployment, migration and environment provisioning, served as first-line support on build and deployment failures from pipeline and container logs to root cause, and wrote the runbooks used to onboard new client environments."
           ]
         },
         "softwareIntern": {
@@ -146,8 +168,8 @@
           "company": "Tokyo Tech Lab Viet Nam",
           "period": "Apr 2024 — Oct 2024",
           "bullets": [
-            "Built Gitman, an internal Git repository management tool, from scratch with Vue.js, TypeScript, Nest.js, and MongoDB, and released it for company-wide internal use.",
-            "Shipped Vue 3 and TypeScript workflow features into the production HRM platform as one of 20 engineers, then moved onto client-facing product work at the end of the internship."
+            "Built Gitman, an internal Git repository management tool, from the first commit to a company-wide release as the sole developer.",
+            "Moved onto client product work at the end of the internship and was promoted to Software Engineer after six months."
           ]
         }
       }
@@ -175,74 +197,53 @@
     "Projects": {
       "eyebrow": "Selected work",
       "title": "Projects",
-      "description": "Full write-ups from client and personal work — context, ownership, and what shipped.",
-      "viewDetail": "View Details →",
-      "viewCaseStudy": "View case study →",
+      "description": "Infrastructure and delivery work from client and personal projects: context, ownership and what shipped.",
+      "viewDetail": "View details",
+      "viewCaseStudy": "View case study",
       "live": "Live site",
       "repo": "Repository",
       "approach": "What I did",
       "noPublicLink": "Client project — no public link",
       "items": {
-        "kotae": {
-          "title": "Kotae — AI Chatbot Platform",
-          "period": "Aug 2024 – Present",
-          "role": "Full-stack Developer / DevOps",
-          "team": "Tokyo Tech Lab · team of 14",
-          "summary": "AI-powered chatbot SaaS for SME customer support, combining RAG-based knowledge Q&A with omnichannel messaging.",
+        "portfolio": {
+          "title": "Portfolio Platform on Amazon EKS",
+          "period": "Sep 2025 – Present",
+          "role": "DevOps Engineer",
+          "team": "Solo project",
+          "summary": "This site, run as a production platform: Amazon EKS behind Cloudflare, built and operated across three repositories for the app, the Terraform infrastructure and the Argo CD GitOps configuration.",
           "bullets": [
-            "Owned end-to-end delivery from early product stages across Nest.js APIs, Next.js admin/embed UI, and AWS/GitOps (Docker/ECR, Helm, Terraform Cognito/S3).",
-            "Built Nest.js chat/Socket.io session flows and Redis/Bull jobs for analytics aggregation and email on MongoDB + OpenAI/LangChain.",
-            "Shipped Next.js chatbot configuration, knowledge-base training workflows, history/analytics dashboards, and an embeddable widget with WordPress publish flows."
-          ]
-        },
-        "starlive": {
-          "title": "StarLive — Live Streaming Platform",
-          "period": "Jul 2026 – Present",
-          "role": "Frontend Developer",
-          "team": "Tokyo Tech Lab · team of 15",
-          "summary": "Paid live-streaming and 1:1 video-call platform with real-time per-minute billing and cross-app RTC integration.",
-          "bullets": [
-            "Built the admin live-monitoring console with multi-room Tencent TRTC playback, IM chat logs, viewer lists, and moderator actions (force kick/end/premium), shared across admin and production apps via a Turborepo package.",
-            "Implemented recording review and livestream session analytics UIs—playback/detail with tags and comments, session stats, timeline charts, and consumption rankings.",
-            "Delivered agency production-fee settlement workflows with bulk confirm/success-fail actions and EN/JA localization.",
-            "Led Turborepo monorepo migration of the admin frontend (Next.js), extracting shared packages and aligning Docker/CI for workspace builds."
+            "Containerized the app with a multi-stage Dockerfile (non-root user, health check) and built arm64 images for a Graviton node.",
+            "Defined the AWS and Cloudflare stack in Terraform: VPC, a one-node EKS cluster with a private API endpoint, ECR, SSM Parameter Store and EKS Pod Identity, with the Cloudflare proxy in front of an ALB that accepts traffic from Cloudflare only.",
+            "Ran the cluster as GitOps with Argo CD ApplicationSets and Helm charts: AWS Load Balancer Controller, External Secrets, HPA autoscaling, and Prometheus with remote write to Grafana Cloud dashboards.",
+            "Automated releases with GitHub Actions: an arm64 image pushed to Amazon ECR through OIDC with no long-lived keys, an approved image tag committed to the GitOps repo, a smoke test and an automatic revert on failure.",
+            "Kept the run within a fixed AWS credit budget: a scheduled Lambda scales the node to zero at night and on Sundays, backed by AWS Budgets and CloudWatch alarms by email."
           ]
         },
         "ercBooking": {
-          "title": "ERC Booking — Clinic Scheduling",
-          "period": "Jan 2026 – May 2026",
-          "role": "Full-stack Developer / DevOps",
+          "title": "ERC Booking — Infrastructure & CI/CD",
+          "period": "Jan 2026 – Jun 2026",
+          "role": "DevOps Engineer",
           "team": "Tokyo Tech Lab · team of 5",
-          "summary": "Clinic scheduling platform with RBAC user management, automated multi-env infrastructure, and multilingual notification pipeline.",
+          "summary": "Clinic scheduling platform built for per-tenant isolation; sole owner of its infrastructure and deployment pipelines.",
           "bullets": [
-            "Led DevOps for a clinic booking platform, provisioning multi-env AWS infrastructure with Terraform (VPC, ECS Fargate, Aurora, Redis, ALB, CloudFront, S3, SQS, SES).",
-            "Owned GitHub Actions CI/CD for S3/CloudFront frontend deploys, ECR/ECS backend rollouts, and Liquibase database migrations across environments.",
-            "Built Nest.js RBAC APIs and React admin features for user/role management with OpenAPI-synced clients.",
-            "Implemented an async email pipeline via SQS workers and SES SMTP with multilingual Handlebars templates."
+            "Owned the Terraform codebase end to end: 151 resources across 22 reusable modules (VPC, ECS Fargate, Aurora PostgreSQL, ElastiCache, CloudFront + WAF, SQS, SES, Backup, Bastion).",
+            "Designed the per-tenant isolation model so each new clinic gets a dedicated production environment from the same modules, then stood up the first production tenant alongside shared dev and staging.",
+            "Built the GitHub Actions rollout pipeline that patches ECS task definitions, registers revisions and rolls out API and worker services with stability checks, old-revision cleanup and path-based selective builds.",
+            "Engineered a branch-gated Liquibase migration pipeline that runs as a one-off ECS Fargate task per environment and links straight to CloudWatch Logs for failure triage.",
+            "Authored the S3 + CloudFront release pipeline for the frontend, with immutable cache-control on hashed assets and targeted invalidation for zero-downtime deploys."
           ]
         },
-        "hrm": {
-          "title": "HRM Platform — Human Resources",
-          "period": "Apr 2024 – Oct 2024",
-          "role": "Front-end Developer",
-          "team": "Tokyo Tech Lab · team of 20",
-          "summary": "Internal human resource management system covering employee, timekeeping, and HR workflow modules.",
+        "kotae": {
+          "title": "Kotae — AI Chatbot Platform",
+          "period": "Aug 2024 – Present",
+          "role": "DevOps Engineer",
+          "team": "Tokyo Tech Lab · team of 14",
+          "summary": "Production AI workload serving 10+ SME customers, with RAG retrieval and generation backed by AWS Bedrock, OpenAI and Gemini, operated on Kubernetes across four environments.",
           "bullets": [
-            "Built and refined HR workflows UI with Vue 3 and TypeScript for a production system serving 50+ internal employees, improving usability and stability.",
-            "Implemented Nest.js APIs and MySQL data layer for core HR modules.",
-            "Fixed bugs and iterated UX based on internal user feedback."
-          ]
-        },
-        "portfolio": {
-          "title": "Personal Portfolio",
-          "period": "Sep 2025 – Present",
-          "role": "Independent Developer",
-          "team": "Solo project",
-          "summary": "Multilingual personal portfolio showcasing projects and professional profile, with automated CI/CD and infrastructure as code.",
-          "bullets": [
-            "Built a multilingual portfolio (EN/VI) with Next.js, TypeScript, Tailwind CSS, next-intl, and Motion.",
-            "Defined the AWS infrastructure in Terraform (VPC, ECR, IAM OIDC role for GitHub Actions, SSM parameters) and the Kubernetes layer as Argo CD GitOps with Helm charts, External Secrets and Prometheus/Grafana.",
-            "Automated CI/CD with GitHub Actions: lint, type-check and build on every pull request; arm64 images pushed to Amazon ECR through OIDC and promoted via the GitOps repo with smoke tests and automatic rollback; Telegram alerts for contact form submissions."
+            "Operated the Helm-managed Kubernetes deployment across four isolated environments (development, test, demo, production): release rollouts and rollbacks through Helm against per-environment values, autoscaling and ingress configuration.",
+            "Kept memory-heavy, bursty AI workloads stable under live traffic: diagnosed OOMKilled containers, CrashLoopBackOff and failing probes with kubectl, and tuned resource requests, limits and probe thresholds.",
+            "Hardened the RAG ingestion path against server-side request forgery with private-IP and redirect checks around the crawler, covered by unit tests.",
+            "Contributed Terraform for the service's Cognito and S3 resources, and unblocked developers when builds and rollouts failed on the shared multi-environment pipeline."
           ]
         }
       }
@@ -250,7 +251,8 @@
   },
   "footer": {
     "brand": "Dai An",
-    "about": "Full-stack software engineer shipping production web apps in TypeScript, Next.js, and Nest.js — with Terraform, Docker, and AWS CI/CD behind them.",
+    "about": "DevOps engineer building and operating cloud infrastructure, Kubernetes platforms and delivery pipelines.",
+    "builtWith": "Running on Amazon EKS behind Cloudflare",
     "links": {
       "title": "Quick Links",
       "about": "About",

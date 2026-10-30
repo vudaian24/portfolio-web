@@ -1,3 +1,4 @@
+import { ArrowLeft, ArrowUpRight } from "lucide-react";
 import { notFound } from "next/navigation";
 import { getTranslations, setRequestLocale } from "next-intl/server";
 import { Link } from "@/i18n/navigation";
@@ -41,13 +42,17 @@ export default async function ProjectCaseStudyPage({ params }: Props) {
         <CaseStudyBlock>
           <Link
             href={{ pathname: "/", hash: "projects" }}
-            className="text-sm font-medium text-brand underline-offset-4 hover:underline"
+            className="group inline-flex items-center gap-2 text-sm font-medium text-brand"
           >
-            {t("back")}
+            <ArrowLeft
+              className="h-4 w-4 transition-transform duration-300 group-hover:-translate-x-1"
+              aria-hidden
+            />
+            <span className="link-underline">{t("back")}</span>
           </Link>
         </CaseStudyBlock>
         <CaseStudyBlock>
-          <h1 className="font-display mt-6 text-3xl font-semibold md:text-5xl">
+          <h1 className="font-display text-gradient-brand mt-6 pb-1 text-3xl font-semibold md:text-5xl">
             {tp(`items.${id}.title`)}
           </h1>
           <p className="mt-4 max-w-3xl text-lg text-muted-foreground">
@@ -55,7 +60,7 @@ export default async function ProjectCaseStudyPage({ params }: Props) {
           </p>
         </CaseStudyBlock>
         <CaseStudyBlock>
-          <dl className="mt-8 grid gap-4 sm:grid-cols-3">
+          <dl className="card-glow mt-8 grid gap-4 p-6 sm:grid-cols-3">
             <div>
               <dt className="text-xs uppercase tracking-wider text-text-muted">
                 {t("role")}
@@ -81,7 +86,7 @@ export default async function ProjectCaseStudyPage({ params }: Props) {
             <h2 className="font-display text-xl font-semibold">
               {t("approach")}
             </h2>
-            <ul className="mt-4 list-disc space-y-2 pl-5 text-muted-foreground">
+            <ul className="mt-4 list-disc space-y-2 pl-5 text-muted-foreground marker:text-brand">
               {bullets.map((b) => (
                 <li key={b.slice(0, 32)}>{b}</li>
               ))}
@@ -98,7 +103,7 @@ export default async function ProjectCaseStudyPage({ params }: Props) {
                 {project.tags.map((tag) => (
                   <li
                     key={tag}
-                    className="rounded-md border border-border px-2.5 py-1 text-sm"
+                    className="rounded-full border border-brand/20 bg-brand-subtle px-3 py-1 text-sm text-brand"
                   >
                     {tag}
                   </li>
@@ -114,9 +119,13 @@ export default async function ProjectCaseStudyPage({ params }: Props) {
                 href={project.href}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex h-11 items-center rounded-lg bg-brand px-6 text-sm font-semibold text-brand-foreground transition-opacity hover:opacity-90"
+                className="btn btn-primary"
               >
                 {project.id === "portfolio" ? t("repo") : t("live")}
+                <ArrowUpRight
+                  className="btn-icon btn-icon-up h-4 w-4"
+                  aria-hidden
+                />
               </a>
             ) : (
               <p className="text-sm text-text-muted">{t("noPublicLink")}</p>

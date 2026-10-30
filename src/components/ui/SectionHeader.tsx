@@ -3,7 +3,9 @@
 import { useReducedMotion } from "motion/react";
 import * as m from "motion/react-m";
 import { cn } from "@/lib/utils";
+import { AnimatedText } from "./AnimatedText";
 import {
+  EASE_OUT,
   sectionHeaderContainer,
   sectionHeaderItem,
   viewportOnce,
@@ -26,27 +28,52 @@ export function SectionHeader({
 }: SectionHeaderProps) {
   const centered = align === "center";
   const reduceMotion = useReducedMotion();
+  const item = reduceMotion ? undefined : sectionHeaderItem;
 
-  const body = (
-    <>
+  return (
+    <m.div
+      className={cn(centered ? "text-center" : "max-w-2xl", className)}
+      initial={reduceMotion ? false : "hidden"}
+      whileInView="visible"
+      viewport={viewportOnce}
+      variants={reduceMotion ? undefined : sectionHeaderContainer}
+    >
       <m.p
-        variants={reduceMotion ? undefined : sectionHeaderItem}
-        className="section-label mb-3"
+        variants={item}
+        className={cn(
+          "section-label mb-3 flex items-center gap-3",
+          centered && "justify-center",
+        )}
       >
+        <m.span
+          aria-hidden
+          className="h-px w-8 origin-left bg-brand"
+          variants={
+            reduceMotion
+              ? undefined
+              : {
+                  hidden: { scaleX: 0 },
+                  visible: {
+                    scaleX: 1,
+                    transition: { duration: 0.6, ease: EASE_OUT },
+                  },
+                }
+          }
+        />
         {eyebrow}
       </m.p>
-      <m.h2
-        variants={reduceMotion ? undefined : sectionHeaderItem}
+      <AnimatedText
+        as="h2"
+        text={title}
+        delay={0.1}
         className={cn(
           "font-display text-3xl font-semibold tracking-tight text-foreground md:text-4xl",
           centered && "mx-auto",
         )}
-      >
-        {title}
-      </m.h2>
+      />
       {description ? (
         <m.p
-          variants={reduceMotion ? undefined : sectionHeaderItem}
+          variants={item}
           className={cn(
             "mt-4 text-base text-muted-foreground md:text-lg",
             centered && "mx-auto max-w-xl",
@@ -55,54 +82,6 @@ export function SectionHeader({
           {description}
         </m.p>
       ) : null}
-    </>
-  );
-
-  if (reduceMotion) {
-    return (
-      <div
-        className={cn(
-          centered && "text-center",
-          !centered && "max-w-2xl",
-          className,
-        )}
-      >
-        <p className="section-label mb-3">{eyebrow}</p>
-        <h2
-          className={cn(
-            "font-display text-3xl font-semibold tracking-tight text-foreground md:text-4xl",
-            centered && "mx-auto",
-          )}
-        >
-          {title}
-        </h2>
-        {description ? (
-          <p
-            className={cn(
-              "mt-4 text-base text-muted-foreground md:text-lg",
-              centered && "mx-auto max-w-xl",
-            )}
-          >
-            {description}
-          </p>
-        ) : null}
-      </div>
-    );
-  }
-
-  return (
-    <m.div
-      className={cn(
-        centered && "text-center",
-        !centered && "max-w-2xl",
-        className,
-      )}
-      initial="hidden"
-      whileInView="visible"
-      viewport={viewportOnce}
-      variants={sectionHeaderContainer}
-    >
-      {body}
     </m.div>
   );
 }

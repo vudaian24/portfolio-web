@@ -71,7 +71,7 @@ export default function Footer() {
 
         <div className="mt-12 border-t border-border/80 pt-8 text-center text-xs text-text-muted sm:text-left">
           <p>
-            © {new Date().getFullYear()} {t("brand")} &mdash; Built with Next.js
+            © {new Date().getFullYear()} {t("brand")} &mdash; {t("builtWith")}
           </p>
         </div>
       </div>

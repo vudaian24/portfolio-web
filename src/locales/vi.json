@@ -2,7 +2,7 @@
   "Common": {
     "Metadata": {
       "title": "Đại An | Portfolio",
-      "description": "Đại An — full-stack software engineer phát triển web app production bằng TypeScript, Next.js và Nest.js, kèm DevOps trên AWS. Xem dự án, kinh nghiệm và liên hệ."
+      "description": "Đại An — DevOps engineer vận hành workload container trên Kubernetes và AWS, với hạ tầng Terraform và pipeline CI/CD trên Jenkins, GitLab CI và GitHub Actions."
     },
     "Languages": {
       "vi": "Tiếng Việt",
@@ -27,74 +27,97 @@
   "HomePage": {
     "HeroSection": {
       "brand": "Đại An",
-      "eyebrow": "Full-stack Software Engineer · Web · Cloud & DevOps",
-      "title": "Đưa sản phẩm web production ra thực tế end-to-end",
-      "description": "Full-stack engineer với 2,5 năm làm TypeScript, Next.js và Nest.js — đồng thời là DevOps chính trên dự án khách hàng (Terraform, Docker, GitHub Actions, AWS). Mình giao tính năng trên các sản phẩm AI/RAG, streaming realtime và đặt lịch, làm việc tiếng Anh với đối tác nước ngoài.",
+      "eyebrow": "DevOps Engineer · Cloud & Infrastructure",
+      "title": "Xây dựng và vận hành hạ tầng đưa phần mềm lên production",
+      "focusPrefix": "Thực chiến với",
+      "focus": [
+        "Kubernetes & Helm",
+        "Terraform trên AWS",
+        "Pipeline CI/CD",
+        "GitOps với Argo CD"
+      ],
+      "description": "DevOps engineer với hơn 2 năm triển khai và vận hành workload container trên cloud và Linux tự quản lý. Mình phụ trách hạ tầng Terraform, triển khai Kubernetes và pipeline delivery cho các sản phẩm khách hàng, làm việc trực tiếp với team nước ngoài bằng tiếng Anh.",
+      "availability": "Sẵn sàng cho vị trí DevOps / Platform",
       "ctaProjects": "Xem dự án",
       "ctaContact": "Liên hệ",
-      "ctaResume": "Mở CV",
+      "ctaResume": "Tải CV",
       "photoAlt": "Ảnh đại diện của Đại An"
-    },
-    "FeaturedWork": {
-      "eyebrow": "Nổi bật",
-      "title": "Dự án tiêu biểu",
-      "cta": "Xem trong Projects",
-      "live": "Xem live site"
     },
     "AboutSection": {
       "eyebrow": "Giới thiệu",
       "title": "Về mình",
-      "description": "Full-stack software engineer với 2,5 năm phát triển web app production bằng TypeScript, Next.js và Nest.js, đồng thời là DevOps engineer chính trên dự án khách hàng (Terraform, Docker, GitHub Actions, AWS). Đã giao tính năng end-to-end trên ba sản phẩm khách hàng song song — chatbot AI/RAG, streaming realtime tính phí theo phút, và đặt lịch phòng khám — trong đội 5–15 engineer, làm việc trực tiếp với product owner và designer nước ngoài bằng tiếng Anh.",
-      "cta": "Xem dự án tiêu biểu",
-      "skillsTitle": "Công nghệ mình dùng",
+      "description": "DevOps engineer với hơn 2 năm triển khai và vận hành workload container trên cloud và Linux tự quản lý. Mình vận hành bản triển khai Kubernetes và Helm của một dịch vụ AI dùng LLM trên bốn môi trường, phụ trách một nền tảng AWS multi-tenant dựng từ 22 module Terraform tái sử dụng, và xây pipeline delivery trên Jenkins, GitLab CI và GitHub Actions. Mình cũng hỗ trợ team phát triển và release khi build hay deploy lỗi, và viết runbook cho mọi người làm theo.",
+      "cta": "Xem các dự án",
+      "skillsTitle": "Kỹ năng",
+      "stats": [
+        {
+          "value": "2+",
+          "label": "năm làm DevOps và hạ tầng"
+        },
+        {
+          "value": "151",
+          "label": "resource Terraform trong 22 module tái sử dụng"
+        },
+        {
+          "value": "4",
+          "label": "môi trường Kubernetes vận hành bằng Helm"
+        },
+        {
+          "value": "3",
+          "label": "hệ thống CI: Jenkins, GitLab CI, GitHub Actions"
+        }
+      ],
       "groups": {
-        "languages": "Ngôn ngữ",
-        "frontend": "Frontend",
-        "backend": "Backend",
-        "data": "Database & Cache",
-        "cloud": "Cloud & DevOps",
-        "practices": "Thực hành & công cụ"
+        "containers": "Container & Orchestration",
+        "cicd": "CI/CD",
+        "iac": "Infrastructure as Code & Scripting",
+        "cloud": "Cloud (AWS) & Edge",
+        "linux": "Linux & On-Premises",
+        "observability": "Monitoring & Observability",
+        "data": "Cơ sở dữ liệu"
       },
       "skills": {
-        "typescript": "TypeScript",
-        "javascript": "JavaScript",
-        "sql": "SQL",
-        "nextjs": "Next.js",
-        "react": "React",
-        "vue": "Vue 3",
-        "tailwind": "Tailwind CSS",
-        "shadcn": "Shadcn UI",
-        "vite": "Vite",
-        "nestjs": "Nest.js",
-        "node": "Node.js",
-        "express": "Express.js",
-        "openapi": "REST/OpenAPI",
-        "socketio": "Socket.io",
-        "langchain": "LangChain",
-        "postgresql": "PostgreSQL",
-        "mongodb": "MongoDB",
-        "mysql": "MySQL",
-        "redis": "Redis",
-        "aws": "AWS",
-        "terraform": "Terraform",
+        "kubernetes": "Kubernetes",
+        "helm": "Helm",
+        "argocd": "Argo CD",
+        "kubectl": "kubectl",
         "docker": "Docker",
-        "nginx": "Nginx",
+        "compose": "Docker Compose",
         "githubActions": "GitHub Actions",
+        "gitlabCi": "GitLab CI",
+        "jenkins": "Jenkins",
+        "liquibase": "Liquibase",
+        "terraform": "Terraform",
+        "bash": "Bash",
+        "python": "Python",
+        "jq": "jq",
+        "eks": "EKS",
+        "ecsFargate": "ECS Fargate",
+        "vpc": "VPC",
+        "aurora": "Aurora",
+        "elasticache": "ElastiCache",
+        "cloudfrontWaf": "CloudFront / WAF",
+        "sqsSes": "SQS / SES",
+        "iam": "IAM",
+        "secretsManager": "Secrets Manager",
+        "cloudflare": "Cloudflare",
         "linux": "Linux",
+        "systemd": "systemd",
+        "nginx": "Nginx",
+        "proxmox": "Proxmox (VM/LXC)",
+        "prometheus": "Prometheus",
         "grafana": "Grafana",
-        "scrum": "Agile Scrum",
-        "gitflow": "Gitflow",
-        "codeReview": "Code Review",
-        "jira": "Jira",
-        "postman": "Postman",
-        "figma": "Figma",
-        "turborepo": "Turborepo"
+        "cloudwatch": "CloudWatch",
+        "postgresql": "PostgreSQL",
+        "mysql": "MySQL",
+        "mongodb": "MongoDB",
+        "redis": "Redis"
       }
     },
     "ContactSection": {
       "eyebrow": "Liên hệ",
       "title": "Kết nối",
-      "description": "Mình mở cho vị trí full-time/contract và cả hợp tác dự án. Gửi tin nhắn — thường phản hồi trong 24–48 giờ.",
+      "description": "Sẵn sàng cho vị trí DevOps, platform và hạ tầng cloud, full-time hoặc hợp đồng. Gửi tin nhắn, mình thường phản hồi trong 24–48 giờ.",
       "form": {
         "name": "Tên của bạn",
         "email": "Email của bạn",
@@ -117,28 +140,27 @@
       "note": "Thông tin chỉ dùng để phản hồi (không spam)."
     },
     "ResumeSection": {
-      "eyebrow": "Hồ sơ",
-      "title": "CV",
-      "description": "Tóm tắt kinh nghiệm, kỹ năng và dự án tiêu biểu — khớp với nội dung trên site.",
-      "buttonFullstack": "CV Full-Stack",
-      "buttonDevops": "CV DevOps"
+      "eyebrow": "CV",
+      "title": "CV DevOps",
+      "description": "Kinh nghiệm, dự án hạ tầng và kỹ năng trong một trang, khớp với nội dung trang này.",
+      "button": "Tải CV"
     },
     "ExperienceSection": {
       "eyebrow": "Kinh nghiệm",
       "title": "Hành trình làm việc",
-      "description": "Các mốc giao sản phẩm khách hàng và phụ trách DevOps.",
+      "description": "Phụ trách hạ tầng và pipeline delivery cho các sản phẩm khách hàng.",
       "current": "Hiện tại",
       "items": {
         "softwareEngineer": {
-          "role": "Software Engineer",
+          "role": "Software Engineer — DevOps & Infrastructure",
           "company": "Tokyo Tech Lab Viet Nam",
           "period": "10/2024 — Hiện tại",
           "bullets": [
-            "Được promote từ intern trong sáu tháng; hiện giao tính năng end-to-end trên ba sản phẩm khách hàng song song trong đội 5–15 engineer, từ thiết kế kỹ thuật qua code review đến release trên AWS.",
-            "Là DevOps engineer chính trên các dự án khách hàng, chuẩn hóa Terraform infrastructure-as-code và pipeline GitHub Actions thành template tái sử dụng giữa các dự án và môi trường.",
-            "Loại bỏ một lớp lỗi tích hợp frontend–backend lặp lại bằng việc đưa contract API type-safe sinh từ OpenAPI thành chuẩn dùng chung trong team.",
-            "Đảm bảo chất lượng release qua Gitflow code review, và sở hữu tài liệu kiến trúc giúp rút ngắn thời gian onboard thành viên mới.",
-            "Làm việc trực tiếp với product owner và designer nước ngoài bằng tiếng Anh, biến yêu cầu nghiệp vụ thành kế hoạch kỹ thuật theo sprint."
+            "Kỹ sư DevOps và hạ tầng chính trên ba sản phẩm khách hàng chạy song song: phụ trách hạ tầng và pipeline delivery của nền tảng đặt lịch phòng khám multi-tenant, hỗ trợ release và môi trường cho Kotae (AI chatbot) và StarLive (streaming thời gian thực) trong team 14–15 người.",
+            "Xây và duy trì pipeline delivery trên ba hệ thống CI: Jenkins (pipeline Jenkinsfile build và publish container sau các cổng test và chất lượng, kèm quản trị agent, credential và plugin), GitLab CI và GitHub Actions.",
+            "Tái cấu trúc CI GitHub Actions của nền tảng HR nội bộ thành các component workflow_call tái sử dụng, chặn bằng lint và type-check, thay cho cơ chế workflow_run vốn âm thầm bỏ qua lần chạy đầu của mọi pull request.",
+            "Thu hẹp khác biệt giữa local, CI và production bằng cách thay MinIO bằng LocalStack để test gọi cùng S3 API với dịch vụ thật, và biến quy ước commit, pull request thành cổng kiểm tra tự động.",
+            "Viết script Bash cho deploy, migration và cấp phát môi trường; hỗ trợ tuyến đầu khi build hay deploy lỗi, truy từ log pipeline và container đến nguyên nhân gốc; viết runbook để onboard môi trường khách hàng mới."
           ]
         },
         "softwareIntern": {
@@ -146,8 +168,8 @@
           "company": "Tokyo Tech Lab Viet Nam",
           "period": "04/2024 — 10/2024",
           "bullets": [
-            "Xây dựng Gitman — công cụ quản lý Git repository nội bộ — từ đầu với Vue.js, TypeScript, Nest.js và MongoDB, rồi phát hành dùng nội bộ toàn công ty.",
-            "Ship tính năng workflow Vue 3 và TypeScript vào nền tảng HRM production trong đội 20 engineer, sau đó chuyển sang làm sản phẩm hướng khách hàng khi kết thúc thực tập."
+            "Xây Gitman, công cụ quản lý Git repository nội bộ, từ commit đầu tiên đến khi phát hành toàn công ty, là developer duy nhất.",
+            "Chuyển sang làm sản phẩm khách hàng cuối kỳ thực tập và được lên Software Engineer sau sáu tháng."
           ]
         }
       }
@@ -175,74 +197,53 @@
     "Projects": {
       "eyebrow": "Dự án tiêu biểu",
       "title": "Dự án",
-      "description": "Toàn bộ case study từ công việc khách hàng và cá nhân — ngữ cảnh, phần mình sở hữu, và những gì đã ship.",
-      "viewDetail": "Xem chi tiết →",
-      "viewCaseStudy": "Xem case study →",
+      "description": "Công việc hạ tầng và delivery từ dự án khách hàng và cá nhân: bối cảnh, phần mình phụ trách và kết quả.",
+      "viewDetail": "Xem chi tiết",
+      "viewCaseStudy": "Xem case study",
       "live": "Live site",
       "repo": "Repository",
       "approach": "Việc mình làm",
       "noPublicLink": "Dự án khách hàng — không có link công khai",
       "items": {
-        "kotae": {
-          "title": "Kotae — Nền tảng AI Chatbot",
-          "period": "08/2024 – Hiện tại",
-          "role": "Full-stack Developer / DevOps",
-          "team": "Tokyo Tech Lab · đội 14 người",
-          "summary": "SaaS chatbot AI hỗ trợ khách hàng SME, kết hợp hỏi đáp tri thức RAG với nhắn tin đa kênh.",
+        "portfolio": {
+          "title": "Nền tảng Portfolio trên Amazon EKS",
+          "period": "09/2025 – Hiện tại",
+          "role": "DevOps Engineer",
+          "team": "Dự án cá nhân",
+          "summary": "Chính trang này, vận hành như một nền tảng production: Amazon EKS phía sau Cloudflare, xây dựng và vận hành qua ba repo cho ứng dụng, hạ tầng Terraform và cấu hình GitOps với Argo CD.",
           "bullets": [
-            "Sở hữu giao hàng end-to-end từ giai đoạn sớm: Nest.js API, Next.js admin/embed UI, và AWS/GitOps (Docker/ECR, Helm, Terraform Cognito/S3).",
-            "Xây flow chat/Socket.io trên Nest.js và job Redis/Bull cho analytics cùng email trên MongoDB + OpenAI/LangChain.",
-            "Ship cấu hình chatbot Next.js, luồng train knowledge base, dashboard lịch sử/analytics, và widget nhúng kèm publish WordPress."
-          ]
-        },
-        "starlive": {
-          "title": "StarLive — Nền tảng Live Streaming",
-          "period": "07/2026 – Hiện tại",
-          "role": "Frontend Developer",
-          "team": "Tokyo Tech Lab · đội 15 người",
-          "summary": "Nền tảng livestream và video call 1:1 trả phí với billing theo phút realtime và tích hợp RTC cross-app.",
-          "bullets": [
-            "Xây console giám sát live admin với phát lại multi-room Tencent TRTC, log chat IM, danh sách viewer và thao tác moderator (kick/end/premium), chia sẻ qua package Turborepo giữa admin và production.",
-            "Implement UI review recording và analytics phiên livestream — playback/chi tiết kèm tag/comment, thống kê phiên, biểu đồ timeline và xếp hạng tiêu thụ.",
-            "Giao luồng quyết toán phí sản xuất agency với bulk confirm/success-fail và localization EN/JA.",
-            "Dẫn migration Turborepo monorepo cho admin frontend (Next.js), tách shared package và căn Docker/CI cho workspace build."
+            "Đóng gói ứng dụng bằng Dockerfile multi-stage (user không phải root, health check) và build image arm64 cho node Graviton.",
+            "Định nghĩa hạ tầng AWS và Cloudflare bằng Terraform: VPC, cụm EKS một node với API endpoint private, ECR, SSM Parameter Store và EKS Pod Identity; Cloudflare proxy đứng trước ALB chỉ nhận traffic từ Cloudflare.",
+            "Vận hành cluster theo GitOps với Argo CD ApplicationSet và Helm chart: AWS Load Balancer Controller, External Secrets, autoscaling bằng HPA, và Prometheus remote write lên dashboard Grafana Cloud.",
+            "Tự động hóa release với GitHub Actions: đẩy image arm64 lên Amazon ECR qua OIDC không dùng key dài hạn, ghi image tag đã duyệt vào repo GitOps, smoke test và tự động revert khi lỗi.",
+            "Giữ chi phí trong ngân sách credit AWS cố định: Lambda theo lịch scale node về 0 vào ban đêm và Chủ nhật, kèm AWS Budgets và CloudWatch alarm gửi email."
           ]
         },
         "ercBooking": {
-          "title": "ERC Booking — Đặt lịch phòng khám",
-          "period": "01/2026 – 05/2026",
-          "role": "Full-stack Developer / DevOps",
-          "team": "Tokyo Tech Lab · đội 5 người",
-          "summary": "Nền tảng đặt lịch phòng khám với RBAC, hạ tầng đa môi trường tự động và pipeline thông báo đa ngôn ngữ.",
+          "title": "ERC Booking — Hạ tầng & CI/CD",
+          "period": "01/2026 – 06/2026",
+          "role": "DevOps Engineer",
+          "team": "Tokyo Tech Lab · team 5 người",
+          "summary": "Nền tảng đặt lịch phòng khám thiết kế cách ly theo từng tenant; một mình phụ trách hạ tầng và pipeline triển khai.",
           "bullets": [
-            "Dẫn DevOps cho nền tảng booking phòng khám, provision hạ tầng AWS đa môi trường bằng Terraform (VPC, ECS Fargate, Aurora, Redis, ALB, CloudFront, S3, SQS, SES).",
-            "Sở hữu CI/CD GitHub Actions cho deploy frontend S3/CloudFront, rollout backend ECR/ECS, và migration Liquibase qua các môi trường.",
-            "Xây API RBAC Nest.js và tính năng admin React cho quản lý user/role với client đồng bộ OpenAPI.",
-            "Implement pipeline email bất đồng bộ qua SQS worker và SES SMTP với template Handlebars đa ngôn ngữ."
+            "Phụ trách toàn bộ codebase Terraform: 151 resource trong 22 module tái sử dụng (VPC, ECS Fargate, Aurora PostgreSQL, ElastiCache, CloudFront + WAF, SQS, SES, Backup, Bastion).",
+            "Thiết kế mô hình cách ly theo tenant để mỗi phòng khám mới có môi trường production riêng từ cùng bộ module, rồi dựng tenant production đầu tiên bên cạnh dev và staging dùng chung.",
+            "Xây pipeline rollout bằng GitHub Actions: cập nhật ECS task definition, đăng ký revision và rollout service API, worker kèm kiểm tra ổn định, dọn revision cũ và build chọn lọc theo đường dẫn.",
+            "Xây pipeline migration Liquibase theo nhánh, chạy như một ECS Fargate task riêng cho từng môi trường và dẫn thẳng tới CloudWatch Logs khi cần điều tra lỗi.",
+            "Viết pipeline release S3 + CloudFront cho frontend, với cache-control immutable cho asset có hash và invalidation có chọn lọc để deploy không downtime."
           ]
         },
-        "hrm": {
-          "title": "HRM Platform — Quản trị nhân sự",
-          "period": "04/2024 – 10/2024",
-          "role": "Front-end Developer",
-          "team": "Tokyo Tech Lab · đội 20 người",
-          "summary": "Hệ thống nhân sự nội bộ gồm module nhân viên, chấm công và workflow HR.",
+        "kotae": {
+          "title": "Kotae — Nền tảng AI Chatbot",
+          "period": "08/2024 – Hiện tại",
+          "role": "DevOps Engineer",
+          "team": "Tokyo Tech Lab · team 14 người",
+          "summary": "Workload AI production phục vụ hơn 10 khách hàng SME, với truy xuất RAG và sinh câu trả lời dựa trên AWS Bedrock, OpenAI và Gemini, vận hành trên Kubernetes qua bốn môi trường.",
           "bullets": [
-            "Xây và tinh chỉnh UI workflow HR bằng Vue 3 và TypeScript cho hệ thống production phục vụ 50+ nhân sự nội bộ, cải thiện khả năng dùng và ổn định.",
-            "Implement API Nest.js và lớp dữ liệu MySQL cho các module HR cốt lõi.",
-            "Sửa bug và iterate UX dựa trên phản hồi người dùng nội bộ."
-          ]
-        },
-        "portfolio": {
-          "title": "Personal Portfolio",
-          "period": "09/2025 – Hiện tại",
-          "role": "Independent Developer",
-          "team": "Dự án cá nhân",
-          "summary": "Portfolio cá nhân đa ngôn ngữ giới thiệu dự án và hồ sơ nghề nghiệp, với CI/CD tự động và hạ tầng dưới dạng code.",
-          "bullets": [
-            "Xây portfolio đa ngôn ngữ (EN/VI) với Next.js, TypeScript, Tailwind CSS, next-intl và Motion.",
-            "Định nghĩa hạ tầng AWS bằng Terraform (VPC, ECR, IAM OIDC role cho GitHub Actions, SSM parameter) và tầng Kubernetes theo GitOps với Argo CD, Helm chart, External Secrets và Prometheus/Grafana.",
-            "Tự động hóa CI/CD với GitHub Actions: lint, type-check và build cho mỗi pull request; image arm64 đẩy lên Amazon ECR qua OIDC và triển khai qua repo GitOps kèm smoke test và tự động rollback; cảnh báo Telegram cho form liên hệ."
+            "Vận hành bản triển khai Kubernetes quản lý bằng Helm trên bốn môi trường tách biệt (development, test, demo, production): rollout và rollback qua Helm theo values từng môi trường, autoscaling và cấu hình ingress.",
+            "Giữ workload AI nặng bộ nhớ, tải dồn dập ổn định khi có traffic thật: chẩn đoán container bị OOMKilled, CrashLoopBackOff và probe lỗi bằng kubectl, rồi tinh chỉnh resource request, limit và ngưỡng probe.",
+            "Gia cố luồng nạp dữ liệu RAG chống server-side request forgery bằng kiểm tra IP private và redirect quanh crawler, có unit test đi kèm.",
+            "Đóng góp Terraform cho Cognito và S3 của dịch vụ, và gỡ vướng cho developer khi build hay rollout lỗi trên pipeline đa môi trường dùng chung."
           ]
         }
       }
@@ -250,7 +251,8 @@
   },
   "footer": {
     "brand": "Đại An",
-    "about": "Full-stack software engineer phát triển web app production bằng TypeScript, Next.js và Nest.js — cùng Terraform, Docker và CI/CD trên AWS.",
+    "about": "DevOps engineer xây dựng và vận hành hạ tầng cloud, nền tảng Kubernetes và pipeline delivery.",
+    "builtWith": "Chạy trên Amazon EKS phía sau Cloudflare",
     "links": {
       "title": "Liên kết",
       "about": "Giới thiệu",

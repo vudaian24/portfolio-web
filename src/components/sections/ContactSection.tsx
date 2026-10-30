@@ -75,7 +75,7 @@ export default function ContactSection() {
       </MotionReveal>
 
       <MotionReveal delay={0.06} className="mt-12">
-        <div className="rounded-2xl border border-border bg-surface-elevated/50 p-6 shadow-sm backdrop-blur-sm md:p-10">
+        <div className="rounded-3xl border border-brand/20 bg-surface-elevated/70 p-6 shadow-[0_24px_60px_-32px_var(--brand-glow)] backdrop-blur-sm md:p-10">
           <form onSubmit={handleSubmit(onSubmit)} className="space-y-5">
             <div className="space-y-2">
               <label
@@ -155,12 +155,10 @@ export default function ContactSection() {
             </div>
 
             <div className="flex flex-col gap-4 pt-2 sm:flex-row sm:items-center sm:justify-between">
-              <m.button
+              <button
                 type="submit"
                 disabled={isSubmitting}
-                whileHover={isSubmitting ? undefined : { scale: 1.02 }}
-                whileTap={isSubmitting ? undefined : { scale: 0.98 }}
-                className="font-display inline-flex h-12 w-full items-center justify-center gap-2 rounded-lg bg-brand px-8 text-sm font-semibold text-brand-foreground transition-opacity hover:opacity-90 disabled:cursor-not-allowed disabled:opacity-50 sm:w-auto"
+                className="btn btn-primary w-full px-8 sm:w-auto"
               >
                 {isSubmitting ? (
                   <svg className="h-5 w-5 animate-spin" viewBox="0 0 24 24">
@@ -180,10 +178,14 @@ export default function ContactSection() {
                     />
                   </svg>
                 ) : (
-                  <Send className="h-4 w-4" strokeWidth={2} aria-hidden />
+                  <Send
+                    className="btn-icon btn-icon-up h-4 w-4"
+                    strokeWidth={2}
+                    aria-hidden
+                  />
                 )}
                 {isSubmitting ? t("status.sending") : t("form.button")}
-              </m.button>
+              </button>
 
               <AnimatePresence mode="wait">
                 {submitStatus === "success" && (

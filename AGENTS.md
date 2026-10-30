@@ -41,7 +41,7 @@ Before reporting a change as done, run `yarn lint` and `yarn type-check`.
 - `src/components/` — `sections/` (page sections; many come as a server file plus a `*Client.tsx` pair), `ui/` (shared primitives), plus Navbar, Footer, ThemeToggle, LanguageSelector.
 - `src/config/site.ts` — site-level config.
 - `src/lib/` — `contact.ts` (zod schema, `escapeTelegramHtml`), `utils.ts`, `animation.ts`, `types.ts`.
-- `public/` — `avatar.jpg`, `cv.pdf`, `cv-devops.pdf`.
+- `public/` — `avatar.jpg`, `cv.pdf` (the DevOps CV; the deploy smoke test fetches `/cv.pdf`).
 - `docs/superpowers/` — dated plans and specs for the CV redesign.
 - `README.md` is the project overview: stack, commands, environment variable names, Docker, and deployment status. Keep it in sync when scripts, env vars, or deployment change.
 

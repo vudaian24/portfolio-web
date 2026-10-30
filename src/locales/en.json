@@ -222,7 +222,7 @@
         "ercBooking": {
           "title": "ERC Booking — Infrastructure & CI/CD",
           "period": "Jan 2026 – Jun 2026",
-          "role": "DevOps Engineer",
+          "role": "DevOps Engineer / Backend Developer",
           "team": "Tokyo Tech Lab · team of 5",
           "summary": "Clinic scheduling platform built for per-tenant isolation; sole owner of its infrastructure and deployment pipelines.",
           "bullets": [
@@ -236,7 +236,7 @@
         "kotae": {
           "title": "Kotae — AI Chatbot Platform",
           "period": "Aug 2024 – Present",
-          "role": "DevOps Engineer",
+          "role": "DevOps / Full-Stack Engineer",
           "team": "Tokyo Tech Lab · team of 14",
           "summary": "Production AI workload serving 10+ SME customers, with RAG retrieval and generation backed by AWS Bedrock, OpenAI and Gemini, operated on Kubernetes across four environments.",
           "bullets": [

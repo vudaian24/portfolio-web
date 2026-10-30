@@ -222,7 +222,7 @@
         "ercBooking": {
           "title": "ERC Booking — Hạ tầng & CI/CD",
           "period": "01/2026 – 06/2026",
-          "role": "DevOps Engineer",
+          "role": "DevOps Engineer / Backend Developer",
           "team": "Tokyo Tech Lab · team 5 người",
           "summary": "Nền tảng đặt lịch phòng khám thiết kế cách ly theo từng tenant; một mình phụ trách hạ tầng và pipeline triển khai.",
           "bullets": [
@@ -236,7 +236,7 @@
         "kotae": {
           "title": "Kotae — Nền tảng AI Chatbot",
           "period": "08/2024 – Hiện tại",
-          "role": "DevOps Engineer",
+          "role": "DevOps / Full-Stack Engineer",
           "team": "Tokyo Tech Lab · team 14 người",
           "summary": "Workload AI production phục vụ hơn 10 khách hàng SME, với truy xuất RAG và sinh câu trả lời dựa trên AWS Bedrock, OpenAI và Gemini, vận hành trên Kubernetes qua bốn môi trường.",
           "bullets": [

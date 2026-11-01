@@ -68,7 +68,7 @@ Pipeline lives in `.github/workflows/`. Production runs on EKS. The AWS deploy i
 
 ## Rules
 
-- Commit on `main` and push directly; do not open pull requests. Use conventional commits (`feat`, `fix`, `chore`, `docs`, `perf`).
+- Change `main` through a pull request: the ruleset `protect main` rejects direct pushes and force-pushes (ADR 0019 in the workspace repo). Work on a branch, open the pull request with a conventional-commit title (`feat`, `fix`, `chore`, `docs`, `perf`), read the `Pipeline` CI result, then `gh pr merge --squash --delete-branch`.
 - Never commit `.env*` files, tokens, or chat IDs. `.gitignore` covers `.env*` except `.env.example`.
 - Never commit `.next/`, `node_modules/`, or `*.tsbuildinfo`.
 - Keep `en.json` and `vi.json` key-identical. Add every new UI string to both files in the same change.

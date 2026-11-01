@@ -2,7 +2,7 @@
   "Common": {
     "Metadata": {
       "title": "Đại An | Portfolio",
-      "description": "Đại An — DevOps engineer vận hành workload container trên Kubernetes và AWS, với hạ tầng Terraform và pipeline CI/CD trên Jenkins, GitLab CI và GitHub Actions."
+      "description": "Đại An — DevOps engineer vận hành workload container trên AWS (ECS Fargate, EKS), với hạ tầng Terraform và pipeline triển khai trên GitHub Actions."
     },
     "Languages": {
       "vi": "Tiếng Việt",
@@ -36,7 +36,7 @@
         "Pipeline CI/CD",
         "GitOps với Argo CD"
       ],
-      "description": "DevOps engineer với hơn 2 năm triển khai và vận hành workload container trên cloud và Linux tự quản lý. Mình phụ trách hạ tầng Terraform, triển khai Kubernetes và pipeline delivery cho các sản phẩm khách hàng, làm việc trực tiếp với team nước ngoài bằng tiếng Anh.",
+      "description": "DevOps engineer với 2.5 năm triển khai và vận hành workload container trên AWS (ECS Fargate, EKS). Mình từng chịu trách nhiệm chính hạ tầng của một nền tảng đặt lịch nhiều phòng khám, hỗ trợ release một dịch vụ AI production trên EKS, và làm việc trực tiếp với product owner nước ngoài bằng tiếng Anh.",
       "availability": "Sẵn sàng cho vị trí DevOps / Platform",
       "ctaProjects": "Xem dự án",
       "ctaContact": "Liên hệ",
@@ -46,25 +46,25 @@
     "AboutSection": {
       "eyebrow": "Giới thiệu",
       "title": "Về mình",
-      "description": "DevOps engineer với hơn 2 năm triển khai và vận hành workload container trên cloud và Linux tự quản lý. Mình vận hành bản triển khai Kubernetes và Helm của một dịch vụ AI dùng LLM trên bốn môi trường, phụ trách một nền tảng AWS multi-tenant dựng từ 22 module Terraform tái sử dụng, và xây pipeline delivery trên Jenkins, GitLab CI và GitHub Actions. Mình cũng hỗ trợ team phát triển và release khi build hay deploy lỗi, và viết runbook cho mọi người làm theo.",
+      "description": "DevOps engineer với 2.5 năm kinh nghiệm (từ 04/2024) triển khai và vận hành workload container trên AWS (ECS Fargate, EKS), trước đó từng tự quản VPS Linux và homelab. Mình hỗ trợ release một dịch vụ AI dùng LLM ở production, triển khai bằng Argo CD và Helm trên EKS. Mình từng chịu trách nhiệm chính hạ tầng của một nền tảng AWS nhiều phòng khám, mỗi phòng khám một môi trường riêng — 151 resource Terraform trong 22 module tái sử dụng — với rollout container không downtime và migration database có kiểm soát. Mình xây pipeline triển khai trên GitHub Actions, từng duy trì pipeline Jenkins, và viết tài liệu cấp phát Terraform và onboarding khách hàng.",
       "cta": "Xem các dự án",
       "skillsTitle": "Kỹ năng",
       "stats": [
         {
-          "value": "2+",
-          "label": "năm làm DevOps và hạ tầng"
+          "value": "2.5",
+          "label": "năm làm DevOps và hạ tầng (từ 04/2024)"
         },
         {
           "value": "151",
           "label": "resource Terraform trong 22 module tái sử dụng"
         },
         {
-          "value": "4",
-          "label": "môi trường Kubernetes vận hành bằng Helm"
+          "value": "5",
+          "label": "Helm chart chạy qua GitOps với Argo CD"
         },
         {
-          "value": "3",
-          "label": "hệ thống CI: Jenkins, GitLab CI, GitHub Actions"
+          "value": "19",
+          "label": "bản ghi quyết định kiến trúc (ADR)"
         }
       ],
       "groups": {
@@ -72,7 +72,7 @@
         "cicd": "CI/CD",
         "iac": "Infrastructure as Code & Scripting",
         "cloud": "Cloud (AWS) & Edge",
-        "linux": "Linux & On-Premises",
+        "linux": "Linux & Homelab",
         "observability": "Monitoring & Observability",
         "data": "Cơ sở dữ liệu"
       },
@@ -84,7 +84,6 @@
         "docker": "Docker",
         "compose": "Docker Compose",
         "githubActions": "GitHub Actions",
-        "gitlabCi": "GitLab CI",
         "jenkins": "Jenkins",
         "liquibase": "Liquibase",
         "terraform": "Terraform",
@@ -104,9 +103,9 @@
         "linux": "Linux",
         "systemd": "systemd",
         "nginx": "Nginx",
-        "proxmox": "Proxmox (VM/LXC)",
+        "proxmox": "Proxmox (homelab)",
         "prometheus": "Prometheus",
-        "grafana": "Grafana",
+        "grafana": "Grafana Cloud",
         "cloudwatch": "CloudWatch",
         "postgresql": "PostgreSQL",
         "mysql": "MySQL",
@@ -142,13 +141,13 @@
     "ResumeSection": {
       "eyebrow": "CV",
       "title": "CV DevOps",
-      "description": "Kinh nghiệm, dự án hạ tầng và kỹ năng trong một trang, khớp với nội dung trang này.",
+      "description": "Kinh nghiệm, dự án hạ tầng và kỹ năng trong hai trang, khớp với nội dung trang này.",
       "button": "Tải CV"
     },
     "ExperienceSection": {
       "eyebrow": "Kinh nghiệm",
       "title": "Hành trình làm việc",
-      "description": "Phụ trách hạ tầng và pipeline delivery cho các sản phẩm khách hàng.",
+      "description": "Công việc DevOps, hạ tầng và release cho sản phẩm khách hàng và SaaS.",
       "current": "Hiện tại",
       "items": {
         "softwareEngineer": {
@@ -156,11 +155,11 @@
           "company": "Tokyo Tech Lab Viet Nam",
           "period": "10/2024 — Hiện tại",
           "bullets": [
-            "Kỹ sư DevOps và hạ tầng chính trên ba sản phẩm khách hàng chạy song song: phụ trách hạ tầng và pipeline delivery của nền tảng đặt lịch phòng khám multi-tenant, hỗ trợ release và môi trường cho Kotae (AI chatbot) và StarLive (streaming thời gian thực) trong team 14–15 người.",
-            "Xây và duy trì pipeline delivery trên ba hệ thống CI: Jenkins (pipeline Jenkinsfile build và publish container sau các cổng test và chất lượng, kèm quản trị agent, credential và plugin), GitLab CI và GitHub Actions.",
-            "Tái cấu trúc CI GitHub Actions của nền tảng HR nội bộ thành các component workflow_call tái sử dụng, chặn bằng lint và type-check, thay cho cơ chế workflow_run vốn âm thầm bỏ qua lần chạy đầu của mọi pull request.",
-            "Thu hẹp khác biệt giữa local, CI và production bằng cách thay MinIO bằng LocalStack để test gọi cùng S3 API với dịch vụ thật, và biến quy ước commit, pull request thành cổng kiểm tra tự động.",
-            "Viết script Bash cho deploy, migration và cấp phát môi trường; hỗ trợ tuyến đầu khi build hay deploy lỗi, truy từ log pipeline và container đến nguyên nhân gốc; viết runbook để onboard môi trường khách hàng mới."
+            "Làm DevOps và hạ tầng cho ba sản phẩm: chịu trách nhiệm chính (03–06/2026) về hạ tầng và pipeline triển khai của một nền tảng đặt lịch nhiều phòng khám cho khách hàng, hỗ trợ release và môi trường cho Kotae (SaaS AI chatbot của Tokyo Techies, được biệt phái) và StarLive (streaming thời gian thực, dự án khách hàng nhiều vendor) trong team 14–15 người, làm việc trực tiếp với product owner nước ngoài bằng tiếng Anh.",
+            "Xây pipeline triển khai trên GitHub Actions và duy trì các pipeline Jenkinsfile sẵn có trên Jenkins.",
+            "Thu hẹp khác biệt giữa local, CI và production của nền tảng đặt lịch phòng khám bằng cách thay MinIO bằng LocalStack, để test dùng cùng S3 API với dịch vụ đã triển khai.",
+            "Viết script Bash tự động hóa triển khai, migration và cấp phát môi trường.",
+            "Viết README Terraform và hướng dẫn onboarding phòng khám mới, dùng để cấp phát từng môi trường khách hàng."
           ]
         },
         "softwareIntern": {
@@ -169,7 +168,7 @@
           "period": "04/2024 — 10/2024",
           "bullets": [
             "Xây Gitman, công cụ quản lý Git repository nội bộ, từ commit đầu tiên đến khi phát hành toàn công ty, là developer duy nhất.",
-            "Chuyển sang làm sản phẩm khách hàng cuối kỳ thực tập và được lên Software Engineer sau sáu tháng."
+            "Phát triển tính năng workflow bằng Vue 3 và TypeScript cho nền tảng HRM dùng toàn công ty; những tháng cuối kỳ thực tập chuyển sang sản phẩm Kotae (biệt phái sang Tokyo Techies) và được lên Software Engineer sau sáu tháng."
           ]
         }
       }
@@ -197,7 +196,7 @@
     "Projects": {
       "eyebrow": "Dự án tiêu biểu",
       "title": "Dự án",
-      "description": "Công việc hạ tầng và delivery từ dự án khách hàng và cá nhân: bối cảnh, phần mình phụ trách và kết quả.",
+      "description": "Công việc hạ tầng và delivery từ dự án khách hàng, SaaS và cá nhân: bối cảnh, phần mình phụ trách và kết quả.",
       "viewDetail": "Xem chi tiết",
       "viewCaseStudy": "Xem case study",
       "live": "Live site",
@@ -207,43 +206,43 @@
       "items": {
         "portfolio": {
           "title": "Nền tảng Portfolio trên Amazon EKS",
-          "period": "09/2025 – Hiện tại",
-          "role": "DevOps Engineer",
+          "period": "2026",
+          "role": "Kỹ sư duy nhất — hạ tầng, GitOps, pipeline release và ứng dụng",
           "team": "Dự án cá nhân",
-          "summary": "Chính trang này, vận hành như một nền tảng production: Amazon EKS phía sau Cloudflare, xây dựng và vận hành qua ba repo cho ứng dụng, hạ tầng Terraform và cấu hình GitOps với Argo CD.",
+          "summary": "Website cá nhân chạy production trên cụm EKS một node sau Cloudflare, xây dựng trên ba repository public.",
           "bullets": [
-            "Đóng gói ứng dụng bằng Dockerfile multi-stage (user không phải root, health check) và build image arm64 cho node Graviton.",
-            "Định nghĩa hạ tầng AWS và Cloudflare bằng Terraform: VPC, cụm EKS một node với API endpoint private, ECR, SSM Parameter Store và EKS Pod Identity; Cloudflare proxy đứng trước ALB chỉ nhận traffic từ Cloudflare.",
-            "Vận hành cluster theo GitOps với Argo CD ApplicationSet và Helm chart: AWS Load Balancer Controller, External Secrets, autoscaling bằng HPA, và Prometheus remote write lên dashboard Grafana Cloud.",
-            "Tự động hóa release với GitHub Actions: đẩy image arm64 lên Amazon ECR qua OIDC không dùng key dài hạn, ghi image tag đã duyệt vào repo GitOps, smoke test và tự động revert khi lỗi.",
-            "Giữ chi phí trong ngân sách credit AWS cố định: Lambda theo lịch scale node về 0 vào ban đêm và Chủ nhật, kèm AWS Budgets và CloudWatch alarm gửi email."
+            "Cấp phát AWS và Cloudflare bằng Terraform (67 khối resource, 6 module): VPC, EKS với API private qua Session Manager, Pod Identity, ECR và security group chỉ nhận traffic từ Cloudflare cho ALB do controller tạo; CI chạy TFLint và Trivy.",
+            "Vận hành cluster theo GitOps: Argo CD ApplicationSet triển khai 5 Helm chart (Argo CD, Load Balancer Controller, External Secrets, Prometheus, ứng dụng kèm HPA), kiểm tra bằng kubeconform.",
+            "Tự động hóa release bằng GitHub Actions: OIDC vào AWS, image gắn tag SHA trong ECR có bước phê duyệt, commit tag vào GitOps, rồi kiểm tra phiên bản, smoke test và tự revert khi lỗi.",
+            "Đẩy 119 metric Prometheus đã lọc lên 18 dashboard Grafana Cloud upstream, kèm alarm CloudWatch khi node down và khi scheduler lỗi.",
+            "Viết 19 ADR và 7 runbook, lưu trong repository workspace private (cung cấp khi được yêu cầu)."
           ]
         },
         "ercBooking": {
-          "title": "ERC Booking — Hạ tầng & CI/CD",
-          "period": "01/2026 – 06/2026",
+          "title": "ERC Booking System — Hạ tầng & CI/CD",
+          "period": "03/2026 – 06/2026",
           "role": "DevOps Engineer / Backend Developer",
           "team": "Tokyo Tech Lab · team 5 người",
-          "summary": "Nền tảng đặt lịch phòng khám thiết kế cách ly theo từng tenant; một mình phụ trách hạ tầng và pipeline triển khai.",
+          "summary": "Nền tảng đặt lịch phòng khám, thiết kế cô lập theo từng tenant; chịu trách nhiệm chính về hạ tầng và CI/CD.",
           "bullets": [
-            "Phụ trách toàn bộ codebase Terraform: 151 resource trong 22 module tái sử dụng (VPC, ECS Fargate, Aurora PostgreSQL, ElastiCache, CloudFront + WAF, SQS, SES, Backup, Bastion).",
-            "Thiết kế mô hình cách ly theo tenant để mỗi phòng khám mới có môi trường production riêng từ cùng bộ module, rồi dựng tenant production đầu tiên bên cạnh dev và staging dùng chung.",
-            "Xây pipeline rollout bằng GitHub Actions: cập nhật ECS task definition, đăng ký revision và rollout service API, worker kèm kiểm tra ổn định, dọn revision cũ và build chọn lọc theo đường dẫn.",
-            "Xây pipeline migration Liquibase theo nhánh, chạy như một ECS Fargate task riêng cho từng môi trường và dẫn thẳng tới CloudWatch Logs khi cần điều tra lỗi.",
-            "Viết pipeline release S3 + CloudFront cho frontend, với cache-control immutable cho asset có hash và invalidation có chọn lọc để deploy không downtime."
+            "Chịu trách nhiệm chính codebase Terraform: 151 resource trong 22 module tái sử dụng (VPC, ECS Fargate, Aurora PostgreSQL, ElastiCache, CloudFront + WAF, SQS, SES, Backup); viết các module bastion, migration task, ECS scaling theo giờ làm việc, GitHub Actions IAM, Route 53, S3 frontend và SES SMTP.",
+            "Thiết kế template theo tenant để mỗi phòng khám mới có môi trường production riêng từ cùng bộ module — gồm một môi trường production mẫu và hướng dẫn onboarding.",
+            "Giảm chi phí lúc nhàn rỗi bằng scaling theo lịch giờ làm việc cho ECS API và worker, và môi trường dev chạy không cần NAT gateway.",
+            "Xây pipeline rollout GitHub Actions: patch ECS task definition, đăng ký revision, rollout service API và worker kèm kiểm tra ổn định, dọn revision cũ và build chọn lọc theo đường dẫn.",
+            "Xây pipeline migration Liquibase gắn theo nhánh, chạy dưới dạng ECS Fargate task một lần cho mỗi môi trường và tự tạo link CloudWatch Logs để truy vết lỗi.",
+            "Viết pipeline release S3 + CloudFront cho frontend, dùng cache-control immutable cho asset có hash và invalidation có chọn lọc để deploy SPA không downtime."
           ]
         },
         "kotae": {
-          "title": "Kotae — Nền tảng AI Chatbot",
+          "title": "Kotae — Nền tảng AI/RAG Chatbot",
           "period": "08/2024 – Hiện tại",
-          "role": "DevOps / Full-Stack Engineer",
-          "team": "Tokyo Tech Lab · team 14 người",
-          "summary": "Workload AI production phục vụ hơn 10 khách hàng SME, với truy xuất RAG và sinh câu trả lời dựa trên AWS Bedrock, OpenAI và Gemini, vận hành trên Kubernetes qua bốn môi trường.",
+          "role": "Full-Stack Engineer (release support)",
+          "team": "Tokyo Techies · team 14 người",
+          "summary": "SaaS AI chatbot chăm sóc khách hàng cho doanh nghiệp nhỏ: RAG trên knowledge base của khách hàng với AWS Bedrock, OpenAI và Gemini, chạy trên EKS (dev, test, production).",
           "bullets": [
-            "Vận hành bản triển khai Kubernetes quản lý bằng Helm trên bốn môi trường tách biệt (development, test, demo, production): rollout và rollback qua Helm theo values từng môi trường, autoscaling và cấu hình ingress.",
-            "Giữ workload AI nặng bộ nhớ, tải dồn dập ổn định khi có traffic thật: chẩn đoán container bị OOMKilled, CrashLoopBackOff và probe lỗi bằng kubectl, rồi tinh chỉnh resource request, limit và ngưỡng probe.",
-            "Gia cố luồng nạp dữ liệu RAG chống server-side request forgery bằng kiểm tra IP private và redirect quanh crawler, có unit test đi kèm.",
-            "Đóng góp Terraform cho Cognito và S3 của dịch vụ, và gỡ vướng cho developer khi build hay rollout lỗi trên pipeline đa môi trường dùng chung."
+            "Hỗ trợ release dịch vụ dùng LLM này trên pipeline Argo CD + Helm của team trên EKS (development, test, production) bằng cách kích hoạt deploy môi trường development.",
+            "Chẩn đoán lỗi crawler trên cluster development từ log worker pod (timeout điều hướng khi nhiều pod chạy đồng thời) và điều chỉnh timeout crawl.",
+            "Gia cố luồng nạp dữ liệu RAG chống server-side request forgery, thêm kiểm tra IP private và kiểm tra khả năng truy cập qua redirect quanh crawler."
           ]
         }
       }

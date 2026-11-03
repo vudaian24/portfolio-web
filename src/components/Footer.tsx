@@ -1,5 +1,5 @@
 import { useTranslations } from "next-intl";
-import Link from "next/link";
+import { Link } from "@/i18n/navigation";
 import { MotionReveal } from "@/components/ui/MotionReveal";
 import { SECTION_IDS, SOCIAL_LINKS } from "@/config/site";
 
@@ -37,7 +37,7 @@ export default function Footer() {
               {FOOTER_LINKS.map((item) => (
                 <li key={item.href}>
                   <Link
-                    href={item.href}
+                    href={{ pathname: "/", hash: item.href.slice(1) }}
                     className="group inline-flex items-center text-sm text-text-secondary transition-colors hover:text-brand"
                   >
                     <span className="transition-transform duration-200 group-hover:translate-x-1">
@@ -53,7 +53,7 @@ export default function Footer() {
             <p className="section-label mb-4">{t("socials.title")}</p>
             <div className="flex flex-wrap gap-2">
               {SOCIAL_LINKS.map((s) => (
-                <Link
+                <a
                   key={s.href}
                   href={s.href}
                   target="_blank"
@@ -63,7 +63,7 @@ export default function Footer() {
                 >
                   <s.icon size={16} strokeWidth={1.75} />
                   {s.label}
-                </Link>
+                </a>
               ))}
             </div>
           </div>

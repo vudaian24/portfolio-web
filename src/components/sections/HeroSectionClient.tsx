@@ -16,10 +16,11 @@ import {
 
 /** Commands shown in the hero terminal; they describe how this site runs */
 const TERMINAL_LINES = [
-  "$ kubectl get pods -n portfolio",
-  "portfolio-web   1/1   Running",
+  "$ kubectl get pods -n portfolio-web",
+  "portfolio-web-6d9f8c   1/1   Running",
   "$ argocd app get portfolio-web",
-  "Sync: Synced   Health: Healthy",
+  "Sync Status:    Synced",
+  "Health Status:  Healthy",
   "$ terraform plan",
   "No changes. Infrastructure is up-to-date.",
 ] as const;
@@ -52,7 +53,7 @@ export default function HeroSectionClient({ content }: HeroSectionClientProps) {
   const photoY = useTransform(
     scrollYProgress,
     [0, 1],
-    [0, reduceMotion ? 0 : 48],
+    [0, reduceMotion ? 0 : 40],
   );
   const copyY = useTransform(
     scrollYProgress,
@@ -62,7 +63,7 @@ export default function HeroSectionClient({ content }: HeroSectionClientProps) {
   const copyOpacity = useTransform(
     scrollYProgress,
     [0, 0.7],
-    [1, reduceMotion ? 1 : 0.55],
+    [1, reduceMotion ? 1 : 0.7],
   );
   const item = reduceMotion ? undefined : staggerItem;
 
@@ -70,12 +71,18 @@ export default function HeroSectionClient({ content }: HeroSectionClientProps) {
     <section
       ref={sectionRef}
       id={SECTION_IDS.home}
-      className="relative flex min-h-[min(100dvh,920px)] items-center py-16 lg:py-24"
+      className="relative flex items-center py-10 sm:py-14 lg:min-h-[min(100dvh,880px)] lg:py-24"
     >
-      <div className="section-shell flex w-full flex-col items-center gap-16 lg:flex-row lg:items-center lg:justify-between lg:gap-12">
+      {/*
+        One grid, three items. Below lg they stack as photo, copy, terminal so
+        the headline stays near the top of a phone. From lg the copy fills the
+        left column and the photo and terminal share the right one, so the
+        terminal can overlap the photo but never the text.
+      */}
+      <div className="section-shell grid w-full items-center gap-8 sm:gap-10 lg:grid-cols-[minmax(0,1fr)_21rem] lg:gap-x-12 xl:grid-cols-[minmax(0,1fr)_22rem] xl:gap-x-16">
         <m.div
           style={{ y: copyY, opacity: copyOpacity }}
-          className="order-2 flex w-full max-w-2xl flex-1 flex-col items-center text-center lg:order-1 lg:items-start lg:text-left"
+          className="order-2 flex w-full max-w-2xl flex-col items-center justify-self-center text-center lg:order-none lg:col-start-1 lg:row-span-2 lg:row-start-1 lg:items-start lg:justify-self-start lg:text-left"
         >
           <m.div
             initial="hidden"
@@ -97,15 +104,15 @@ export default function HeroSectionClient({ content }: HeroSectionClientProps) {
           >
             <m.p
               variants={item}
-              className="mb-6 inline-flex items-center gap-2 rounded-full border border-brand/30 bg-brand-subtle px-3.5 py-1.5 text-xs font-medium text-brand"
+              className="mb-5 inline-flex items-center gap-2 rounded-full border border-brand/30 bg-brand-subtle px-3.5 py-1.5 text-xs font-medium text-brand sm:mb-6"
             >
               <span className="relative flex h-2 w-2" aria-hidden>
-                <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-accent-green opacity-60" />
+                <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-accent-green opacity-50" />
                 <span className="relative inline-flex h-2 w-2 rounded-full bg-accent-green" />
               </span>
               {content.availability}
             </m.p>
-            <m.p variants={item} className="section-label mb-4">
+            <m.p variants={item} className="section-label mb-3 sm:mb-4">
               {content.eyebrow}
             </m.p>
             <m.p
@@ -119,7 +126,7 @@ export default function HeroSectionClient({ content }: HeroSectionClientProps) {
               onMount
               delay={0.35}
               text={content.title}
-              className="mt-4 font-display text-2xl font-semibold text-foreground sm:text-3xl md:text-4xl"
+              className="mt-3 font-display text-2xl font-semibold text-foreground sm:mt-4 sm:text-3xl md:text-4xl"
             />
             <m.p
               variants={item}
@@ -133,14 +140,14 @@ export default function HeroSectionClient({ content }: HeroSectionClientProps) {
             </m.p>
             <m.p
               variants={item}
-              className="mt-6 text-base leading-relaxed text-muted-foreground sm:text-lg"
+              className="mt-5 text-base leading-relaxed text-muted-foreground sm:mt-6 sm:text-lg"
             >
               {content.description}
             </m.p>
 
             <m.div
               variants={item}
-              className="mt-10 flex w-full flex-col gap-3 sm:w-auto sm:flex-row"
+              className="mt-8 flex w-full flex-col gap-3 sm:mt-10 sm:w-auto sm:flex-row"
             >
               <Link
                 href={`#${SECTION_IDS.projects}`}
@@ -169,7 +176,10 @@ export default function HeroSectionClient({ content }: HeroSectionClientProps) {
               </a>
             </m.div>
 
-            <m.ul variants={item} className="mt-8 flex items-center gap-2">
+            <m.ul
+              variants={item}
+              className="mt-6 flex items-center gap-2 sm:mt-8"
+            >
               {SOCIAL_LINKS.map((social) => (
                 <li key={social.href}>
                   <a
@@ -192,49 +202,48 @@ export default function HeroSectionClient({ content }: HeroSectionClientProps) {
           initial={reduceMotion ? false : { opacity: 0, scale: 0.94, y: 16 }}
           animate={{ opacity: 1, scale: 1, y: 0 }}
           transition={{ duration: 0.7, delay: 0.15, ease: EASE_OUT }}
-          className="order-1 flex flex-col items-center lg:order-2 lg:items-end"
+          className="relative order-1 justify-self-center lg:order-none lg:col-start-2 lg:row-start-1 lg:self-end lg:justify-self-end"
         >
-          <div className="relative">
-            <m.div
-              className="absolute -inset-4 rounded-[2.25rem] bg-gradient-to-br from-brand/40 via-brand-light/20 to-transparent blur-2xl"
-              aria-hidden
-              animate={
-                reduceMotion
-                  ? undefined
-                  : { opacity: [0.5, 0.9, 0.5], scale: [1, 1.05, 1] }
-              }
-              transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }}
+          <m.div
+            className="absolute -inset-4 rounded-[2.25rem] bg-gradient-to-br from-brand/30 via-brand-light/15 to-transparent blur-2xl"
+            aria-hidden
+            animate={
+              reduceMotion
+                ? undefined
+                : { opacity: [0.5, 0.85, 0.5], scale: [1, 1.04, 1] }
+            }
+            transition={{ duration: 7, repeat: Infinity, ease: "easeInOut" }}
+          />
+          <div className="relative aspect-[779/1280] w-36 overflow-hidden rounded-2xl border border-brand/20 bg-surface shadow-xl sm:w-44 sm:rounded-3xl lg:w-64">
+            <Image
+              src="/avatar.jpg"
+              alt={content.photoAlt}
+              fill
+              className="object-cover"
+              sizes="(min-width: 1024px) 256px, (min-width: 640px) 176px, 144px"
+              priority
             />
-            <div className="relative aspect-[779/1280] w-48 overflow-hidden rounded-3xl border border-brand/20 bg-surface shadow-xl sm:w-56 md:w-64">
-              <Image
-                src="/avatar.jpg"
-                alt={content.photoAlt}
-                fill
-                className="object-cover"
-                sizes="(max-width: 768px) 192px, 256px"
-                priority
-              />
-            </div>
-
-            <m.div
-              initial={reduceMotion ? false : { opacity: 0, y: 24 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 0.5, ease: EASE_OUT }}
-              className="mt-6 w-[min(88vw,21rem)] overflow-hidden rounded-xl border border-border bg-surface-elevated/90 shadow-2xl backdrop-blur-md lg:absolute lg:-bottom-14 lg:-left-56 lg:mt-0"
-            >
-              <div className="flex items-center gap-1.5 border-b border-border px-3 py-2">
-                <span className="h-2.5 w-2.5 rounded-full bg-destructive/70" />
-                <span className="h-2.5 w-2.5 rounded-full bg-accent-orange" />
-                <span className="h-2.5 w-2.5 rounded-full bg-accent-green" />
-                <span className="ml-2 font-mono text-[11px] text-text-muted">
-                  ~/portfolio
-                </span>
-              </div>
-              <pre className="min-h-[9.5rem] px-4 py-3 text-left font-mono text-[11.5px] leading-relaxed text-text-secondary">
-                <Typewriter lines={TERMINAL_LINES} />
-              </pre>
-            </m.div>
           </div>
+        </m.div>
+
+        <m.div
+          style={{ y: photoY }}
+          initial={reduceMotion ? false : { opacity: 0, y: 24 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6, delay: 0.5, ease: EASE_OUT }}
+          className="relative z-10 order-3 hidden w-full max-w-sm justify-self-center overflow-hidden rounded-xl border border-border bg-surface-elevated/90 shadow-2xl backdrop-blur-md sm:block lg:order-none lg:col-start-2 lg:row-start-2 lg:-mt-14 lg:max-w-none lg:self-start lg:justify-self-end"
+        >
+          <div className="flex items-center gap-1.5 border-b border-border px-3 py-2">
+            <span className="h-2.5 w-2.5 rounded-full bg-destructive/70" />
+            <span className="h-2.5 w-2.5 rounded-full bg-accent-orange" />
+            <span className="h-2.5 w-2.5 rounded-full bg-accent-green" />
+            <span className="ml-2 font-mono text-[11px] text-text-muted">
+              ~/portfolio
+            </span>
+          </div>
+          <pre className="min-h-[10.5rem] px-4 py-3 text-left font-mono text-[11.5px] leading-relaxed text-text-secondary">
+            <Typewriter lines={TERMINAL_LINES} />
+          </pre>
         </m.div>
       </div>
     </section>

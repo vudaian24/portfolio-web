@@ -80,7 +80,15 @@ export const SOCIAL_LINKS = [
 export const SKILL_GROUPS = [
   {
     id: "containers",
-    keys: ["kubernetes", "helm", "argocd", "kubectl", "docker", "compose"],
+    keys: [
+      "kubernetes",
+      "helm",
+      "argocd",
+      "externalSecrets",
+      "kubectl",
+      "docker",
+      "compose",
+    ],
   },
   {
     id: "cicd",
@@ -88,12 +96,17 @@ export const SKILL_GROUPS = [
   },
   {
     id: "iac",
-    keys: ["terraform", "bash", "python", "jq"],
+    keys: ["terraform", "tflintTrivy", "bash", "python", "jq"],
+  },
+  {
+    id: "observability",
+    keys: ["prometheus", "grafana", "cloudwatch"],
   },
   {
     id: "cloud",
     keys: [
       "eks",
+      "ecr",
       "ecsFargate",
       "vpc",
       "aurora",
@@ -102,16 +115,14 @@ export const SKILL_GROUPS = [
       "sqsSes",
       "iam",
       "secretsManager",
+      "ssm",
+      "lambda",
       "cloudflare",
     ],
   },
   {
     id: "linux",
     keys: ["linux", "systemd", "nginx", "proxmox"],
-  },
-  {
-    id: "observability",
-    keys: ["prometheus", "grafana", "cloudwatch"],
   },
   {
     id: "data",
@@ -158,7 +169,10 @@ export const PROJECTS: readonly ProjectConfig[] = [
       "Helm",
       "Cloudflare",
       "GitHub Actions",
+      "External Secrets",
+      "Lambda",
       "Prometheus",
+      "Grafana Cloud",
     ],
   },
   {

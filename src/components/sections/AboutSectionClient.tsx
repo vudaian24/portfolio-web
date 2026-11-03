@@ -14,6 +14,7 @@ import {
   Terminal,
   Workflow,
 } from "lucide-react";
+import { CountUp } from "@/components/ui/CountUp";
 import { MotionReveal } from "@/components/ui/MotionReveal";
 import { Section, SectionHeader } from "@/components/ui/Section";
 import { chipCascade, staggerContainer, staggerItem } from "@/lib/animation";
@@ -78,7 +79,7 @@ export default function AboutSectionClient({
               >
                 <dt className="sr-only">{stat.label}</dt>
                 <dd className="font-display text-gradient-brand text-3xl font-semibold">
-                  {stat.value}
+                  <CountUp value={stat.value} />
                 </dd>
                 <dd className="mt-1 text-xs leading-snug text-text-secondary md:text-sm">
                   {stat.label}

@@ -34,7 +34,7 @@
         "Kubernetes & Helm",
         "Terraform trên AWS",
         "Pipeline CI/CD",
-        "GitOps với Argo CD"
+        "GitOps & Argo CD"
       ],
       "description": "DevOps engineer với 2.5 năm triển khai và vận hành workload container trên AWS (ECS Fargate, EKS). Mình từng chịu trách nhiệm chính hạ tầng của một nền tảng đặt lịch nhiều phòng khám, hỗ trợ release một dịch vụ AI production trên EKS, và làm việc trực tiếp với product owner nước ngoài bằng tiếng Anh.",
       "availability": "Sẵn sàng cho vị trí DevOps / Platform",
@@ -83,6 +83,7 @@
         "kubectl": "kubectl",
         "docker": "Docker",
         "compose": "Docker Compose",
+        "externalSecrets": "External Secrets",
         "githubActions": "GitHub Actions",
         "jenkins": "Jenkins",
         "liquibase": "Liquibase",
@@ -90,7 +91,9 @@
         "bash": "Bash",
         "python": "Python",
         "jq": "jq",
+        "tflintTrivy": "TFLint / Trivy",
         "eks": "EKS",
+        "ecr": "ECR",
         "ecsFargate": "ECS Fargate",
         "vpc": "VPC",
         "aurora": "Aurora",
@@ -99,6 +102,8 @@
         "sqsSes": "SQS / SES",
         "iam": "IAM",
         "secretsManager": "Secrets Manager",
+        "ssm": "SSM Parameter Store",
+        "lambda": "Lambda / EventBridge",
         "cloudflare": "Cloudflare",
         "linux": "Linux",
         "systemd": "systemd",
@@ -214,6 +219,7 @@
             "Cấp phát AWS và Cloudflare bằng Terraform (67 khối resource, 6 module): VPC, EKS với API private qua Session Manager, Pod Identity, ECR và security group chỉ nhận traffic từ Cloudflare cho ALB do controller tạo; CI chạy TFLint và Trivy.",
             "Vận hành cluster theo GitOps: Argo CD ApplicationSet triển khai 5 Helm chart (Argo CD, Load Balancer Controller, External Secrets, Prometheus, ứng dụng kèm HPA), kiểm tra bằng kubeconform.",
             "Tự động hóa release bằng GitHub Actions: OIDC vào AWS, image gắn tag SHA trong ECR có bước phê duyệt, commit tag vào GitOps, rồi kiểm tra phiên bản, smoke test và tự revert khi lỗi.",
+            "Giảm chi phí vận hành bằng night scheduler (EventBridge và Lambda) giữ node group ở 0 từ 22:00 đến 08:00 (ICT) và cả ngày Chủ nhật; website chủ động tắt trong khung giờ này.",
             "Đẩy 119 metric Prometheus đã lọc lên 18 dashboard Grafana Cloud upstream, kèm alarm CloudWatch khi node down và khi scheduler lỗi.",
             "Viết 19 ADR và 7 runbook, lưu trong repository workspace private (cung cấp khi được yêu cầu)."
           ]

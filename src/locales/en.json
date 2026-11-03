@@ -34,7 +34,7 @@
         "Kubernetes & Helm",
         "Terraform on AWS",
         "CI/CD pipelines",
-        "GitOps with Argo CD"
+        "GitOps & Argo CD"
       ],
       "description": "DevOps engineer with 2.5 years delivering and operating containerized workloads on AWS (ECS Fargate, EKS). I was the primary infrastructure owner of a multi-clinic booking platform, support releases of a production AI service on EKS, and work directly with overseas product owners in English.",
       "availability": "Open to DevOps and platform roles",
@@ -83,6 +83,7 @@
         "kubectl": "kubectl",
         "docker": "Docker",
         "compose": "Docker Compose",
+        "externalSecrets": "External Secrets",
         "githubActions": "GitHub Actions",
         "jenkins": "Jenkins",
         "liquibase": "Liquibase",
@@ -90,7 +91,9 @@
         "bash": "Bash",
         "python": "Python",
         "jq": "jq",
+        "tflintTrivy": "TFLint / Trivy",
         "eks": "EKS",
+        "ecr": "ECR",
         "ecsFargate": "ECS Fargate",
         "vpc": "VPC",
         "aurora": "Aurora",
@@ -99,6 +102,8 @@
         "sqsSes": "SQS / SES",
         "iam": "IAM",
         "secretsManager": "Secrets Manager",
+        "ssm": "SSM Parameter Store",
+        "lambda": "Lambda / EventBridge",
         "cloudflare": "Cloudflare",
         "linux": "Linux",
         "systemd": "systemd",
@@ -214,6 +219,7 @@
             "Provisioned AWS and Cloudflare in Terraform (67 resource blocks, 6 modules): VPC, EKS with a private API via Session Manager, Pod Identity, ECR, and a Cloudflare-only security group for the controller-managed ALB; CI runs TFLint and Trivy.",
             "Ran the cluster as GitOps: Argo CD ApplicationSets deploy 5 Helm charts (Argo CD, Load Balancer Controller, External Secrets, Prometheus, the app with an HPA), validated with kubeconform.",
             "Automated releases in GitHub Actions: OIDC to AWS, approval-gated SHA-tagged images in ECR, the tag committed to GitOps, then a version check, smoke test and auto-revert on failure.",
+            "Cut the running cost with a night scheduler (EventBridge and a Lambda) that holds the node group at 0 from 22:00 to 08:00 ICT and all day on Sunday; the site is intentionally offline in that window.",
             "Shipped 119 filtered Prometheus metrics to 18 upstream Grafana Cloud dashboards, with CloudWatch node-down and scheduler-error alarms.",
             "Wrote 19 ADRs and 7 runbooks, kept in a private workspace repository (available on request)."
           ]

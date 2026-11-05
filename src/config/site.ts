@@ -2,15 +2,15 @@ import type { LucideIcon } from "lucide-react";
 import {
   Briefcase,
   FileText,
-  Github,
   GraduationCap,
   History,
   Home,
-  Linkedin,
   Mail,
   PhoneCall,
   User,
 } from "lucide-react";
+
+import { Github, Linkedin } from "@/lib/brandIcons";
 
 export const SITE_URL = "https://portfolio.anvd.io.vn";
 

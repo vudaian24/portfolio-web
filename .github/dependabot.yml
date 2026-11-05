@@ -1,0 +1,74 @@
+# Dependabot version updates. Pull requests run CI only; a merge to main
+# starts the deploy job, which still waits for approval on aws-production.
+version: 2
+updates:
+  # Workflows plus the composite action in .github/actions/setup-node.
+  # Actions stay pinned to a commit SHA with a "# vX.Y.Z" comment.
+  - package-ecosystem: github-actions
+    directories:
+      - /
+      - /.github/actions/*
+    schedule:
+      interval: weekly
+      day: monday
+      time: "09:00"
+      timezone: Asia/Ho_Chi_Minh
+    cooldown:
+      default-days: 7
+    groups:
+      github-actions:
+        patterns: ["*"]
+    commit-message:
+      prefix: chore
+      include: scope
+
+  - package-ecosystem: npm
+    directory: /
+    schedule:
+      interval: weekly
+      day: monday
+      time: "09:00"
+      timezone: Asia/Ho_Chi_Minh
+    cooldown:
+      default-days: 7
+      semver-major-days: 14
+    ignore:
+      # Stay on Next.js 15 (owner decision, see AGENTS.md); 15.5.x patches still come through.
+      - dependency-name: next
+        update-types: ["version-update:semver-major"]
+      - dependency-name: eslint-config-next
+        update-types: ["version-update:semver-major"]
+      # eslint-config-next 15 targets ESLint 9.
+      - dependency-name: eslint
+        update-types: ["version-update:semver-major"]
+      # Types follow the Node 24 runtime used in CI and Docker.
+      - dependency-name: "@types/node"
+        update-types: ["version-update:semver-major"]
+    groups:
+      # next and eslint-config-next must stay on the same exact version.
+      nextjs:
+        patterns: ["next", "eslint-config-next"]
+      react:
+        patterns: ["react", "react-dom", "@types/react", "@types/react-dom"]
+      minor-and-patch:
+        update-types: ["minor", "patch"]
+    commit-message:
+      prefix: chore
+      include: scope
+
+  - package-ecosystem: docker
+    directory: /
+    schedule:
+      interval: weekly
+      day: monday
+      time: "09:00"
+      timezone: Asia/Ho_Chi_Minh
+    cooldown:
+      default-days: 7
+    ignore:
+      # Node 24 everywhere (CI, Docker, local).
+      - dependency-name: node
+        update-types: ["version-update:semver-major"]
+    commit-message:
+      prefix: chore
+      include: scope

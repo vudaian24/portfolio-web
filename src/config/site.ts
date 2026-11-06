@@ -11,6 +11,7 @@ import {
 } from "lucide-react";
 
 import { Github, Linkedin } from "@/lib/brandIcons";
+import type { TechIconId, TechTag } from "@/lib/techIcons";
 
 export const SITE_URL = "https://portfolio.anvd.io.vn";
 
@@ -137,6 +138,49 @@ export const SKILL_KEYS = SKILL_GROUPS.flatMap((g) => [
   ...g.keys,
 ]) as unknown as readonly SkillKey[];
 
+/** Logos shown before each skill label (see src/lib/techIcons.ts) */
+export const SKILL_ICONS: Record<SkillKey, readonly TechIconId[]> = {
+  kubernetes: ["kubernetes"],
+  helm: ["helm"],
+  argocd: ["argo"],
+  externalSecrets: ["externalSecrets"],
+  kubectl: ["kubernetes"],
+  docker: ["docker"],
+  compose: ["docker"],
+  githubActions: ["githubActions"],
+  jenkins: ["jenkins"],
+  liquibase: ["liquibase"],
+  terraform: ["terraform"],
+  tflintTrivy: ["trivy"],
+  bash: ["bash"],
+  python: ["python"],
+  jq: ["jq"],
+  prometheus: ["prometheus"],
+  grafana: ["grafana"],
+  cloudwatch: ["awsCloudwatch"],
+  eks: ["awsEks"],
+  ecr: ["awsEcr"],
+  ecsFargate: ["awsEcs", "awsFargate"],
+  vpc: ["awsVpc"],
+  aurora: ["awsAurora"],
+  elasticache: ["awsElasticache"],
+  cloudfrontWaf: ["awsCloudfront", "awsWaf"],
+  sqsSes: ["awsSqs", "awsSes"],
+  iam: ["awsIam"],
+  secretsManager: ["awsSecretsManager"],
+  ssm: ["awsSystemsManager"],
+  lambda: ["awsLambda", "awsEventbridge"],
+  cloudflare: ["cloudflare"],
+  linux: ["linux"],
+  systemd: ["systemd"],
+  nginx: ["nginx"],
+  proxmox: ["proxmox"],
+  postgresql: ["postgresql"],
+  mysql: ["mysql"],
+  mongodb: ["mongodb"],
+  redis: ["redis"],
+};
+
 export const PROJECT_IDS = ["portfolio", "ercBooking", "kotae"] as const;
 
 export type ProjectId = (typeof PROJECT_IDS)[number];
@@ -154,7 +198,8 @@ export type ProjectConfig = {
   /** Omit for client/internal work with no public URL */
   href?: string;
   external?: boolean;
-  tags?: readonly string[];
+  /** Every tag needs an entry in TAG_ICONS */
+  tags?: readonly TechTag[];
 };
 
 export const PROJECTS: readonly ProjectConfig[] = [

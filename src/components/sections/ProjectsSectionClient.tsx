@@ -6,7 +6,9 @@ import type { Variants } from "motion/react";
 import { ArrowRight, ArrowUpRight, Check } from "lucide-react";
 import { Link } from "@/i18n/navigation";
 import { Section, SectionHeader } from "@/components/ui/Section";
+import { TechChip } from "@/components/ui/TechChip";
 import { EASE_OUT } from "@/lib/animation";
+import { TAG_ICONS, type TechTag } from "@/lib/techIcons";
 import { SECTION_IDS, projectAnchorId, type ProjectId } from "@/config/site";
 
 const entryVariants: Variants = {
@@ -28,7 +30,7 @@ export type ProjectsContent = {
   items: {
     id: ProjectId;
     href?: string;
-    tags?: readonly string[];
+    tags?: readonly TechTag[];
     title: string;
     role: string;
     team: string;
@@ -113,9 +115,7 @@ export default function ProjectsSectionClient({
               <ul className="mt-7 flex flex-wrap gap-2">
                 {project.tags.map((tag) => (
                   <li key={tag}>
-                    <span className="inline-flex items-center rounded-full border border-brand/20 bg-brand-subtle px-3 py-1 text-xs font-medium text-brand">
-                      {tag}
-                    </span>
+                    <TechChip label={tag} icons={TAG_ICONS[tag]} />
                   </li>
                 ))}
               </ul>

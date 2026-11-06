@@ -17,8 +17,10 @@ import {
 import { CountUp } from "@/components/ui/CountUp";
 import { MotionReveal } from "@/components/ui/MotionReveal";
 import { Section, SectionHeader } from "@/components/ui/Section";
+import { TechChip } from "@/components/ui/TechChip";
 import { chipCascade, staggerContainer, staggerItem } from "@/lib/animation";
 import { SECTION_IDS, type SkillGroupId } from "@/config/site";
+import type { TechIconId } from "@/lib/techIcons";
 
 const GROUP_ICONS: Record<SkillGroupId, LucideIcon> = {
   containers: Boxes,
@@ -40,7 +42,7 @@ export type AboutContent = {
   groups: {
     id: SkillGroupId;
     label: string;
-    skills: { key: string; label: string }[];
+    skills: { key: string; label: string; icons: readonly TechIconId[] }[];
   }[];
 };
 
@@ -133,9 +135,7 @@ export default function AboutSectionClient({
                           viewport={{ once: true, amount: 0.3 }}
                           variants={reduceMotion ? undefined : chipCascade}
                         >
-                          <span className="inline-flex items-center rounded-md border border-border/80 bg-background/70 px-2.5 py-1 text-xs font-medium text-foreground transition-colors duration-300 hover:border-brand/50 hover:bg-brand-subtle hover:text-brand md:text-sm">
-                            {skill.label}
-                          </span>
+                          <TechChip label={skill.label} icons={skill.icons} />
                         </m.li>
                       ))}
                     </ul>

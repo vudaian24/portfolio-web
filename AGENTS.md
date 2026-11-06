@@ -40,8 +40,8 @@ Before reporting a change as done, run `yarn lint` and `yarn type-check`.
 - `src/locales/en.json`, `src/locales/vi.json` — UI strings. Both have 192 leaf keys today, with identical key sets.
 - `src/components/` — `sections/` (page sections; many come as a server file plus a `*Client.tsx` pair), `ui/` (shared primitives), plus Navbar (highlights the section in view), Footer, ThemeToggle, LanguageSelector, ScrollProgress, BackToTopButton.
 - `src/config/site.ts` — site-level config.
-- `src/lib/` — `contact.ts` (zod schema, `escapeTelegramHtml`), `utils.ts`, `animation.ts`, `useActiveSection.ts` (scroll-spy for the navbar), `types.ts`.
-- `public/` — `avatar.jpg`, `cv.pdf` (the DevOps CV; the deploy smoke test fetches `/cv.pdf`).
+- `src/lib/` — `contact.ts` (zod schema, `escapeTelegramHtml`), `utils.ts`, `animation.ts`, `useActiveSection.ts` (scroll-spy for the navbar), `types.ts`, `brandIcons.ts` (GitHub, LinkedIn glyphs), `techIcons.ts` (logo registry and `TAG_ICONS` for tech chips; skill logos are `SKILL_ICONS` in `src/config/site.ts`).
+- `public/` — `avatar.jpg`, `cv.pdf` (the DevOps CV; the deploy smoke test fetches `/cv.pdf`), `icons/aws/` (AWS Architecture Icons, 48 px service icons from the official asset package) and `icons/brands/` (Simple Icons logos with the brand colour baked in, plus the official External Secrets, jq and systemd logos). Add a new tech logo as an SVG there and register it in `src/lib/techIcons.ts`; a new project tag needs a `TAG_ICONS` entry or type-check fails.
 - `docs/superpowers/` — dated plans and specs for the CV redesign.
 - `README.md` is the project overview: stack, commands, environment variable names, Docker, and deployment status. Keep it in sync when scripts, env vars, or deployment change.
 

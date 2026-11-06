@@ -1,6 +1,6 @@
 import { getTranslations } from "next-intl/server";
 import AboutSectionClient, { type AboutContent } from "./AboutSectionClient";
-import { SKILL_GROUPS } from "@/config/site";
+import { SKILL_GROUPS, SKILL_ICONS } from "@/config/site";
 
 export default async function AboutSection() {
   const t = await getTranslations("HomePage.AboutSection");
@@ -18,6 +18,7 @@ export default async function AboutSection() {
       skills: group.keys.map((key) => ({
         key,
         label: t(`skills.${key}`),
+        icons: SKILL_ICONS[key],
       })),
     })),
   };

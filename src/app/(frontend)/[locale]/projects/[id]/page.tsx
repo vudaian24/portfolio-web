@@ -6,7 +6,9 @@ import {
   CaseStudyBlock,
   CaseStudyMotion,
 } from "@/components/sections/CaseStudyMotion";
+import { TechChip } from "@/components/ui/TechChip";
 import { isProjectId, PROJECTS } from "@/config/site";
+import { TAG_ICONS } from "@/lib/techIcons";
 import { routing } from "@/i18n/routing";
 
 type Props = {
@@ -101,11 +103,8 @@ export default async function ProjectCaseStudyPage({ params }: Props) {
               </h2>
               <ul className="mt-4 flex flex-wrap gap-2">
                 {project.tags.map((tag) => (
-                  <li
-                    key={tag}
-                    className="rounded-full border border-brand/20 bg-brand-subtle px-3 py-1 text-sm text-brand"
-                  >
-                    {tag}
+                  <li key={tag}>
+                    <TechChip label={tag} icons={TAG_ICONS[tag]} size="md" />
                   </li>
                 ))}
               </ul>

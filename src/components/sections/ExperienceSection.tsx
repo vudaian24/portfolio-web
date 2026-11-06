@@ -20,6 +20,12 @@ export default async function ExperienceSection() {
       company: t(`items.${item.id}.company`),
       period: t(`items.${item.id}.period`),
       bullets: t.raw(`items.${item.id}.bullets`) as string[],
+      milestone: item.milestone
+        ? {
+            label: t(`items.${item.id}.milestone.label`),
+            date: t(`items.${item.id}.milestone.date`),
+          }
+        : undefined,
     })),
   };
 

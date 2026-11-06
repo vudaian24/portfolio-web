@@ -2,11 +2,12 @@
 //
 // Every icon is a static SVG under public/icons:
 // - public/icons/aws: AWS Architecture Icons (official asset package, 48 px
-//   service icons), used for AWS services.
+//   service icons, plus the AWS Cloud group logo for plain "AWS"), used for
+//   AWS services.
 // - public/icons/brands: brand logos from Simple Icons (CC0, brand colour
-//   baked in), plus the official External Secrets (Apache-2.0), jq and systemd
-//   (LGPL-2.1) logos, and a neutral sparkle for OpenAI, which has no Simple
-//   Icons entry.
+//   baked in), plus the official External Secrets (Apache-2.0), jq, systemd
+//   (LGPL-2.1) and LocalStack (mark only, from localstack/docs) logos, and a
+//   neutral sparkle for OpenAI, which has no Simple Icons entry.
 //
 // `tone` marks logos whose brand colour lacks contrast on one theme: "dark"
 // logos are lightened in dark mode, "light" logos darkened in light mode
@@ -25,6 +26,7 @@ const brand = (name: string, tone?: TechIcon["tone"]): TechIcon => ({
 
 export const TECH_ICONS = {
   // AWS services
+  aws: aws("aws"),
   awsAurora: aws("aurora"),
   awsBedrock: aws("bedrock"),
   awsCloudfront: aws("cloudfront"),
@@ -59,6 +61,7 @@ export const TECH_ICONS = {
   langchain: brand("langchain", "light"),
   linux: brand("linux", "light"),
   liquibase: brand("liquibase"),
+  localstack: brand("localstack"),
   mongodb: brand("mongodb"),
   mysql: brand("mysql"),
   nginx: brand("nginx"),
@@ -75,8 +78,12 @@ export const TECH_ICONS = {
 
 export type TechIconId = keyof typeof TECH_ICONS;
 
-/** Project and case-study tags; each tag shows its icons before the label. */
+/** Project, case-study and experience tags; each shows its icons before the label. */
 export const TAG_ICONS = {
+  AWS: ["aws"],
+  Bash: ["bash"],
+  Jenkins: ["jenkins"],
+  LocalStack: ["localstack"],
   "Amazon EKS": ["awsEks"],
   "Argo CD": ["argo"],
   "Aurora PostgreSQL": ["awsAurora"],

@@ -262,7 +262,10 @@ export type ExperienceId = (typeof EXPERIENCE_IDS)[number];
 export type ExperienceConfig = {
   id: ExperienceId;
   current?: boolean;
-  tags?: readonly string[];
+  /** Show the `items.<id>.milestone` marker (label, date) after this role on the timeline */
+  milestone?: boolean;
+  /** Every tag needs an entry in TAG_ICONS */
+  tags?: readonly TechTag[];
 };
 
 /** Reverse-chronological work timeline */
@@ -270,6 +273,7 @@ export const EXPERIENCE_ITEMS: readonly ExperienceConfig[] = [
   {
     id: "softwareEngineer",
     current: true,
+    milestone: true,
     tags: [
       "Terraform",
       "AWS",

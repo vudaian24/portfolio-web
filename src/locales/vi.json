@@ -159,6 +159,10 @@
           "role": "Software Engineer — DevOps & Infrastructure",
           "company": "Tokyo Tech Lab Viet Nam",
           "period": "10/2024 — Hiện tại",
+          "milestone": {
+            "label": "Được lên Software Engineer",
+            "date": "10/2024"
+          },
           "bullets": [
             "Làm DevOps và hạ tầng cho ba sản phẩm: chịu trách nhiệm chính (03–06/2026) về hạ tầng và pipeline triển khai của một nền tảng đặt lịch nhiều phòng khám cho khách hàng, hỗ trợ release và môi trường cho Kotae (SaaS AI chatbot của Tokyo Techies, được biệt phái) và StarLive (streaming thời gian thực, dự án khách hàng nhiều vendor) trong team 14–15 người, làm việc trực tiếp với product owner nước ngoài bằng tiếng Anh.",
             "Xây pipeline triển khai trên GitHub Actions và duy trì các pipeline Jenkinsfile sẵn có trên Jenkins.",

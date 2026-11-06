@@ -81,11 +81,3 @@ export const pageEnter: Variants = {
     transition: { duration: 0.55, ease: EASE_OUT },
   },
 };
-
-export const timelineLine: Variants = {
-  hidden: { scaleY: 0 },
-  visible: {
-    scaleY: 1,
-    transition: { duration: 0.9, ease: EASE_OUT },
-  },
-};

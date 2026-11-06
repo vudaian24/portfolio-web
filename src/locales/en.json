@@ -159,6 +159,10 @@
           "role": "Software Engineer — DevOps & Infrastructure",
           "company": "Tokyo Tech Lab Viet Nam",
           "period": "Oct 2024 — Present",
+          "milestone": {
+            "label": "Promoted to Software Engineer",
+            "date": "Oct 2024"
+          },
           "bullets": [
             "DevOps and infrastructure work across three products: primary owner (Mar–Jun 2026) of the infrastructure and delivery pipelines for a multi-clinic booking client platform, and release and environment support for Kotae (Tokyo Techies' AI chatbot SaaS, on secondment) and StarLive (real-time streaming, multi-vendor client project) in teams of 14–15, working directly with overseas product owners in English.",
             "Built delivery pipelines in GitHub Actions and maintained existing Jenkinsfile pipelines in Jenkins.",

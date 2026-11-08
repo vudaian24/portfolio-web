@@ -36,7 +36,7 @@
         "Pipeline CI/CD",
         "GitOps & Argo CD"
       ],
-      "description": "DevOps engineer với 2.5 năm triển khai và vận hành workload container trên AWS (ECS Fargate, EKS). Mình từng chịu trách nhiệm chính hạ tầng của một nền tảng đặt lịch nhiều phòng khám, hỗ trợ release một dịch vụ AI production trên EKS, và làm việc trực tiếp với product owner nước ngoài bằng tiếng Anh.",
+      "description": "DevOps engineer với 2+ năm triển khai và vận hành workload container trên AWS (ECS Fargate, EKS). Mình từng chịu trách nhiệm chính hạ tầng của một nền tảng đặt lịch nhiều phòng khám, hỗ trợ release một dịch vụ AI production trên EKS, và làm việc trực tiếp với product owner nước ngoài bằng tiếng Anh.",
       "availability": "Sẵn sàng cho vị trí DevOps / Platform",
       "ctaProjects": "Xem dự án",
       "ctaContact": "Liên hệ",
@@ -46,13 +46,13 @@
     "AboutSection": {
       "eyebrow": "Giới thiệu",
       "title": "Về mình",
-      "description": "DevOps engineer với 2.5 năm kinh nghiệm (từ 04/2024) triển khai và vận hành workload container trên AWS (ECS Fargate, EKS), trước đó từng tự quản VPS Linux và homelab. Mình hỗ trợ release một dịch vụ AI dùng LLM ở production, triển khai bằng Argo CD và Helm trên EKS. Mình từng chịu trách nhiệm chính hạ tầng của một nền tảng AWS nhiều phòng khám, mỗi phòng khám một môi trường riêng — 151 resource Terraform trong 22 module tái sử dụng — với rollout container không downtime và migration database có kiểm soát. Mình xây pipeline triển khai trên GitHub Actions, từng duy trì pipeline Jenkins, và viết tài liệu cấp phát Terraform và onboarding khách hàng.",
+      "description": "DevOps engineer với 2+ năm kinh nghiệm triển khai và vận hành workload container trên AWS (ECS Fargate, EKS). Mình từng chịu trách nhiệm chính hạ tầng của một nền tảng AWS nhiều phòng khám, mỗi phòng khám một môi trường — 151 resource Terraform trong 22 module, rollout container cuốn chiếu, migration database có kiểm soát và scaling theo lịch giảm ~64% giờ chạy compute dev. Mình xây dựng pipeline GitHub Actions, từng duy trì Jenkins và hỗ trợ release dịch vụ AI dùng LLM trên EKS (Argo CD, Helm).",
       "cta": "Xem các dự án",
       "skillsTitle": "Kỹ năng",
       "stats": [
         {
-          "value": "2.5",
-          "label": "năm làm DevOps và hạ tầng (từ 04/2024)"
+          "value": "2+",
+          "label": "năm làm DevOps và hạ tầng"
         },
         {
           "value": "151",
@@ -72,16 +72,16 @@
         "cicd": "CI/CD",
         "iac": "Infrastructure as Code & Scripting",
         "cloud": "Cloud (AWS) & Edge",
-        "linux": "Linux & Homelab",
+        "linux": "Linux & Web Servers",
         "observability": "Monitoring & Observability",
-        "data": "Cơ sở dữ liệu"
+        "data": "Cơ sở dữ liệu",
+        "dev": "Phát triển"
       },
       "skills": {
         "kubernetes": "Kubernetes",
         "helm": "Helm",
         "argocd": "Argo CD",
-        "kubectl": "kubectl",
-        "docker": "Docker",
+        "docker": "Docker (BuildKit)",
         "compose": "Docker Compose",
         "externalSecrets": "External Secrets",
         "githubActions": "GitHub Actions",
@@ -90,7 +90,6 @@
         "terraform": "Terraform",
         "bash": "Bash",
         "python": "Python",
-        "jq": "jq",
         "tflintTrivy": "TFLint / Trivy",
         "eks": "EKS",
         "ecr": "ECR",
@@ -108,14 +107,17 @@
         "linux": "Linux",
         "systemd": "systemd",
         "nginx": "Nginx",
-        "proxmox": "Proxmox (homelab)",
         "prometheus": "Prometheus",
         "grafana": "Grafana Cloud",
         "cloudwatch": "CloudWatch",
         "postgresql": "PostgreSQL",
         "mysql": "MySQL",
         "mongodb": "MongoDB",
-        "redis": "Redis"
+        "redis": "Redis",
+        "sonarqube": "SonarQube",
+        "oidcPodIdentity": "OIDC / Pod Identity",
+        "typescript": "TypeScript",
+        "nodejs": "Node.js / NestJS"
       }
     },
     "ContactSection": {
@@ -164,9 +166,9 @@
             "date": "10/2024"
           },
           "bullets": [
-            "Làm DevOps và hạ tầng cho ba sản phẩm: chịu trách nhiệm chính (03–06/2026) về hạ tầng và pipeline triển khai của một nền tảng đặt lịch nhiều phòng khám cho khách hàng, hỗ trợ release và môi trường cho Kotae (SaaS AI chatbot của Tokyo Techies, được biệt phái) và StarLive (streaming thời gian thực, dự án khách hàng nhiều vendor) trong team 14–15 người, làm việc trực tiếp với product owner nước ngoài bằng tiếng Anh.",
-            "Xây pipeline triển khai trên GitHub Actions và duy trì các pipeline Jenkinsfile sẵn có trên Jenkins.",
-            "Thu hẹp khác biệt giữa local, CI và production của nền tảng đặt lịch phòng khám bằng cách thay MinIO bằng LocalStack, để test dùng cùng S3 API với dịch vụ đã triển khai.",
+            "Thực hiện công việc DevOps và hạ tầng cho ba sản phẩm — chịu trách nhiệm chính về hạ tầng và pipeline triển khai của một nền tảng đặt lịch nhiều phòng khám cho khách hàng, đồng thời hỗ trợ release và môi trường cho Kotae (SaaS AI chatbot của Tokyo Techies, được biệt phái) và StarLive (streaming thời gian thực, dự án khách hàng nhiều vendor) trong các team 14–15 người, làm việc trực tiếp bằng tiếng Anh với product owner nước ngoài.",
+            "Xây dựng pipeline triển khai trên GitHub Actions và duy trì các pipeline Jenkinsfile sẵn có trên Jenkins; ở StarLive, chuyển app admin sang monorepo Turborepo, tối ưu Docker build bằng BuildKit cache mount, thống nhất Node 24 và thêm SonarQube vào CI.",
+            "Thu hẹp khác biệt giữa môi trường local, CI và production của nền tảng đặt lịch phòng khám — thay MinIO bằng LocalStack để test dùng cùng S3 API với dịch vụ đã triển khai.",
             "Viết script Bash tự động hóa triển khai, migration và cấp phát môi trường.",
             "Viết README Terraform và hướng dẫn onboarding phòng khám mới, dùng để cấp phát từng môi trường khách hàng."
           ]
@@ -174,10 +176,10 @@
         "softwareIntern": {
           "role": "Software Intern",
           "company": "Tokyo Tech Lab Viet Nam",
-          "period": "04/2024 — 10/2024",
+          "period": "01/2024 — 10/2024",
           "bullets": [
-            "Xây Gitman, công cụ quản lý Git repository nội bộ, từ commit đầu tiên đến khi phát hành toàn công ty, là developer duy nhất.",
-            "Phát triển tính năng workflow bằng Vue 3 và TypeScript cho nền tảng HRM dùng toàn công ty; những tháng cuối kỳ thực tập chuyển sang sản phẩm Kotae (biệt phái sang Tokyo Techies) và được lên Software Engineer sau sáu tháng."
+            "Xây dựng Gitman, công cụ quản lý repository Git nội bộ, từ commit đầu tiên đến khi phát hành toàn công ty — giao diện Vue.js và TypeScript trên API Nest.js và MongoDB — tự đảm nhận toàn bộ với tư cách lập trình viên duy nhất.",
+            "Phát triển tính năng workflow bằng Vue 3 và TypeScript cho nền tảng HRM production dùng toàn công ty; trong những tháng cuối kỳ thực tập chuyển sang sản phẩm Kotae (biệt phái sang Tokyo Techies) và được lên Software Engineer sau chín tháng."
           ]
         }
       }
@@ -213,46 +215,45 @@
       "approach": "Việc mình làm",
       "noPublicLink": "Dự án khách hàng — không có link công khai",
       "items": {
-        "portfolio": {
-          "title": "Nền tảng Portfolio trên Amazon EKS",
-          "period": "2026",
-          "role": "Kỹ sư duy nhất — hạ tầng, GitOps, pipeline release và ứng dụng",
-          "team": "Dự án cá nhân",
-          "summary": "Website cá nhân chạy production trên cụm EKS một node sau Cloudflare, xây dựng trên ba repository public.",
-          "bullets": [
-            "Cấp phát AWS và Cloudflare bằng Terraform (67 khối resource, 6 module): VPC, EKS với API private qua Session Manager, Pod Identity, ECR và security group chỉ nhận traffic từ Cloudflare cho ALB do controller tạo; CI chạy TFLint và Trivy.",
-            "Vận hành cluster theo GitOps: Argo CD ApplicationSet triển khai 5 Helm chart (Argo CD, Load Balancer Controller, External Secrets, Prometheus, ứng dụng kèm HPA), kiểm tra bằng kubeconform.",
-            "Tự động hóa release bằng GitHub Actions: OIDC vào AWS, image gắn tag SHA trong ECR có bước phê duyệt, commit tag vào GitOps, rồi kiểm tra phiên bản, smoke test và tự revert khi lỗi.",
-            "Giảm chi phí vận hành bằng night scheduler (EventBridge và Lambda) giữ node group ở 0 từ 22:00 đến 08:00 (ICT) và cả ngày Chủ nhật; website chủ động tắt trong khung giờ này.",
-            "Đẩy 119 metric Prometheus đã lọc lên 18 dashboard Grafana Cloud upstream, kèm alarm CloudWatch khi node down và khi scheduler lỗi.",
-            "Viết 19 ADR và 7 runbook, lưu trong repository workspace private (cung cấp khi được yêu cầu)."
-          ]
-        },
         "ercBooking": {
-          "title": "ERC Booking System — Hạ tầng & CI/CD",
+          "title": "ERC Booking System",
           "period": "03/2026 – 06/2026",
           "role": "DevOps Engineer / Backend Developer",
           "team": "Tokyo Tech Lab · team 5 người",
           "summary": "Nền tảng đặt lịch phòng khám, thiết kế cô lập theo từng tenant; chịu trách nhiệm chính về hạ tầng và CI/CD.",
           "bullets": [
-            "Chịu trách nhiệm chính codebase Terraform: 151 resource trong 22 module tái sử dụng (VPC, ECS Fargate, Aurora PostgreSQL, ElastiCache, CloudFront + WAF, SQS, SES, Backup); viết các module bastion, migration task, ECS scaling theo giờ làm việc, GitHub Actions IAM, Route 53, S3 frontend và SES SMTP.",
-            "Thiết kế template theo tenant để mỗi phòng khám mới có môi trường production riêng từ cùng bộ module — gồm một môi trường production mẫu và hướng dẫn onboarding.",
-            "Giảm chi phí lúc nhàn rỗi bằng scaling theo lịch giờ làm việc cho ECS API và worker, và môi trường dev chạy không cần NAT gateway.",
-            "Xây pipeline rollout GitHub Actions: patch ECS task definition, đăng ký revision, rollout service API và worker kèm kiểm tra ổn định, dọn revision cũ và build chọn lọc theo đường dẫn.",
-            "Xây pipeline migration Liquibase gắn theo nhánh, chạy dưới dạng ECS Fargate task một lần cho mỗi môi trường và tự tạo link CloudWatch Logs để truy vết lỗi.",
-            "Viết pipeline release S3 + CloudFront cho frontend, dùng cache-control immutable cho asset có hash và invalidation có chọn lọc để deploy SPA không downtime."
+            "Chịu trách nhiệm chính codebase Terraform (151 resource, 22 module tái sử dụng): viết các module bastion, migration task, scaling theo giờ làm việc, GitHub Actions IAM, Route 53, S3 frontend, SES SMTP và template theo phòng khám để mỗi phòng khám có môi trường production riêng.",
+            "Khóa ALB sau CloudFront + WAF, phục vụ S3 private qua OAC và signed URL; giảm ~64% giờ chạy compute dev bằng scaling ECS theo giờ làm việc (60/168 giờ mỗi tuần) và không dùng NAT gateway.",
+            "Xây dựng pipeline rollout GitHub Actions: patch ECS task definition, rolling deploy API/worker (giữ 100% task healthy), dọn revision cũ, build chọn lọc theo đường dẫn, và release frontend lên S3 + CloudFront với asset hash immutable.",
+            "Xây dựng pipeline migration Liquibase gắn theo nhánh, chạy dưới dạng ECS Fargate task một lần cho mỗi môi trường và tự tạo link CloudWatch Logs để truy vết lỗi."
           ]
         },
         "kotae": {
-          "title": "Kotae — Nền tảng AI/RAG Chatbot",
+          "title": "Kotae",
           "period": "08/2024 – Hiện tại",
           "role": "Full-Stack Engineer (release support)",
           "team": "Tokyo Techies · team 14 người",
-          "summary": "SaaS AI chatbot chăm sóc khách hàng cho doanh nghiệp nhỏ: RAG trên knowledge base của khách hàng với AWS Bedrock, OpenAI và Gemini, chạy trên EKS (dev, test, production).",
+          "summary": "Chatbot AI chăm sóc khách hàng cho doanh nghiệp nhỏ, dùng RAG, chạy trên EKS.",
           "bullets": [
-            "Hỗ trợ release dịch vụ dùng LLM này trên pipeline Argo CD + Helm của team trên EKS (development, test, production) bằng cách kích hoạt deploy môi trường development.",
-            "Chẩn đoán lỗi crawler trên cluster development từ log worker pod (timeout điều hướng khi nhiều pod chạy đồng thời) và điều chỉnh timeout crawl.",
-            "Gia cố luồng nạp dữ liệu RAG chống server-side request forgery, thêm kiểm tra IP private và kiểm tra khả năng truy cập qua redirect quanh crawler."
+            "Thực hiện 21 lần deploy môi trường development cho các service frontend, backend và landing (11/2024 – 01/2026) qua pipeline GitHub Actions sang Argo CD + Helm của team trên EKS.",
+            "Chẩn đoán lỗi crawler trên cluster development từ log worker pod (timeout điều hướng khi nhiều pod chạy đồng thời) và tăng timeout điều hướng của crawler.",
+            "Dựng thử stack Firecrawl tự host bằng Docker Compose (6 service gồm Playwright, Redis, RabbitMQ) có giới hạn bộ nhớ, health check và profile; giảm số trang crawl đồng thời từ 10 xuống 3.",
+            "Mở rộng ingestion website cho RAG: khám phá URL từ sitemap.xml và OCR chữ trong ảnh khi crawl, phát hành sau feature flag.",
+            "Gia cố luồng ingestion RAG chống SSRF bằng kiểm tra IP private và redirect quanh crawler."
+          ]
+        },
+        "portfolio": {
+          "title": "Portfolio Platform",
+          "period": "2026",
+          "role": "Kỹ sư duy nhất — hạ tầng, GitOps, pipeline release và ứng dụng",
+          "team": "Dự án cá nhân",
+          "summary": "Website cá nhân chạy production trên cụm EKS một node sau Cloudflare, xây dựng trên ba repository public.",
+          "bullets": [
+            "Cấp phát AWS và Cloudflare bằng Terraform (67 khối resource, 6 module): VPC, EKS với API private qua Session Manager, Pod Identity, ECR và security group chỉ nhận traffic từ Cloudflare cho ALB do controller tạo; CI chạy TFLint và Trivy, action pin theo SHA.",
+            "Vận hành cluster theo GitOps: Argo CD ApplicationSet triển khai 5 Helm chart (Argo CD, Load Balancer Controller, External Secrets, Prometheus, ứng dụng kèm HPA), kiểm tra bằng kubeconform.",
+            "Tự động hóa release bằng GitHub Actions: OIDC vào AWS, image gắn tag SHA trong ECR có bước phê duyệt, commit tag vào GitOps, rồi kiểm tra phiên bản, smoke test và tự revert khi lỗi.",
+            "Đẩy 119 metric Prometheus đã lọc lên 18 dashboard Grafana Cloud upstream, kèm alarm CloudWatch khi node down và khi scheduler lỗi — scheduler tắt node ban đêm (EventBridge + Lambda Python, reconcile mỗi 15 phút) giảm một nửa giờ chạy node (84/168 giờ mỗi tuần).",
+            "Viết 19 ADR và 7 runbook, lưu trong repository workspace private (cung cấp khi được yêu cầu)."
           ]
         }
       }

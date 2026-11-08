@@ -4,7 +4,7 @@ import { useInView, useReducedMotion } from "motion/react";
 import { useEffect, useRef, useState } from "react";
 
 type CountUpProps = {
-  /** Numeric text such as "151" or "2.5"; decimals are preserved */
+  /** Numeric text such as "151", "2.5" or "2+"; decimals and a trailing qualifier are preserved */
   value: string;
   className?: string;
   duration?: number;
@@ -21,14 +21,19 @@ export function CountUp({ value, className, duration = 1.2 }: CountUpProps) {
   const reduceMotion = useReducedMotion();
 
   const target = Number.parseFloat(value);
-  const decimals = value.includes(".") ? (value.split(".")[1]?.length ?? 0) : 0;
+  // Keep a trailing qualifier such as the "+" in "2+" once the count lands.
+  const suffix = value.replace(/^[\d.]+/, "");
+  const number = value.slice(0, value.length - suffix.length);
+  const decimals = number.includes(".")
+    ? (number.split(".")[1]?.length ?? 0)
+    : 0;
   const animatable = Number.isFinite(target) && !reduceMotion;
   const [display, setDisplay] = useState(value);
 
   // Start from zero once hydrated, ahead of the scroll that triggers the count.
   useEffect(() => {
-    if (animatable) setDisplay((0).toFixed(decimals));
-  }, [animatable, decimals]);
+    if (animatable) setDisplay(`${(0).toFixed(decimals)}${suffix}`);
+  }, [animatable, decimals, suffix]);
 
   useEffect(() => {
     if (!animatable || !inView) return;
@@ -37,12 +42,12 @@ export function CountUp({ value, className, duration = 1.2 }: CountUpProps) {
     const tick = (now: number) => {
       const t = Math.min((now - start) / (duration * 1000), 1);
       const eased = 1 - (1 - t) ** 3;
-      setDisplay((target * eased).toFixed(decimals));
+      setDisplay(`${(target * eased).toFixed(decimals)}${suffix}`);
       if (t < 1) frame = requestAnimationFrame(tick);
     };
     frame = requestAnimationFrame(tick);
     return () => cancelAnimationFrame(frame);
-  }, [animatable, inView, target, decimals, duration]);
+  }, [animatable, inView, target, decimals, suffix, duration]);
 
   return (
     <span ref={ref} className={className}>

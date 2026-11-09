@@ -64,16 +64,20 @@ export const TECH_ICONS = {
   localstack: brand("localstack"),
   mongodb: brand("mongodb"),
   mysql: brand("mysql"),
+  nestjs: brand("nestjs"),
   nginx: brand("nginx"),
+  nodejs: brand("nodejs"),
   openai: brand("openai"),
   postgresql: brand("postgresql"),
   prometheus: brand("prometheus"),
   proxmox: brand("proxmox"),
   python: brand("python"),
   redis: brand("redis"),
+  sonarqube: brand("sonarqube"),
   systemd: brand("systemd"),
   terraform: brand("terraform"),
   trivy: brand("trivy", "dark"),
+  typescript: brand("typescript"),
 } as const satisfies Record<string, TechIcon>;
 
 export type TechIconId = keyof typeof TECH_ICONS;
@@ -104,6 +108,7 @@ export const TAG_ICONS = {
   Liquibase: ["liquibase"],
   OpenAI: ["openai"],
   Prometheus: ["prometheus"],
+  SonarQube: ["sonarqube"],
   "SQS / SES": ["awsSqs", "awsSes"],
   Terraform: ["terraform"],
 } as const satisfies Record<string, readonly TechIconId[]>;

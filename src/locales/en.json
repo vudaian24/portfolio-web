@@ -36,7 +36,7 @@
         "CI/CD pipelines",
         "GitOps & Argo CD"
       ],
-      "description": "DevOps engineer with 2.5 years delivering and operating containerized workloads on AWS (ECS Fargate, EKS). I was the primary infrastructure owner of a multi-clinic booking platform, support releases of a production AI service on EKS, and work directly with overseas product owners in English.",
+      "description": "DevOps engineer with 2+ years delivering and operating containerized workloads on AWS (ECS Fargate, EKS). I was the primary infrastructure owner of a multi-clinic booking platform, support releases of a production AI service on EKS, and work directly with overseas product owners in English.",
       "availability": "Open to DevOps and platform roles",
       "ctaProjects": "View projects",
       "ctaContact": "Get in touch",
@@ -46,13 +46,13 @@
     "AboutSection": {
       "eyebrow": "Introduction",
       "title": "About Me",
-      "description": "DevOps engineer with 2.5 years (since April 2024) delivering and operating containerized workloads on AWS (ECS Fargate, EKS), with earlier self-managed Linux VPS and homelab work. I support releases of a production LLM-backed AI service deployed with Argo CD and Helm on EKS. I was the primary infrastructure owner of a multi-clinic AWS platform with a dedicated environment per clinic — 151 Terraform resources across 22 reusable modules — with zero-downtime container rollouts and gated database migrations. I build delivery pipelines in GitHub Actions, have maintained Jenkins pipelines, and document Terraform provisioning and client onboarding.",
+      "description": "DevOps engineer with 2+ years of experience delivering and operating containerized workloads on AWS (ECS Fargate, EKS). I was the primary infrastructure owner for a multi-clinic AWS platform with per-clinic environments — 151 Terraform resources across 22 modules, rolling container rollouts, gated database migrations, and scheduled scaling that cut dev compute hours by ~64%. I build GitHub Actions pipelines, have maintained Jenkins, and support releases of an LLM-backed AI service on EKS (Argo CD, Helm).",
       "cta": "See the projects",
       "skillsTitle": "Tech skills",
       "stats": [
         {
-          "value": "2.5",
-          "label": "years in DevOps and infrastructure (since April 2024)"
+          "value": "2+",
+          "label": "years in DevOps and infrastructure"
         },
         {
           "value": "151",
@@ -72,16 +72,16 @@
         "cicd": "CI/CD",
         "iac": "Infrastructure as Code & Scripting",
         "cloud": "Cloud (AWS) & Edge",
-        "linux": "Linux & Homelab",
+        "linux": "Linux & Web Servers",
         "observability": "Monitoring & Observability",
-        "data": "Databases"
+        "data": "Databases",
+        "dev": "Development"
       },
       "skills": {
         "kubernetes": "Kubernetes",
         "helm": "Helm",
         "argocd": "Argo CD",
-        "kubectl": "kubectl",
-        "docker": "Docker",
+        "docker": "Docker (BuildKit)",
         "compose": "Docker Compose",
         "externalSecrets": "External Secrets",
         "githubActions": "GitHub Actions",
@@ -90,7 +90,6 @@
         "terraform": "Terraform",
         "bash": "Bash",
         "python": "Python",
-        "jq": "jq",
         "tflintTrivy": "TFLint / Trivy",
         "eks": "EKS",
         "ecr": "ECR",
@@ -108,14 +107,17 @@
         "linux": "Linux",
         "systemd": "systemd",
         "nginx": "Nginx",
-        "proxmox": "Proxmox (homelab)",
         "prometheus": "Prometheus",
         "grafana": "Grafana Cloud",
         "cloudwatch": "CloudWatch",
         "postgresql": "PostgreSQL",
         "mysql": "MySQL",
         "mongodb": "MongoDB",
-        "redis": "Redis"
+        "redis": "Redis",
+        "sonarqube": "SonarQube",
+        "oidcPodIdentity": "OIDC / Pod Identity",
+        "typescript": "TypeScript",
+        "nodejs": "Node.js / NestJS"
       }
     },
     "ContactSection": {
@@ -164,20 +166,20 @@
             "date": "Oct 2024"
           },
           "bullets": [
-            "DevOps and infrastructure work across three products: primary owner (Mar–Jun 2026) of the infrastructure and delivery pipelines for a multi-clinic booking client platform, and release and environment support for Kotae (Tokyo Techies' AI chatbot SaaS, on secondment) and StarLive (real-time streaming, multi-vendor client project) in teams of 14–15, working directly with overseas product owners in English.",
-            "Built delivery pipelines in GitHub Actions and maintained existing Jenkinsfile pipelines in Jenkins.",
-            "Closed the gap between local, CI and production on the clinic-booking platform by replacing MinIO with LocalStack, so tests exercise the same S3 API as the deployed service.",
-            "Wrote Bash automation for deployment, migration and environment-provisioning tasks.",
-            "Wrote the Terraform README and the new-clinic onboarding guide used to provision each client environment."
+            "Deliver DevOps and infrastructure work across three products — primary owner of the infrastructure and delivery pipelines for a multi-clinic booking client platform, and supporting the release and environment needs of Kotae (Tokyo Techies' AI chatbot SaaS, on secondment) and StarLive (real-time streaming, multi-vendor client project) in teams of 14–15, working directly with overseas product owners in English.",
+            "Built delivery pipelines in GitHub Actions and maintained existing Jenkinsfile pipelines in Jenkins; on StarLive, migrated the admin app to a Turborepo monorepo, optimized the Docker build with BuildKit cache mounts, standardized on Node 24, and added SonarQube to CI.",
+            "Closed the gap between local, CI, and production environments on the clinic-booking platform — replacing MinIO with LocalStack so tests exercise the same S3 API as the deployed service.",
+            "Wrote Bash automation for deployment, migration, and environment-provisioning tasks.",
+            "Wrote the Terraform README and new-clinic onboarding guide for provisioning each client environment."
           ]
         },
         "softwareIntern": {
           "role": "Software Intern",
           "company": "Tokyo Tech Lab Viet Nam",
-          "period": "Apr 2024 — Oct 2024",
+          "period": "Jan 2024 — Oct 2024",
           "bullets": [
-            "Built Gitman, an internal Git repository management tool, from the first commit to a company-wide release as the sole developer.",
-            "Shipped Vue 3 and TypeScript workflow features into the company-wide HRM platform, then moved onto the Kotae product (on secondment to Tokyo Techies) in the final months of the internship and was promoted to Software Engineer after six months."
+            "Built Gitman, an internal Git repository management tool, from the first commit through to company-wide release — Vue.js and TypeScript interface over a Nest.js and MongoDB API — owning it end to end as the sole developer.",
+            "Shipped Vue 3 and TypeScript workflow features into the production HRM platform used across the company, then moved onto the Kotae product (on secondment to Tokyo Techies) in the final months of the internship and was promoted to Software Engineer after nine months."
           ]
         }
       }
@@ -213,46 +215,45 @@
       "approach": "What I did",
       "noPublicLink": "Client project — no public link",
       "items": {
-        "portfolio": {
-          "title": "Portfolio Platform on Amazon EKS",
-          "period": "2026",
-          "role": "Sole engineer — infrastructure, GitOps, release pipeline and application",
-          "team": "Solo project",
-          "summary": "Personal production site on a one-node EKS cluster behind Cloudflare, built across three public repositories.",
-          "bullets": [
-            "Provisioned AWS and Cloudflare in Terraform (67 resource blocks, 6 modules): VPC, EKS with a private API via Session Manager, Pod Identity, ECR, and a Cloudflare-only security group for the controller-managed ALB; CI runs TFLint and Trivy.",
-            "Ran the cluster as GitOps: Argo CD ApplicationSets deploy 5 Helm charts (Argo CD, Load Balancer Controller, External Secrets, Prometheus, the app with an HPA), validated with kubeconform.",
-            "Automated releases in GitHub Actions: OIDC to AWS, approval-gated SHA-tagged images in ECR, the tag committed to GitOps, then a version check, smoke test and auto-revert on failure.",
-            "Cut the running cost with a night scheduler (EventBridge and a Lambda) that holds the node group at 0 from 22:00 to 08:00 ICT and all day on Sunday; the site is intentionally offline in that window.",
-            "Shipped 119 filtered Prometheus metrics to 18 upstream Grafana Cloud dashboards, with CloudWatch node-down and scheduler-error alarms.",
-            "Wrote 19 ADRs and 7 runbooks, kept in a private workspace repository (available on request)."
-          ]
-        },
         "ercBooking": {
-          "title": "ERC Booking System — Infrastructure & CI/CD",
+          "title": "ERC Booking System",
           "period": "Mar 2026 – Jun 2026",
           "role": "DevOps Engineer / Backend Developer",
           "team": "Tokyo Tech Lab · team of 5",
           "summary": "Clinic scheduling platform architected for per-tenant isolation; primary owner of its infrastructure and CI/CD.",
           "bullets": [
-            "Primary owner of the Terraform codebase: 151 resources across 22 reusable modules (VPC, ECS Fargate, Aurora PostgreSQL, ElastiCache, CloudFront + WAF, SQS, SES, Backup), authoring the bastion, migration-task, ECS work-hours scaling, GitHub Actions IAM, Route 53, S3 frontend and SES SMTP modules.",
-            "Designed the per-tenant template so each new clinic gets a dedicated production environment from the same modules — a sample production environment plus an onboarding guide.",
-            "Cut idle cost with work-hours scheduled scaling of the ECS API and worker services, and a dev environment that runs without a NAT gateway.",
-            "Built the GitHub Actions rollout pipeline that patches ECS task definitions, registers revisions and rolls out API and worker services with stability checks, old-revision cleanup and path-based selective builds.",
-            "Engineered a branch-gated Liquibase migration pipeline that runs as a one-off ECS Fargate task per environment and auto-generates CloudWatch Logs links for failure triage.",
-            "Authored the S3 + CloudFront release pipeline for the frontend, using immutable cache-control on hashed assets with targeted invalidation for zero-downtime SPA deploys."
+            "Primary owner of the Terraform codebase (151 resources, 22 reusable modules): authored the bastion, migration-task, work-hours scaling, GitHub Actions IAM, Route 53, S3 frontend, and SES SMTP modules, plus a per-clinic template that gives each clinic a dedicated production environment.",
+            "Locked the ALB behind CloudFront + WAF and served private S3 media via OAC + signed URLs; cut dev compute hours by ~64% with work-hours ECS scaling (60 of 168 hours a week) and no NAT gateway.",
+            "Built the GitHub Actions rollout pipeline: patched ECS task definitions, rolling API/worker deploys (100% minimum healthy), old-revision cleanup, path-based selective builds, and an S3 + CloudFront frontend release with immutable hashed assets.",
+            "Engineered a branch-gated Liquibase migration pipeline that runs as a one-off ECS Fargate task per environment and auto-generates CloudWatch Logs links for failure triage."
           ]
         },
         "kotae": {
-          "title": "Kotae — AI/RAG Chatbot Platform",
+          "title": "Kotae",
           "period": "Aug 2024 – Present",
           "role": "Full-Stack Engineer (release support)",
           "team": "Tokyo Techies · team of 14",
-          "summary": "SaaS AI customer-support chatbot for small businesses: RAG over customer knowledge bases on AWS Bedrock, OpenAI and Gemini, run on EKS (dev, test, production).",
+          "summary": "AI customer-support chatbot for small businesses: RAG over customer knowledge bases, run on EKS.",
           "bullets": [
-            "Supported releases of this LLM-backed service on the team's Argo CD + Helm pipeline on EKS (development, test, production) by triggering development deployments.",
-            "Diagnosed crawler failures on the development cluster from worker-pod logs (navigation timeouts across concurrent pods) and tuned the crawl timeouts.",
-            "Hardened the RAG ingestion path against server-side request forgery, adding private-IP and redirect reachability checks around the crawler."
+            "Shipped 21 development deployments across the frontend, backend, and landing services (Nov. 2024 – Jan. 2026) through the team's GitHub Actions to Argo CD + Helm pipeline on EKS.",
+            "Diagnosed crawler failures on the development cluster from worker-pod logs (navigation timeouts across concurrent pods) and raised the crawler's navigation timeout.",
+            "Prototyped a self-hosted Firecrawl stack in Docker Compose (6 services incl. Playwright, Redis, RabbitMQ) with memory limits, health checks, and profiles, and cut crawler concurrency from 10 to 3 pages.",
+            "Extended RAG website ingestion with sitemap.xml URL discovery and feature-flagged OCR of text in crawled images.",
+            "Hardened RAG ingestion against SSRF with private-IP and redirect checks around the crawler."
+          ]
+        },
+        "portfolio": {
+          "title": "Portfolio Platform",
+          "period": "2026",
+          "role": "Sole engineer — infrastructure, GitOps, release pipeline and application",
+          "team": "Solo project",
+          "summary": "Personal production site on a one-node EKS cluster behind Cloudflare, built across three public repositories.",
+          "bullets": [
+            "Provisioned AWS and Cloudflare in Terraform (67 resource blocks, 6 modules): VPC, EKS with a private API via Session Manager, Pod Identity, ECR, and a Cloudflare-only security group for the controller-managed ALB; CI runs TFLint and Trivy, with actions pinned by SHA.",
+            "Ran the cluster as GitOps: Argo CD ApplicationSets deploy 5 Helm charts (Argo CD, Load Balancer Controller, External Secrets, Prometheus, the app with an HPA), validated with kubeconform.",
+            "Automated releases in GitHub Actions: OIDC to AWS, approval-gated SHA-tagged images in ECR, the tag committed to GitOps, then a version check, smoke test, and auto-revert on failure.",
+            "Shipped 119 filtered Prometheus metrics to 18 upstream Grafana Cloud dashboards, with CloudWatch node-down and scheduler-error alarms — the night-shutdown scheduler (EventBridge + a Python Lambda reconciling every 15 minutes) halves node uptime (84 of 168 hours a week).",
+            "Wrote 19 ADRs and 7 runbooks, kept in a private workspace repository (available on request)."
           ]
         }
       }

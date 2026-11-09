@@ -9,6 +9,7 @@ import {
   ArrowRight,
   Boxes,
   Cloud,
+  Code,
   Database,
   FileCode2,
   Terminal,
@@ -30,6 +31,7 @@ const GROUP_ICONS: Record<SkillGroupId, LucideIcon> = {
   linux: Terminal,
   observability: Activity,
   data: Database,
+  dev: Code,
 };
 
 export type AboutContent = {

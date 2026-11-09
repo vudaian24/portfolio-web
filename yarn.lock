@@ -2618,10 +2618,10 @@ loose-envify@^1.4.0:
   dependencies:
     js-tokens "^3.0.0 || ^4.0.0"
 
-lucide-react@^1.63.0:
-  version "1.63.0"
-  resolved "https://registry.yarnpkg.com/lucide-react/-/lucide-react-1.63.0.tgz#eb7e0d4304030b4fb06b427db397b82ce18e2b35"
-  integrity sha512-GkBfQG+FUJ41x6y3/lNXiOziVU0Rcqqq0TCzhHS8avsFXHZmOdmfBqsVTvHSaVmbI+wbdGkxHRmhYWhD3N4/yA==
+lucide-react@^1.66.0:
+  version "1.66.0"
+  resolved "https://registry.yarnpkg.com/lucide-react/-/lucide-react-1.66.0.tgz#0b7e0bdab15feb8e7c3188ce57493dd431c77309"
+  integrity sha512-8zjbi/Us+ETXqfBwmXF/FHrWGIqOdE6zT1yUdRJLQVoptomSkB0zdFWVIM667t9K8djWDaXdkBkqi2qVTuDNiw==
 
 magic-string@^1.1.0:
   version "1.4.5"

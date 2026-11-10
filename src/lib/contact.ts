@@ -15,6 +15,8 @@ export type ContactErrorKey = (typeof contactErrorKeys)[number];
 // (counted after entity parsing), with room for the fixed template text.
 export const CONTACT_MAX_BODY_BYTES = 16 * 1024;
 
+export const CONTACT_HONEYPOT_FIELD = "website";
+
 export const ContactSchema = z.object({
   name: z
     .string({ error: "nameMin" satisfies ContactErrorKey })
@@ -27,6 +29,9 @@ export const ContactSchema = z.object({
     .string({ error: "messageMin" satisfies ContactErrorKey })
     .min(10, { error: "messageMin" satisfies ContactErrorKey })
     .max(2000, { error: "messageMax" satisfies ContactErrorKey }),
+  // Honeypot. The field is hidden from people and assistive technology, so
+  // only bots fill it in. The route accepts such a request and drops it.
+  [CONTACT_HONEYPOT_FIELD]: z.string().max(200).optional(),
 });
 
 export type ContactForm = z.infer<typeof ContactSchema>;

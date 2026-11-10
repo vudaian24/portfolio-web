@@ -1,3 +1,4 @@
+import type { Metadata } from "next";
 import { ArrowLeft, ArrowUpRight } from "lucide-react";
 import { notFound } from "next/navigation";
 import { getTranslations, setRequestLocale } from "next-intl/server";
@@ -8,6 +9,7 @@ import {
 } from "@/components/sections/CaseStudyMotion";
 import { TechChip } from "@/components/ui/TechChip";
 import { isProjectId, PROJECTS } from "@/config/site";
+import { alternatesFor, localizedUrl, openGraphBase } from "@/lib/seo";
 import { TAG_ICONS } from "@/lib/techIcons";
 import { routing } from "@/i18n/routing";
 
@@ -21,11 +23,29 @@ export function generateStaticParams() {
   );
 }
 
-export async function generateMetadata({ params }: Props) {
+export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { locale, id } = await params;
   if (!isProjectId(id)) return {};
   const t = await getTranslations({ locale, namespace: "HomePage.Projects" });
-  return { title: t(`items.${id}.title`) };
+  const tMeta = await getTranslations({ locale, namespace: "Common.Metadata" });
+  const path = `/projects/${id}`;
+  const title = t(`items.${id}.title`);
+  const description = t(`items.${id}.summary`);
+
+  return {
+    title,
+    description,
+    alternates: alternatesFor(locale, path),
+    openGraph: {
+      type: "article",
+      siteName: tMeta("siteName"),
+      title,
+      description,
+      url: localizedUrl(locale, path),
+      ...openGraphBase(locale),
+    },
+    twitter: { card: "summary_large_image", title, description },
+  };
 }
 
 export default async function ProjectCaseStudyPage({ params }: Props) {

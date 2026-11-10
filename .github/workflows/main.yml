@@ -79,6 +79,9 @@ jobs:
         github.event_name == 'workflow_dispatch')
     runs-on: ubuntu-24.04-arm
     environment: aws-production
+    # Counts from approval, not from the wait for it. Build about 2 minutes,
+    # the version wait at most 10; anything far past that is stuck.
+    timeout-minutes: 30
     concurrency:
       group: deploy-production
       cancel-in-progress: false
@@ -284,9 +287,12 @@ jobs:
         if: success() && steps.target.outputs.mode != 'bootstrap'
         env:
           TARGET_SHA: ${{ steps.target.outputs.sha }}
+        # Reads the header from the health endpoint, which is always rendered per
+        # request: the home page is static, so an edge cache in front of it
+        # could keep serving the old version and stall this wait.
         run: |
           deadline=$((SECONDS + 600))
-          until [ "$(curl -sS --max-time 15 -o /dev/null -D - -H 'Cache-Control: no-cache' "$SITE_URL/" \
+          until [ "$(curl -sS --max-time 15 -o /dev/null -D - -H 'Cache-Control: no-cache' "$SITE_URL/web-api/health" \
             | tr -d '\r' | awk -F': ' 'tolower($1) == "x-app-version" {print $2}')" = "$TARGET_SHA" ]; do
             if [ "$SECONDS" -ge "$deadline" ]; then
               echo "::error::$SITE_URL did not report x-app-version $TARGET_SHA within 10 minutes"

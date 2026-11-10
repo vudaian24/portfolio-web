@@ -10,7 +10,8 @@ export default function middleware(request: NextRequest) {
   if (
     pathname.startsWith("/web-api") ||
     pathname.startsWith("/_next") ||
-    pathname.includes(".")
+    pathname.includes(".") ||
+    pathname.includes("/opengraph-image")
   ) {
     return;
   }
@@ -18,6 +19,8 @@ export default function middleware(request: NextRequest) {
   return intlMiddleware(request);
 }
 
+// Open Graph image routes are left alone: their metadata URL keeps the /en
+// prefix, and the as-needed redirect would make crawlers follow a 307.
 export const config = {
-  matcher: ["/((?!web-api|_next|.*\\..*).*)"],
+  matcher: ["/((?!web-api|_next|.*\\..*|.*opengraph-image).*)"],
 };

@@ -170,7 +170,7 @@ body {
 }
 
 .font-display {
-  font-family: var(--font-outfit), ui-sans-serif, system-ui, sans-serif;
+  font-family: var(--font-display), ui-sans-serif, system-ui, sans-serif;
   letter-spacing: -0.02em;
 }
 
@@ -234,7 +234,7 @@ body::before {
 /* Buttons: lift, glow and a light sweep on hover */
 .btn {
   @apply relative isolate inline-flex h-12 items-center justify-center gap-2 overflow-hidden rounded-xl px-6 text-sm font-semibold whitespace-nowrap;
-  font-family: var(--font-outfit), ui-sans-serif, system-ui, sans-serif;
+  font-family: var(--font-display), ui-sans-serif, system-ui, sans-serif;
   transition:
     transform 0.25s cubic-bezier(0.22, 1, 0.36, 1),
     box-shadow 0.25s ease,
@@ -367,6 +367,38 @@ body::before {
   }
 }
 
+/* Hero entrance. CSS, not motion, so it runs before hydration and the LCP
+   text and photo paint at once (see HeroSectionClient). */
+/* Starts at 0.01, not 0: Chrome skips opacity-0 elements as LCP candidates,
+   so a fade from 0 hides the hero text and photo from LCP until a later,
+   JavaScript-revealed element takes the slot. 0.01 looks the same. */
+@keyframes hero-rise {
+  from {
+    opacity: 0.01;
+    translate: 0 var(--hero-shift, 18px);
+    scale: var(--hero-scale, 1);
+  }
+  to {
+    opacity: 1;
+    translate: none;
+    scale: none;
+  }
+}
+
+/* translate and scale, not transform: motion writes the hero parallax to
+   transform, and the two compose instead of overriding each other. */
+.hero-rise {
+  animation: hero-rise var(--hero-duration, 0.45s)
+    cubic-bezier(0.22, 1, 0.36, 1) both;
+  animation-delay: var(--hero-delay, 0s);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hero-rise {
+    animation: none;
+  }
+}
+
 /* Tech logos (TechChip): brand colours that vanish on one theme get a tone fix */
 .dark .tech-icon[data-tone="dark"] {
   filter: brightness(0) invert(0.88);
@@ -374,6 +406,16 @@ body::before {
 
 :root:not(.dark) .tech-icon[data-tone="light"] {
   filter: brightness(0.7) saturate(1.3);
+}
+
+/* Skip link: hidden until focused, then the first thing on the page */
+.skip-link {
+  @apply fixed left-4 top-3 z-[100] -translate-y-24 rounded-lg bg-brand px-4 py-2 text-sm font-semibold text-brand-foreground shadow-lg;
+  transition: transform 0.2s ease;
+}
+
+.skip-link:focus-visible {
+  @apply translate-y-0 outline-2 outline-offset-2 outline-brand;
 }
 
 /* Underline that grows from the left on hover */
@@ -395,7 +437,7 @@ body::before {
 }
 
 .section-label {
-  font-family: var(--font-outfit), ui-sans-serif, system-ui, sans-serif;
+  font-family: var(--font-display), ui-sans-serif, system-ui, sans-serif;
   @apply text-xs font-semibold uppercase tracking-[0.2em] text-brand;
 }
 

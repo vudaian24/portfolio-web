@@ -66,7 +66,8 @@ export default function LanguageSelector() {
         )}
         aria-expanded={open}
         aria-haspopup="listbox"
-        aria-label="Language"
+        // Starts with the visible text so the name matches the label (WCAG 2.5.3)
+        aria-label={`${currentLanguage?.label ?? ""} — ${t("label")}`}
       >
         <span className="hidden sm:inline">
           {currentLanguage?.flag} {currentLanguage?.label}

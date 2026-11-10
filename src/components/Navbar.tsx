@@ -2,8 +2,9 @@
 
 import { Link } from "@/i18n/navigation";
 import { Menu, X } from "lucide-react";
-import { useState, useEffect } from "react";
-import { AnimatePresence, useReducedMotion } from "motion/react";
+import { useState, useEffect, useRef } from "react";
+import { AnimatePresence } from "motion/react";
+import { useReducedMotion } from "@/lib/useReducedMotion";
 import * as m from "motion/react-m";
 import { cn } from "@/lib/utils";
 import { useTranslations } from "next-intl";
@@ -15,7 +16,10 @@ import { useActiveSection } from "@/lib/useActiveSection";
 
 export default function Navbar() {
   const t = useTranslations("Common.nav");
+  const tA11y = useTranslations("Common.a11y");
   const [isOpen, setIsOpen] = useState(false);
+  const toggleRef = useRef<HTMLButtonElement>(null);
+  const menuRef = useRef<HTMLDivElement>(null);
   const [scrolled, setScrolled] = useState(false);
   const reduceMotion = useReducedMotion();
   const active = useActiveSection(NAV_ITEMS.map((item) => item.href.slice(1)));
@@ -26,20 +30,56 @@ export default function Navbar() {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
+  // While the mobile menu is open: lock page scroll, move focus into the menu
+  // and keep Tab inside it (the toggle plus the menu), close on Escape with
+  // focus back on the toggle, and close when the viewport reaches the desktop
+  // layout, where the menu is hidden and would leave the page locked.
   useEffect(() => {
-    document.body.style.overflow = isOpen ? "hidden" : "";
-    if (!isOpen) {
-      return () => {
-        document.body.style.overflow = "";
-      };
-    }
+    if (!isOpen) return;
+    document.body.style.overflow = "hidden";
+
+    const focusable = () => [
+      ...(toggleRef.current ? [toggleRef.current] : []),
+      ...(menuRef.current?.querySelectorAll<HTMLElement>("a[href], button") ??
+        []),
+    ];
+    menuRef.current?.querySelector<HTMLElement>("a[href]")?.focus();
+
     const onKey = (e: KeyboardEvent) => {
-      if (e.key === "Escape") setIsOpen(false);
+      if (e.key === "Escape") {
+        setIsOpen(false);
+        toggleRef.current?.focus();
+        return;
+      }
+      if (e.key !== "Tab") return;
+      const items = focusable();
+      const first = items[0];
+      const last = items[items.length - 1];
+      if (!first || !last) return;
+      const current = document.activeElement;
+      if (!items.includes(current as HTMLElement)) {
+        e.preventDefault();
+        first.focus();
+      } else if (e.shiftKey && current === first) {
+        e.preventDefault();
+        last.focus();
+      } else if (!e.shiftKey && current === last) {
+        e.preventDefault();
+        first.focus();
+      }
     };
+
+    const desktop = window.matchMedia("(min-width: 80rem)");
+    const onDesktop = () => {
+      if (desktop.matches) setIsOpen(false);
+    };
+
     document.addEventListener("keydown", onKey);
+    desktop.addEventListener("change", onDesktop);
     return () => {
       document.body.style.overflow = "";
       document.removeEventListener("keydown", onKey);
+      desktop.removeEventListener("change", onDesktop);
     };
   }, [isOpen]);
 
@@ -65,7 +105,7 @@ export default function Navbar() {
       >
         <nav
           className="section-shell flex h-16 items-center justify-between md:h-[4.25rem]"
-          aria-label="Primary"
+          aria-label={tA11y("primaryNav")}
         >
           <Link
             href="/"
@@ -129,12 +169,13 @@ export default function Navbar() {
             <LanguageSelector />
             <ThemeToggle />
             <button
+              ref={toggleRef}
               type="button"
               onClick={() => setIsOpen(!isOpen)}
               className="inline-flex h-10 w-10 items-center justify-center rounded-lg border border-border/80 bg-surface/80 text-foreground transition-colors hover:border-brand/30 hover:bg-brand-muted/30"
               aria-expanded={isOpen}
-              aria-controls="mobile-nav"
-              aria-label={isOpen ? "Close menu" : "Open menu"}
+              aria-controls={isOpen ? "mobile-nav" : undefined}
+              aria-label={isOpen ? tA11y("closeMenu") : tA11y("openMenu")}
             >
               {isOpen ? <X size={20} /> : <Menu size={20} />}
             </button>
@@ -144,6 +185,7 @@ export default function Navbar() {
         <AnimatePresence>
           {isOpen ? (
             <m.div
+              ref={menuRef}
               id="mobile-nav"
               key="mobile-nav"
               initial={reduceMotion ? false : { opacity: 0, y: -8 }}
@@ -209,14 +251,15 @@ export default function Navbar() {
 
       <AnimatePresence>
         {isOpen ? (
-          <m.button
+          // Pointer-only backdrop: keyboard and screen-reader users close the
+          // menu with the toggle or Escape, so it stays out of their way.
+          <m.div
             key="nav-overlay"
-            type="button"
             initial={reduceMotion ? false : { opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             className="fixed inset-0 z-30 bg-foreground/20 backdrop-blur-[2px] xl:hidden"
-            aria-label="Close menu"
+            aria-hidden
             onClick={() => setIsOpen(false)}
           />
         ) : null}

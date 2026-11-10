@@ -4,8 +4,10 @@ import { useEffect, useState } from "react";
 import { AnimatePresence } from "motion/react";
 import * as m from "motion/react-m";
 import { ArrowUp } from "lucide-react";
+import { useTranslations } from "next-intl";
 
 export default function BackToTopButton() {
+  const t = useTranslations("Common.a11y");
   const [isVisible, setIsVisible] = useState(false);
 
   useEffect(() => {
@@ -29,7 +31,7 @@ export default function BackToTopButton() {
           whileTap={{ scale: 0.94 }}
           onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
           className="fixed bottom-6 right-6 z-50 flex h-11 w-11 items-center justify-center rounded-full border border-border bg-surface-elevated/95 text-brand shadow-md backdrop-blur-sm hover:border-brand/50 hover:bg-brand-muted/40 hover:shadow-lg"
-          aria-label="Back to top"
+          aria-label={t("backToTop")}
         >
           <ArrowUp className="h-5 w-5" strokeWidth={2} />
         </m.button>

@@ -1,6 +1,5 @@
 "use client";
 
-import { useReducedMotion } from "motion/react";
 import * as m from "motion/react-m";
 import type { Variants } from "motion/react";
 import { ArrowRight, ArrowUpRight, Check } from "lucide-react";
@@ -48,8 +47,6 @@ type ProjectsSectionClientProps = {
 export default function ProjectsSectionClient({
   content,
 }: ProjectsSectionClientProps) {
-  const reduceMotion = useReducedMotion();
-
   return (
     <Section id={SECTION_IDS.projects}>
       <SectionHeader
@@ -64,10 +61,10 @@ export default function ProjectsSectionClient({
             key={project.id}
             id={projectAnchorId(project.id)}
             custom={index}
-            initial={reduceMotion ? false : "hidden"}
+            initial="hidden"
             whileInView="visible"
             viewport={{ once: true, amount: 0.12 }}
-            variants={reduceMotion ? undefined : entryVariants}
+            variants={entryVariants}
             className="card-glow group scroll-mt-28 overflow-hidden p-6 md:p-10"
           >
             <div

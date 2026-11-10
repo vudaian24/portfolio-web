@@ -1,6 +1,7 @@
 "use client";
 
-import { AnimatePresence, useReducedMotion } from "motion/react";
+import { AnimatePresence } from "motion/react";
+import { useReducedMotion } from "@/lib/useReducedMotion";
 import type { Variants } from "motion/react";
 import * as m from "motion/react-m";
 import { useEffect, useState } from "react";
@@ -29,17 +30,14 @@ type AnimatedTextProps = {
   as?: "h1" | "h2" | "h3" | "p" | "span";
   className?: string;
   delay?: number;
-  /** Animate on mount instead of when scrolled into view */
-  onMount?: boolean;
 };
 
-/** Reveals text word by word, rising out of a blur */
+/** Reveals text word by word, rising out of a blur, when scrolled into view */
 export function AnimatedText({
   text,
   as = "span",
   className,
   delay = 0,
-  onMount = false,
 }: AnimatedTextProps) {
   const reduceMotion = useReducedMotion();
   const Tag = m[as];
@@ -50,9 +48,6 @@ export function AnimatedText({
   }
 
   const words = text.split(" ");
-  const trigger = onMount
-    ? { animate: "visible" }
-    : { whileInView: "visible", viewport: { once: true, amount: 0.6 } };
 
   return (
     <Tag
@@ -61,7 +56,8 @@ export function AnimatedText({
       initial="hidden"
       custom={delay}
       variants={wordContainer}
-      {...trigger}
+      whileInView="visible"
+      viewport={{ once: true, amount: 0.6 }}
     >
       {words.map((word, i) => (
         <m.span

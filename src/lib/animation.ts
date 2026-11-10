@@ -54,11 +54,6 @@ export const sectionHeaderItem: Variants = {
   },
 };
 
-export const cardHover = {
-  rest: { y: 0 },
-  hover: { y: -6, transition: { duration: 0.28, ease: EASE_OUT } },
-} as const;
-
 export const chipCascade: Variants = {
   hidden: { opacity: 0, y: 12, scale: 0.92 },
   visible: (i: number) => ({

@@ -50,4 +50,4 @@ export function escapeTelegramHtml(text: string): string {
 }
 
 export const inputClass =
-  "w-full rounded-lg border bg-background/80 px-4 py-3 text-sm text-foreground transition-[border-color,box-shadow] outline-none placeholder:text-text-muted focus-visible:ring-2 focus-visible:ring-brand/25 disabled:cursor-not-allowed disabled:opacity-50";
+  "w-full rounded-lg border bg-background/80 px-4 py-3 text-sm text-foreground transition-[border-color,box-shadow] outline-none placeholder:text-text-muted focus-visible:ring-2 focus-visible:ring-brand/25 read-only:cursor-progress read-only:opacity-60";

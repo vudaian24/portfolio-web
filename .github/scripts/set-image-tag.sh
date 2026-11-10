@@ -31,7 +31,13 @@ fi
 cd "$GITOPS_DIR"
 
 for attempt in 1 2 3 4 5; do
-  git fetch --quiet origin main
+  # Retried like the push: a network blip here must not fail the deploy, or
+  # the revert that runs through this same script.
+  if ! git fetch --quiet origin main; then
+    echo "fetch failed (attempt ${attempt}), retrying"
+    sleep $((attempt * 3))
+    continue
+  fi
   git checkout --quiet -B main origin/main
 
   # Only the image tag line is rewritten; comments and other keys are untouched.
@@ -62,5 +68,5 @@ for attempt in 1 2 3 4 5; do
   sleep $((attempt * 3))
 done
 
-echo "::error::could not push image tag after retries" >&2
+echo "::error::could not fetch or push the image tag after retries" >&2
 exit 1

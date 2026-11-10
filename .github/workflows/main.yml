@@ -52,8 +52,10 @@ permissions:
   contents: read
 
 # Off main, a newer run cancels the older one on the same ref. On main every run
-# gets its own group, so a deploy waiting for approval does not hold back CI or
-# a rollback dispatch; the deploy job's own group serializes deploys.
+# gets its own group, so a deploy waiting for approval does not hold back CI.
+# The deploy job's own group serializes deploys, and that includes a rollback
+# dispatch: it queues behind a deploy that is waiting for approval, so reject
+# the waiting deploy first.
 concurrency:
   group: ${{ github.ref == 'refs/heads/main' && format('pipeline-main-{0}', github.run_id) || format('pipeline-{0}', github.ref) }}
   cancel-in-progress: ${{ github.ref != 'refs/heads/main' }}
@@ -290,10 +292,21 @@ jobs:
         # Reads the header from the health endpoint, which is always rendered per
         # request: the home page is static, so an edge cache in front of it
         # could keep serving the old version and stall this wait.
+        # Three matches in a row, 5 s apart: during the rolling update one new
+        # pod can answer while old pods still serve, and a single match would
+        # start the smoke test against a mixed fleet.
         run: |
           deadline=$((SECONDS + 600))
-          until [ "$(curl -sS --max-time 15 -o /dev/null -D - -H 'Cache-Control: no-cache' "$SITE_URL/web-api/health" \
-            | tr -d '\r' | awk -F': ' 'tolower($1) == "x-app-version" {print $2}')" = "$TARGET_SHA" ]; do
+          matches=0
+          while [ "$matches" -lt 3 ]; do
+            version="$(curl -sS --max-time 15 -o /dev/null -D - -H 'Cache-Control: no-cache' "$SITE_URL/web-api/health" \
+              | tr -d '\r' | awk -F': ' 'tolower($1) == "x-app-version" {print $2}')" || version=""
+            if [ "$version" = "$TARGET_SHA" ]; then
+              matches=$((matches + 1))
+              sleep 5
+              continue
+            fi
+            matches=0
             if [ "$SECONDS" -ge "$deadline" ]; then
               echo "::error::$SITE_URL did not report x-app-version $TARGET_SHA within 10 minutes"
               exit 1
@@ -304,18 +317,30 @@ jobs:
 
       - name: Smoke test
         if: success() && steps.target.outputs.mode != 'bootstrap'
+        # Each path must answer 200 itself (a redirect does not count) and
+        # gets three tries, so one network blip does not revert a good release.
         run: |
           for path in / /vi /sitemap.xml /robots.txt /cv.pdf; do
-            if ! curl -fsS --max-time 20 -o /dev/null "$SITE_URL$path"; then
-              echo "::error::smoke test failed for $path"
+            code=""
+            for attempt in 1 2 3; do
+              code="$(curl -sS --max-time 20 -o /dev/null -w '%{http_code}' "$SITE_URL$path")" || code="000"
+              [ "$code" = "200" ] && break
+              echo "attempt $attempt: $path returned $code"
+              sleep 5
+            done
+            if [ "$code" != "200" ]; then
+              echo "::error::smoke test failed for $path (HTTP $code)"
               exit 1
             fi
             echo "ok $path"
           done
 
       # Also on cancel: a run cancelled during the wait must not leave the new tag live.
+      # Runs whenever the tag step started, not only when it succeeded: a step
+      # that failed or was cancelled after its push went through leaves the new
+      # tag live too. The script does nothing when the previous tag is still set.
       - name: Revert portfolio-gitops to the previous tag
-        if: (failure() || cancelled()) && steps.gitops.outcome == 'success' && steps.previous.outputs.tag != ''
+        if: (failure() || cancelled()) && steps.gitops.outcome != 'skipped' && steps.previous.outputs.tag != ''
         env:
           GITOPS_DIR: ${{ github.workspace }}/gitops
           SOURCE_REPO: ${{ github.repository }}
@@ -325,7 +350,7 @@ jobs:
             "$PREVIOUS_TAG" "chore: revert portfolio-web to ${PREVIOUS_TAG:0:7}"
 
       - name: Report a failed first deploy with no previous tag
-        if: (failure() || cancelled()) && steps.gitops.outcome == 'success' && steps.previous.outputs.tag == ''
+        if: (failure() || cancelled()) && steps.gitops.outcome != 'skipped' && steps.previous.outputs.tag == ''
         run: |
           echo "::error::no previous tag to restore in portfolio-gitops (first deploy). The new tag stays live; manual action is needed. See workspace docs/runbooks/rollback.md"
           exit 1

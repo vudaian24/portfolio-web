@@ -1,6 +1,7 @@
 "use client";
 
-import { useReducedMotion, useScroll, useSpring } from "motion/react";
+import { useScroll, useSpring } from "motion/react";
+import { useReducedMotion } from "@/lib/useReducedMotion";
 import * as m from "motion/react-m";
 
 /** Thin reading-progress bar pinned to the top of the viewport */

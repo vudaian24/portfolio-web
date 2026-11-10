@@ -27,7 +27,11 @@
       "resume": "CV"
     },
     "a11y": {
-      "skipToContent": "Skip to content"
+      "skipToContent": "Skip to content",
+      "primaryNav": "Primary",
+      "openMenu": "Open menu",
+      "closeMenu": "Close menu",
+      "backToTop": "Back to top"
     },
     "NotFound": {
       "eyebrow": "Error 404",
@@ -211,7 +215,6 @@
       "team": "Team",
       "stack": "Stack",
       "approach": "Approach",
-      "outcome": "Outcome",
       "live": "Live site",
       "repo": "Repository",
       "noPublicLink": "Client project — no public link"
@@ -220,7 +223,6 @@
       "eyebrow": "Selected work",
       "title": "Projects",
       "description": "Infrastructure and delivery work from client, SaaS and personal projects: context, ownership and what shipped.",
-      "viewDetail": "View details",
       "viewCaseStudy": "View case study",
       "live": "Live site",
       "repo": "Repository",

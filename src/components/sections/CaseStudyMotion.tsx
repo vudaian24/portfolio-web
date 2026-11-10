@@ -1,9 +1,9 @@
 "use client";
 
-import { useReducedMotion } from "motion/react";
+import { useReducedMotion } from "@/lib/useReducedMotion";
 import * as m from "motion/react-m";
 import type { ReactNode } from "react";
-import { pageEnter, staggerContainer, staggerItem } from "@/lib/animation";
+import { pageEnter, staggerItem } from "@/lib/animation";
 
 type CaseStudyMotionProps = {
   children: ReactNode;
@@ -58,5 +58,3 @@ export function CaseStudyBlock({
     </m.div>
   );
 }
-
-export { staggerContainer };

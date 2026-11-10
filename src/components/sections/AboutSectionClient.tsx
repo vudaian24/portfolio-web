@@ -1,6 +1,5 @@
 "use client";
 
-import { useReducedMotion } from "motion/react";
 import * as m from "motion/react-m";
 import Link from "next/link";
 import type { LucideIcon } from "lucide-react";
@@ -55,8 +54,6 @@ type AboutSectionClientProps = {
 export default function AboutSectionClient({
   content,
 }: AboutSectionClientProps) {
-  const reduceMotion = useReducedMotion();
-
   return (
     <Section id={SECTION_IDS.about}>
       <div className="grid gap-14 lg:grid-cols-12 lg:gap-12">
@@ -70,15 +67,15 @@ export default function AboutSectionClient({
 
           <m.dl
             className="mt-8 grid grid-cols-2 gap-3"
-            initial={reduceMotion ? false : "hidden"}
+            initial="hidden"
             whileInView="visible"
             viewport={{ once: true, amount: 0.3 }}
-            variants={reduceMotion ? undefined : staggerContainer}
+            variants={staggerContainer}
           >
             {content.stats.map((stat) => (
               <m.div
                 key={stat.label}
-                variants={reduceMotion ? undefined : staggerItem}
+                variants={staggerItem}
                 className="card-glow p-4"
               >
                 <dt className="sr-only">{stat.label}</dt>
@@ -132,10 +129,10 @@ export default function AboutSectionClient({
                         <m.li
                           key={skill.key}
                           custom={si}
-                          initial={reduceMotion ? false : "hidden"}
+                          initial="hidden"
                           whileInView="visible"
                           viewport={{ once: true, amount: 0.3 }}
-                          variants={reduceMotion ? undefined : chipCascade}
+                          variants={chipCascade}
                         >
                           <TechChip label={skill.label} icons={skill.icons} />
                         </m.li>

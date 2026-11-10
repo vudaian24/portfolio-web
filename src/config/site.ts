@@ -54,8 +54,6 @@ export const NAV_ITEMS = [
   { href: `#${SECTION_IDS.contact}`, labelKey: "contact" as const, icon: Mail },
 ] as const;
 
-export type NavItem = (typeof NAV_ITEMS)[number];
-
 export const SOCIAL_LINKS = [
   {
     href: "https://github.com/vudaian24",
@@ -137,10 +135,6 @@ export const SKILL_GROUPS = [
 
 export type SkillGroupId = (typeof SKILL_GROUPS)[number]["id"];
 export type SkillKey = (typeof SKILL_GROUPS)[number]["keys"][number];
-
-export const SKILL_KEYS = SKILL_GROUPS.flatMap((g) => [
-  ...g.keys,
-]) as unknown as readonly SkillKey[];
 
 /** Logos shown before each skill label (see src/lib/techIcons.ts) */
 export const SKILL_ICONS: Record<SkillKey, readonly TechIconId[]> = {

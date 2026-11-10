@@ -27,7 +27,11 @@
       "resume": "CV"
     },
     "a11y": {
-      "skipToContent": "Bỏ qua để tới nội dung"
+      "skipToContent": "Bỏ qua để tới nội dung",
+      "primaryNav": "Điều hướng chính",
+      "openMenu": "Mở menu",
+      "closeMenu": "Đóng menu",
+      "backToTop": "Về đầu trang"
     },
     "NotFound": {
       "eyebrow": "Lỗi 404",
@@ -211,7 +215,6 @@
       "team": "Đội ngũ",
       "stack": "Công nghệ",
       "approach": "Cách làm",
-      "outcome": "Kết quả",
       "live": "Live site",
       "repo": "Repository",
       "noPublicLink": "Dự án khách hàng — không có link công khai"
@@ -220,7 +223,6 @@
       "eyebrow": "Dự án tiêu biểu",
       "title": "Dự án",
       "description": "Công việc hạ tầng và delivery từ dự án khách hàng, SaaS và cá nhân: bối cảnh, phần mình phụ trách và kết quả.",
-      "viewDetail": "Xem chi tiết",
       "viewCaseStudy": "Xem case study",
       "live": "Live site",
       "repo": "Repository",

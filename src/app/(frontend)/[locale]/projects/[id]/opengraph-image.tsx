@@ -1,5 +1,6 @@
+import { notFound } from "next/navigation";
 import { getTranslations } from "next-intl/server";
-import { PROJECTS } from "@/config/site";
+import { isProjectId, PROJECTS } from "@/config/site";
 import { routing } from "@/i18n/routing";
 import { OG_CONTENT_TYPE, OG_SIZE, renderOgImage } from "@/lib/ogImage";
 
@@ -21,7 +22,8 @@ type Props = {
 
 export default async function OpengraphImage({ params }: Props) {
   const { id } = await params;
-  const project = PROJECTS.find((p) => p.id === id) ?? PROJECTS[0];
+  const project = PROJECTS.find((p) => p.id === id);
+  if (!isProjectId(id) || !project) notFound();
   // English strings for every locale: the image font has no Vietnamese glyphs.
   const t = await getTranslations({
     locale: routing.defaultLocale,

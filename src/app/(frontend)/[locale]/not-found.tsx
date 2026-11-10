@@ -1,6 +1,13 @@
+import type { Metadata } from "next";
 import { ArrowLeft } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { Link } from "@/i18n/navigation";
+
+// The layout's canonical URL describes the home page. A missing page must not
+// claim it, so it is cleared here.
+export const metadata: Metadata = {
+  alternates: { canonical: null },
+};
 
 // Rendered inside the locale layout, so it keeps the navbar, theme and footer.
 // Unknown paths reach it through [...rest]/page.tsx.

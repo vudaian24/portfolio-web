@@ -57,8 +57,35 @@ function causeCode(error: unknown): string {
   return error instanceof Error ? error.name : "unknown";
 }
 
+// True when the browser says the request comes from another site. A request
+// without an Origin header (curl, server-side callers) is not a browser form
+// post and is left to the other checks.
+function isCrossOrigin(req: Request): boolean {
+  const origin = req.headers.get("origin");
+  if (!origin) return false;
+  try {
+    return new URL(origin).host !== req.headers.get("host");
+  } catch {
+    return true;
+  }
+}
+
 export async function POST(req: Request) {
   try {
+    // Another site can post here without a CORS preflight only with a "simple"
+    // content type (an HTML form with enctype text/plain can carry a JSON
+    // body). Requiring application/json and a same-site Origin closes that.
+    if (isCrossOrigin(req)) {
+      return NextResponse.json({ error: "Forbidden" }, { status: 403 });
+    }
+    const contentType = req.headers.get("content-type") ?? "";
+    if (!contentType.toLowerCase().startsWith("application/json")) {
+      return NextResponse.json(
+        { error: "Unsupported media type" },
+        { status: 415 },
+      );
+    }
+
     let body: unknown;
     try {
       body = JSON.parse(await readBodyText(req, CONTACT_MAX_BODY_BYTES));

@@ -1,6 +1,7 @@
 "use client";
 
-import { useInView, useReducedMotion } from "motion/react";
+import { useInView } from "motion/react";
+import { useReducedMotion } from "@/lib/useReducedMotion";
 import { useEffect, useRef, useState } from "react";
 
 type CountUpProps = {
@@ -32,8 +33,10 @@ export function CountUp({ value, className, duration = 1.2 }: CountUpProps) {
 
   // Start from zero once hydrated, ahead of the scroll that triggers the count.
   useEffect(() => {
-    if (animatable) setDisplay(`${(0).toFixed(decimals)}${suffix}`);
-  }, [animatable, decimals, suffix]);
+    // Back to the real value when the count is off: the reduced-motion
+    // preference is only known after hydration, once the zero is already set.
+    setDisplay(animatable ? `${(0).toFixed(decimals)}${suffix}` : value);
+  }, [animatable, decimals, suffix, value]);
 
   useEffect(() => {
     if (!animatable || !inView) return;

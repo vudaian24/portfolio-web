@@ -1,7 +1,8 @@
 "use client";
 
 import { useRef } from "react";
-import { useReducedMotion, useScroll, useSpring } from "motion/react";
+import { useScroll, useSpring } from "motion/react";
+import { useReducedMotion } from "@/lib/useReducedMotion";
 import * as m from "motion/react-m";
 import type { Variants } from "motion/react";
 import type { LucideIcon } from "lucide-react";
@@ -83,15 +84,14 @@ export default function ExperienceSectionClient({
     mass: 0.3,
   });
 
-  const reveal = (variants: Variants) =>
-    reduceMotion
-      ? {}
-      : {
-          initial: "hidden",
-          whileInView: "visible",
-          viewport: { once: true, amount: 0.15 },
-          variants,
-        };
+  // The same props with and without reduced motion, so the markup matches the
+  // server HTML. MotionProvider drops the movement for reduced motion.
+  const reveal = (variants: Variants) => ({
+    initial: "hidden",
+    whileInView: "visible",
+    viewport: { once: true, amount: 0.15 },
+    variants,
+  });
 
   return (
     <Section id={SECTION_IDS.experience}>

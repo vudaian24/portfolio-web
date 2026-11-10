@@ -1,6 +1,5 @@
 "use client";
 
-import { useReducedMotion } from "motion/react";
 import * as m from "motion/react-m";
 import { cn } from "@/lib/utils";
 import { AnimatedText } from "./AnimatedText";
@@ -27,16 +26,15 @@ export function SectionHeader({
   className,
 }: SectionHeaderProps) {
   const centered = align === "center";
-  const reduceMotion = useReducedMotion();
-  const item = reduceMotion ? undefined : sectionHeaderItem;
+  const item = sectionHeaderItem;
 
   return (
     <m.div
       className={cn(centered ? "text-center" : "max-w-2xl", className)}
-      initial={reduceMotion ? false : "hidden"}
+      initial="hidden"
       whileInView="visible"
       viewport={viewportOnce}
-      variants={reduceMotion ? undefined : sectionHeaderContainer}
+      variants={sectionHeaderContainer}
     >
       <m.p
         variants={item}
@@ -48,17 +46,13 @@ export function SectionHeader({
         <m.span
           aria-hidden
           className="h-px w-8 origin-left bg-brand"
-          variants={
-            reduceMotion
-              ? undefined
-              : {
-                  hidden: { scaleX: 0 },
-                  visible: {
-                    scaleX: 1,
-                    transition: { duration: 0.6, ease: EASE_OUT },
-                  },
-                }
-          }
+          variants={{
+            hidden: { scaleX: 0 },
+            visible: {
+              scaleX: 1,
+              transition: { duration: 0.6, ease: EASE_OUT },
+            },
+          }}
         />
         {eyebrow}
       </m.p>

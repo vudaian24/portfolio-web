@@ -87,16 +87,20 @@ export default function ContactSection() {
               </label>
               <input
                 id="name"
-                disabled={isSubmitting}
+                readOnly={isSubmitting}
                 {...register("name")}
                 placeholder={t("form.name")}
                 className={cn(inputClass, fieldBorder(!!errors.name))}
                 aria-invalid={!!errors.name}
+                aria-describedby={errors.name ? "name-error" : undefined}
                 autoComplete="name"
               />
               {errors.name?.message &&
                 isContactErrorKey(errors.name.message) && (
-                  <p className="text-left text-sm text-destructive">
+                  <p
+                    id="name-error"
+                    className="text-left text-sm text-destructive"
+                  >
                     {tErrors(errors.name.message)}
                   </p>
                 )}
@@ -112,16 +116,20 @@ export default function ContactSection() {
               <input
                 id="email"
                 type="email"
-                disabled={isSubmitting}
+                readOnly={isSubmitting}
                 {...register("email")}
                 placeholder={t("form.email")}
                 className={cn(inputClass, fieldBorder(!!errors.email))}
                 aria-invalid={!!errors.email}
+                aria-describedby={errors.email ? "email-error" : undefined}
                 autoComplete="email"
               />
               {errors.email?.message &&
                 isContactErrorKey(errors.email.message) && (
-                  <p className="text-left text-sm text-destructive">
+                  <p
+                    id="email-error"
+                    className="text-left text-sm text-destructive"
+                  >
                     {tErrors(errors.email.message)}
                   </p>
                 )}
@@ -137,7 +145,7 @@ export default function ContactSection() {
               <textarea
                 id="message"
                 rows={5}
-                disabled={isSubmitting}
+                readOnly={isSubmitting}
                 {...register("message")}
                 placeholder={t("form.message")}
                 className={cn(
@@ -146,10 +154,14 @@ export default function ContactSection() {
                   fieldBorder(!!errors.message),
                 )}
                 aria-invalid={!!errors.message}
+                aria-describedby={errors.message ? "message-error" : undefined}
               />
               {errors.message?.message &&
                 isContactErrorKey(errors.message.message) && (
-                  <p className="text-left text-sm text-destructive">
+                  <p
+                    id="message-error"
+                    className="text-left text-sm text-destructive"
+                  >
                     {tErrors(errors.message.message)}
                   </p>
                 )}
@@ -158,7 +170,12 @@ export default function ContactSection() {
             <div className="flex flex-col gap-4 pt-2 sm:flex-row sm:items-center sm:justify-between">
               <button
                 type="submit"
-                disabled={isSubmitting}
+                // aria-disabled, not disabled: a disabled button drops keyboard
+                // focus to the page while the message is being sent
+                aria-disabled={isSubmitting}
+                onClick={(e) => {
+                  if (isSubmitting) e.preventDefault();
+                }}
                 className="btn btn-primary w-full px-8 sm:w-auto"
               >
                 {isSubmitting ? (

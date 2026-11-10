@@ -1,17 +1,14 @@
 "use client";
 
 import Image from "next/image";
-import { useReducedMotion, useScroll, useTransform } from "motion/react";
+import { useScroll, useTransform } from "motion/react";
+import { useReducedMotion } from "@/lib/useReducedMotion";
 import * as m from "motion/react-m";
 import Link from "next/link";
 import { useRef, type CSSProperties } from "react";
 import { ArrowRight, Download } from "lucide-react";
 import { CV_PATH, SECTION_IDS, SOCIAL_LINKS } from "@/config/site";
-import {
-  AnimatedText,
-  RotatingWords,
-  Typewriter,
-} from "@/components/ui/AnimatedText";
+import { RotatingWords, Typewriter } from "@/components/ui/AnimatedText";
 
 /** Commands shown in the hero terminal; they describe how this site runs */
 const TERMINAL_LINES = [
@@ -121,13 +118,12 @@ export default function HeroSectionClient({ content }: HeroSectionClientProps) {
             >
               {content.brand}
             </p>
-            <AnimatedText
-              as="h1"
-              onMount
-              delay={0.35}
-              text={content.title}
-              className="mt-3 font-display text-2xl font-semibold text-foreground sm:mt-4 sm:text-3xl md:text-4xl"
-            />
+            <h1
+              style={heroDelay(3)}
+              className="hero-rise mt-3 font-display text-2xl font-semibold text-foreground sm:mt-4 sm:text-3xl md:text-4xl"
+            >
+              {content.title}
+            </h1>
             <p
               style={heroDelay(4)}
               className="hero-rise mt-4 font-display text-lg font-medium text-text-secondary sm:text-xl"

@@ -55,7 +55,7 @@ Without both values the endpoint returns a server configuration error.
 src/
   app/
     (frontend)/
-      [locale]/          localized routes: home, projects/[id]
+      [locale]/          localized routes: home, projects/[id], 404, Open Graph images
       layout.tsx         root layout and globals.css
     web-api/contact/     POST route: validates with zod, sends to Telegram
     web-api/health/      GET route: health check for probes, returns the app version
@@ -63,7 +63,7 @@ src/
   components/            sections/, ui/, Navbar, Footer, and other shared components
   config/site.ts         site-level configuration
   i18n/                  next-intl routing, request config, navigation
-  lib/                   contact schema, utilities, animation helpers, types
+  lib/                   contact schema, SEO and Open Graph helpers, utilities, animation helpers, types
   locales/               en.json and vi.json (UI strings)
   middleware.ts          next-intl middleware
 public/                  avatar, the DevOps CV (cv.pdf), static assets
@@ -90,7 +90,7 @@ The `-e NAME` form passes the values from your current shell, so no secret is wr
 ## Deployment
 
 - [portfolio.anvd.io.vn](https://portfolio.anvd.io.vn) runs on Amazon EKS behind the Cloudflare proxy.
-- GitHub Actions (`.github/workflows/main.yml`) runs `ci.yml` (lint, type check, build) on pull requests and pushes to `main`. On push to `main`, the `deploy` job runs only when the repository variable `AWS_DEPLOY_ENABLED` is `true`; the `aws-production` environment then requires reviewer approval. It builds a `linux/arm64` image on a native arm64 runner, pushes it to ECR (`portfolio-prod-web`, tagged with the git SHA), and sets the tag in `portfolio-gitops`. It then waits for `x-app-version`, smoke-tests the site, and reverts the tag on failure. `workflow_dispatch` with `image_tag` redeploys an existing image. The first deploy is `workflow_dispatch` with `bootstrap` set to `true`, run from `main` after the cluster bootstrap in the workspace runbook `docs/runbooks/cluster-operations.md`. It builds the image if needed, writes the first tag to `portfolio-gitops`, and skips the wait and the smoke test. It is refused unless `image.tag` is still empty; a push or an `image_tag` redeploy is refused while it is empty. Each run takes exactly one of `image_tag` and `bootstrap`.
+- GitHub Actions (`.github/workflows/main.yml`) runs `ci.yml` (lint, type check, build) on pull requests and pushes to `main`. On push to `main`, the `deploy` job runs only when the repository variable `AWS_DEPLOY_ENABLED` is `true`; the `aws-production` environment then requires reviewer approval. It builds a `linux/arm64` image on a native arm64 runner, pushes it to ECR (`portfolio-prod-web`, tagged with the git SHA), and sets the tag in `portfolio-gitops`. It then waits for `x-app-version` on `/web-api/health`, smoke-tests the site, and reverts the tag on failure. `workflow_dispatch` with `image_tag` redeploys an existing image. The first deploy is `workflow_dispatch` with `bootstrap` set to `true`, run from `main` after the cluster bootstrap in the workspace runbook `docs/runbooks/cluster-operations.md`. It builds the image if needed, writes the first tag to `portfolio-gitops`, and skips the wait and the smoke test. It is refused unless `image.tag` is still empty; a push or an `image_tag` redeploy is refused while it is empty. Each run takes exactly one of `image_tag` and `bootstrap`.
 - `.github/workflows/notify-workspace.yml` tells the private workspace repository about each push to `main`, so it records the new commit.
 - Hosted on Amazon EKS behind an ALB and the Cloudflare proxy. The site is intentionally down 22:00 to 08:00 ICT and all day on Sunday. Argo CD deploys the app chart from the [portfolio-gitops](https://github.com/vudaian24/portfolio-gitops) repository. CI builds the `linux/arm64` image, pushes it to ECR with OIDC, and commits the new image tag to `portfolio-gitops`. The app supports it with Node 24, no `@vercel/analytics`, the `x-app-version` header and `/web-api/health`. The design records are kept in the private workspace repository.
 

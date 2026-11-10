@@ -1,6 +1,7 @@
 import net from "node:net";
 import { NextResponse } from "next/server";
 import {
+  CONTACT_HONEYPOT_FIELD,
   CONTACT_MAX_BODY_BYTES,
   ContactSchema,
   escapeTelegramHtml,
@@ -78,6 +79,12 @@ export async function POST(req: Request) {
         { error: "Invalid request body" },
         { status: 400 },
       );
+    }
+
+    // A filled honeypot means a bot. Answer as if it worked, so the bot has no
+    // signal to adapt to, and send nothing.
+    if (parsed.data[CONTACT_HONEYPOT_FIELD]) {
+      return NextResponse.json({ success: true });
     }
 
     const { name, email, message } = parsed.data;

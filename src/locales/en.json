@@ -2,11 +2,14 @@
   "Common": {
     "Metadata": {
       "title": "Dai An | Portfolio",
-      "description": "Dai An — DevOps engineer running containerized workloads on AWS (ECS Fargate, EKS), with Terraform infrastructure and delivery pipelines in GitHub Actions."
+      "description": "Dai An — DevOps engineer running containerized workloads on AWS (ECS Fargate, EKS), with Terraform infrastructure and delivery pipelines in GitHub Actions.",
+      "siteName": "Dai An",
+      "jobTitle": "DevOps Engineer"
     },
     "Languages": {
       "vi": "Tiếng Việt",
-      "en": "English"
+      "en": "English",
+      "label": "Language"
     },
     "Theme": {
       "toggleToLight": "Switch to light theme",
@@ -22,6 +25,15 @@
       "education": "Education",
       "contact": "Contact",
       "resume": "CV"
+    },
+    "a11y": {
+      "skipToContent": "Skip to content"
+    },
+    "NotFound": {
+      "eyebrow": "Error 404",
+      "title": "Page not found",
+      "description": "The page you are looking for does not exist or has moved.",
+      "back": "Back to home"
     }
   },
   "HomePage": {

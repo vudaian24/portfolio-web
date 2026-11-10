@@ -4,10 +4,9 @@ import Image from "next/image";
 import { useReducedMotion, useScroll, useTransform } from "motion/react";
 import * as m from "motion/react-m";
 import Link from "next/link";
-import { useRef } from "react";
+import { useRef, type CSSProperties } from "react";
 import { ArrowRight, Download } from "lucide-react";
 import { CV_PATH, SECTION_IDS, SOCIAL_LINKS } from "@/config/site";
-import { EASE_OUT, staggerContainer, staggerItem } from "@/lib/animation";
 import {
   AnimatedText,
   RotatingWords,
@@ -39,6 +38,22 @@ export type HeroContent = {
   photoAlt: string;
 };
 
+// The hero rises in with a CSS animation (.hero-rise in globals.css), not with
+// motion: CSS runs before hydration, so the text and the photo, the LCP
+// candidates, paint right away instead of waiting for JavaScript. The keyframes
+// use the translate and scale properties, so they do not fight the parallax
+// that motion writes to transform.
+const heroEntrance = (delay: number, duration = 0.45, shift = 18, scale = 1) =>
+  ({
+    "--hero-delay": `${delay}s`,
+    "--hero-duration": `${duration}s`,
+    "--hero-shift": `${shift}px`,
+    "--hero-scale": scale,
+  }) as CSSProperties;
+
+/** Staggered entrance for the copy column, one slot per line */
+const heroDelay = (slot: number) => heroEntrance(0.05 + slot * 0.09);
+
 type HeroSectionClientProps = {
   content: HeroContent;
 };
@@ -65,7 +80,6 @@ export default function HeroSectionClient({ content }: HeroSectionClientProps) {
     [0, 0.7],
     [1, reduceMotion ? 1 : 0.7],
   );
-  const item = reduceMotion ? undefined : staggerItem;
 
   return (
     <section
@@ -84,43 +98,29 @@ export default function HeroSectionClient({ content }: HeroSectionClientProps) {
           style={{ y: copyY, opacity: copyOpacity }}
           className="order-2 flex w-full max-w-2xl flex-col items-center justify-self-center text-center lg:order-none lg:col-start-1 lg:row-span-2 lg:row-start-1 lg:items-start lg:justify-self-start lg:text-left"
         >
-          <m.div
-            initial="hidden"
-            animate="visible"
-            variants={
-              reduceMotion
-                ? undefined
-                : {
-                    ...staggerContainer,
-                    visible: {
-                      transition: {
-                        staggerChildren: 0.09,
-                        delayChildren: 0.05,
-                      },
-                    },
-                  }
-            }
-            className="flex w-full flex-col items-center lg:items-start"
-          >
-            <m.p
-              variants={item}
-              className="mb-5 inline-flex items-center gap-2 rounded-full border border-brand/30 bg-brand-subtle px-3.5 py-1.5 text-xs font-medium text-brand sm:mb-6"
+          <div className="flex w-full flex-col items-center lg:items-start">
+            <p
+              style={heroDelay(0)}
+              className="hero-rise mb-5 inline-flex items-center gap-2 rounded-full border border-brand/30 bg-brand-subtle px-3.5 py-1.5 text-xs font-medium text-brand sm:mb-6"
             >
               <span className="relative flex h-2 w-2" aria-hidden>
                 <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-accent-green opacity-50" />
                 <span className="relative inline-flex h-2 w-2 rounded-full bg-accent-green" />
               </span>
               {content.availability}
-            </m.p>
-            <m.p variants={item} className="section-label mb-3 sm:mb-4">
+            </p>
+            <p
+              className="hero-rise section-label mb-3 sm:mb-4"
+              style={heroDelay(1)}
+            >
               {content.eyebrow}
-            </m.p>
-            <m.p
-              variants={item}
-              className="font-display text-gradient-brand pb-1 text-5xl font-semibold tracking-tight sm:text-6xl md:text-7xl"
+            </p>
+            <p
+              style={heroDelay(2)}
+              className="hero-rise font-display text-gradient-brand pb-1 text-5xl font-semibold tracking-tight sm:text-6xl md:text-7xl"
             >
               {content.brand}
-            </m.p>
+            </p>
             <AnimatedText
               as="h1"
               onMount
@@ -128,26 +128,26 @@ export default function HeroSectionClient({ content }: HeroSectionClientProps) {
               text={content.title}
               className="mt-3 font-display text-2xl font-semibold text-foreground sm:mt-4 sm:text-3xl md:text-4xl"
             />
-            <m.p
-              variants={item}
-              className="mt-4 font-display text-lg font-medium text-text-secondary sm:text-xl"
+            <p
+              style={heroDelay(4)}
+              className="hero-rise mt-4 font-display text-lg font-medium text-text-secondary sm:text-xl"
             >
               {content.focusPrefix}{" "}
               <RotatingWords
                 words={content.focus}
                 className="font-semibold text-brand"
               />
-            </m.p>
-            <m.p
-              variants={item}
-              className="mt-5 text-base leading-relaxed text-muted-foreground sm:mt-6 sm:text-lg"
+            </p>
+            <p
+              style={heroDelay(5)}
+              className="hero-rise mt-5 text-base leading-relaxed text-muted-foreground sm:mt-6 sm:text-lg"
             >
               {content.description}
-            </m.p>
+            </p>
 
-            <m.div
-              variants={item}
-              className="mt-8 flex w-full flex-col gap-3 sm:mt-10 sm:w-auto sm:flex-row"
+            <div
+              style={heroDelay(6)}
+              className="hero-rise mt-8 flex w-full flex-col gap-3 sm:mt-10 sm:w-auto sm:flex-row"
             >
               <Link
                 href={`#${SECTION_IDS.projects}`}
@@ -174,11 +174,11 @@ export default function HeroSectionClient({ content }: HeroSectionClientProps) {
                 />
                 {content.ctaResume}
               </a>
-            </m.div>
+            </div>
 
-            <m.ul
-              variants={item}
-              className="mt-6 flex items-center gap-2 sm:mt-8"
+            <ul
+              style={heroDelay(7)}
+              className="hero-rise mt-6 flex items-center gap-2 sm:mt-8"
             >
               {SOCIAL_LINKS.map((social) => (
                 <li key={social.href}>
@@ -193,16 +193,13 @@ export default function HeroSectionClient({ content }: HeroSectionClientProps) {
                   </a>
                 </li>
               ))}
-            </m.ul>
-          </m.div>
+            </ul>
+          </div>
         </m.div>
 
         <m.div
-          style={{ y: photoY }}
-          initial={reduceMotion ? false : { opacity: 0, scale: 0.94, y: 16 }}
-          animate={{ opacity: 1, scale: 1, y: 0 }}
-          transition={{ duration: 0.7, delay: 0.15, ease: EASE_OUT }}
-          className="relative order-1 justify-self-center lg:order-none lg:col-start-2 lg:row-start-1 lg:self-end lg:justify-self-end"
+          style={{ y: photoY, ...heroEntrance(0.15, 0.7, 16, 0.94) }}
+          className="hero-rise relative order-1 justify-self-center lg:order-none lg:col-start-2 lg:row-start-1 lg:self-end lg:justify-self-end"
         >
           <m.div
             className="absolute -inset-4 rounded-[2.25rem] bg-gradient-to-br from-brand/30 via-brand-light/15 to-transparent blur-2xl"
@@ -222,16 +219,14 @@ export default function HeroSectionClient({ content }: HeroSectionClientProps) {
               className="object-cover"
               sizes="(min-width: 1024px) 256px, (min-width: 640px) 176px, 144px"
               priority
+              fetchPriority="high"
             />
           </div>
         </m.div>
 
         <m.div
-          style={{ y: photoY }}
-          initial={reduceMotion ? false : { opacity: 0, y: 24 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, delay: 0.5, ease: EASE_OUT }}
-          className="relative z-10 order-3 hidden w-full max-w-sm justify-self-center overflow-hidden rounded-xl border border-border bg-surface-elevated/90 shadow-2xl backdrop-blur-md sm:block lg:order-none lg:col-start-2 lg:row-start-2 lg:-mt-14 lg:max-w-none lg:self-start lg:justify-self-end"
+          style={{ y: photoY, ...heroEntrance(0.5, 0.6, 24) }}
+          className="hero-rise relative z-10 order-3 hidden w-full max-w-sm justify-self-center overflow-hidden rounded-xl border border-border bg-surface-elevated/90 shadow-2xl backdrop-blur-md sm:block lg:order-none lg:col-start-2 lg:row-start-2 lg:-mt-14 lg:max-w-none lg:self-start lg:justify-self-end"
         >
           <div className="flex items-center gap-1.5 border-b border-border px-3 py-2">
             <span className="h-2.5 w-2.5 rounded-full bg-destructive/70" />

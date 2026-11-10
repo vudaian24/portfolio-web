@@ -11,6 +11,7 @@ import { MotionReveal } from "@/components/ui/MotionReveal";
 import { Section, SectionHeader } from "@/components/ui/Section";
 import { CONTACT_API_PATH, SECTION_IDS } from "@/config/site";
 import {
+  CONTACT_HONEYPOT_FIELD,
   ContactSchema,
   type ContactForm,
   inputClass,
@@ -187,35 +188,53 @@ export default function ContactSection() {
                 {isSubmitting ? t("status.sending") : t("form.button")}
               </button>
 
-              <AnimatePresence mode="wait">
-                {submitStatus === "success" && (
-                  <m.div
-                    initial={{ opacity: 0, x: -8 }}
-                    animate={{ opacity: 1, x: 0 }}
-                    exit={{ opacity: 0 }}
-                    className="flex items-center justify-center gap-2 text-sm font-medium text-accent-green sm:justify-end"
-                  >
-                    <CheckCircle2 className="h-5 w-5 shrink-0" aria-hidden />
-                    {t("status.success")}
-                  </m.div>
-                )}
-                {submitStatus === "error" && (
-                  <m.div
-                    initial={{ opacity: 0, x: -8 }}
-                    animate={{ opacity: 1, x: 0 }}
-                    exit={{ opacity: 0 }}
-                    className="flex items-center justify-center gap-2 text-sm font-medium text-destructive sm:justify-end"
-                  >
-                    <AlertCircle className="h-5 w-5 shrink-0" aria-hidden />
-                    {t("status.error")}
-                  </m.div>
-                )}
-              </AnimatePresence>
+              {/* Always in the DOM, so screen readers announce what appears in it */}
+              <div role="status" aria-live="polite" aria-atomic="true">
+                <AnimatePresence mode="wait">
+                  {submitStatus === "success" && (
+                    <m.div
+                      initial={{ opacity: 0, x: -8 }}
+                      animate={{ opacity: 1, x: 0 }}
+                      exit={{ opacity: 0 }}
+                      className="flex items-center justify-center gap-2 text-sm font-medium text-accent-green sm:justify-end"
+                    >
+                      <CheckCircle2 className="h-5 w-5 shrink-0" aria-hidden />
+                      {t("status.success")}
+                    </m.div>
+                  )}
+                  {submitStatus === "error" && (
+                    <m.div
+                      initial={{ opacity: 0, x: -8 }}
+                      animate={{ opacity: 1, x: 0 }}
+                      exit={{ opacity: 0 }}
+                      className="flex items-center justify-center gap-2 text-sm font-medium text-destructive sm:justify-end"
+                    >
+                      <AlertCircle className="h-5 w-5 shrink-0" aria-hidden />
+                      {t("status.error")}
+                    </m.div>
+                  )}
+                </AnimatePresence>
+              </div>
             </div>
 
             <p className="text-center text-xs text-text-muted sm:text-left">
               {t("note")}
             </p>
+            {/* Honeypot: off-screen, out of the tab order and hidden from
+                assistive technology, so only bots fill it in */}
+            <div
+              className="pointer-events-none absolute -left-[9999px] h-px w-px overflow-hidden"
+              aria-hidden
+            >
+              <label htmlFor={CONTACT_HONEYPOT_FIELD}>Website</label>
+              <input
+                id={CONTACT_HONEYPOT_FIELD}
+                type="text"
+                tabIndex={-1}
+                autoComplete="off"
+                {...register(CONTACT_HONEYPOT_FIELD)}
+              />
+            </div>
           </form>
         </div>
       </MotionReveal>

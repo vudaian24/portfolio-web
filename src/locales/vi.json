@@ -2,11 +2,14 @@
   "Common": {
     "Metadata": {
       "title": "Đại An | Portfolio",
-      "description": "Đại An — DevOps engineer vận hành workload container trên AWS (ECS Fargate, EKS), với hạ tầng Terraform và pipeline triển khai trên GitHub Actions."
+      "description": "Đại An — DevOps engineer vận hành workload container trên AWS (ECS Fargate, EKS), với hạ tầng Terraform và pipeline triển khai trên GitHub Actions.",
+      "siteName": "Đại An",
+      "jobTitle": "DevOps Engineer"
     },
     "Languages": {
       "vi": "Tiếng Việt",
-      "en": "English"
+      "en": "English",
+      "label": "Ngôn ngữ"
     },
     "Theme": {
       "toggleToLight": "Chuyển sang giao diện sáng",
@@ -22,6 +25,15 @@
       "education": "Học vấn",
       "contact": "Liên hệ",
       "resume": "CV"
+    },
+    "a11y": {
+      "skipToContent": "Bỏ qua để tới nội dung"
+    },
+    "NotFound": {
+      "eyebrow": "Lỗi 404",
+      "title": "Không tìm thấy trang",
+      "description": "Trang bạn tìm không tồn tại hoặc đã được chuyển đi.",
+      "back": "Về trang chủ"
     }
   },
   "HomePage": {

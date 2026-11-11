@@ -177,7 +177,9 @@ jobs:
           ref: main
           token: ${{ steps.app-token.outputs.token }}
           path: gitops
-          # Needed: the push in set-image-tag.sh uses these credentials.
+          # Full history: last-good-tag.sh walks the image.tag commits.
+          fetch-depth: 0
+          # Needed: the pushes in set-image-tag.sh and last-good-tag.sh use these credentials.
           persist-credentials: true
 
       - name: Set git identity to the GitHub App bot
@@ -191,13 +193,22 @@ jobs:
           git -C gitops config user.email "${bot_id}+${APP_SLUG}[bot]@users.noreply.github.com"
 
       # Runs before any build, so a refused bootstrap pushes no image.
-      - name: Record the tag currently live
+      # live: image.tag on main now. tag: what a failed deploy restores, the
+      # last tag that passed these checks or was set by a revert or by hand.
+      # They differ when an earlier run failed and its revert did not happen:
+      # re-running it must not restore that run's broken tag.
+      - name: Record the live tag and the last good tag
         id: previous
         env:
           GITOPS_DIR: ${{ github.workspace }}/gitops
         run: |
-          previous="$("$GITHUB_WORKSPACE/.github/scripts/set-image-tag.sh" --read)"
-          echo "tag=$previous" >> "$GITHUB_OUTPUT"
+          live="$("$GITHUB_WORKSPACE/.github/scripts/set-image-tag.sh" --read)"
+          good="$("$GITHUB_WORKSPACE/.github/scripts/last-good-tag.sh" --resolve)"
+          if [ "$live" != "$good" ]; then
+            echo "::warning::image.tag '$live' never passed the deploy checks; a failed deploy restores '$good'"
+          fi
+          echo "live=$live" >> "$GITHUB_OUTPUT"
+          echo "tag=$good" >> "$GITHUB_OUTPUT"
 
       # bootstrap needs an empty image.tag; push and redeploy need a set one.
       # A push before the first deploy would otherwise write the tag, fail its
@@ -205,7 +216,7 @@ jobs:
       - name: Check the deploy mode against image.tag
         if: success()
         env:
-          CURRENT_TAG: ${{ steps.previous.outputs.tag }}
+          CURRENT_TAG: ${{ steps.previous.outputs.live }}
           MODE: ${{ steps.target.outputs.mode }}
         run: |
           if [ "$MODE" = "bootstrap" ] && [ -n "$CURRENT_TAG" ]; then
@@ -335,11 +346,23 @@ jobs:
             echo "ok $path"
           done
 
+      # Records the tag as the one a later failed deploy restores. A failure
+      # here must not revert a release that just passed, so it only warns; the
+      # next deploy then restores the previous verified tag instead.
+      - name: Mark the tag as verified
+        if: success() && steps.target.outputs.mode != 'bootstrap'
+        continue-on-error: true
+        env:
+          GITOPS_DIR: ${{ github.workspace }}/gitops
+          TARGET_SHA: ${{ steps.target.outputs.sha }}
+        run: |
+          "$GITHUB_WORKSPACE/.github/scripts/last-good-tag.sh" --mark "$TARGET_SHA"
+
       # Also on cancel: a run cancelled during the wait must not leave the new tag live.
       # Runs whenever the tag step started, not only when it succeeded: a step
       # that failed or was cancelled after its push went through leaves the new
       # tag live too. The script does nothing when the previous tag is still set.
-      - name: Revert portfolio-gitops to the previous tag
+      - name: Revert portfolio-gitops to the last good tag
         if: (failure() || cancelled()) && steps.gitops.outcome != 'skipped' && steps.previous.outputs.tag != ''
         env:
           GITOPS_DIR: ${{ github.workspace }}/gitops
@@ -349,8 +372,8 @@ jobs:
           "$GITHUB_WORKSPACE/.github/scripts/set-image-tag.sh" \
             "$PREVIOUS_TAG" "chore: revert portfolio-web to ${PREVIOUS_TAG:0:7}"
 
-      - name: Report a failed first deploy with no previous tag
+      - name: Report a failed deploy with no tag to restore
         if: (failure() || cancelled()) && steps.gitops.outcome != 'skipped' && steps.previous.outputs.tag == ''
         run: |
-          echo "::error::no previous tag to restore in portfolio-gitops (first deploy). The new tag stays live; manual action is needed. See workspace docs/runbooks/rollback.md"
+          echo "::error::no good tag to restore in portfolio-gitops (first deploy, or no earlier tag passed the checks). The new tag stays live; manual action is needed. See workspace docs/runbooks/rollback.md"
           exit 1

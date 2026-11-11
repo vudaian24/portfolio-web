@@ -182,7 +182,7 @@
             "date": "Oct 2024"
           },
           "bullets": [
-            "Deliver DevOps and infrastructure work across three products — primary owner of the infrastructure and delivery pipelines for a multi-clinic booking client platform, and supporting the release and environment needs of Kotae (Tokyo Techies' AI chatbot SaaS, on secondment) and StarLive (real-time streaming, multi-vendor client project) in teams of 14–15, working directly with overseas product owners in English.",
+            "Deliver DevOps and infrastructure work across three products — primary owner of the infrastructure and delivery pipelines for a multi-clinic booking client platform, and supporting the release and environment needs of Kotae (Tokyo Techies' AI chatbot SaaS, on secondment) and StarLive (real-time streaming, multi-vendor client project) in teams of 5–15, working directly with overseas product owners in English.",
             "Built delivery pipelines in GitHub Actions and maintained existing Jenkinsfile pipelines in Jenkins; on StarLive, migrated the admin app to a Turborepo monorepo, optimized the Docker build with BuildKit cache mounts, standardized on Node 24, and added SonarQube to CI.",
             "Closed the gap between local, CI, and production environments on the clinic-booking platform — replacing MinIO with LocalStack so tests exercise the same S3 API as the deployed service.",
             "Wrote Bash automation for deployment, migration, and environment-provisioning tasks.",
@@ -194,7 +194,7 @@
           "company": "Tokyo Tech Lab Viet Nam",
           "period": "Jan 2024 — Oct 2024",
           "bullets": [
-            "Built Gitman, an internal Git repository management tool, from the first commit through to company-wide release — Vue.js and TypeScript interface over a Nest.js and MongoDB API — owning it end to end as the sole developer.",
+            "Built Gitman, an internal Git repository management tool, with the intern team from the first commit through to company-wide release — Vue.js and TypeScript interface over a Nest.js and MongoDB API.",
             "Shipped Vue 3 and TypeScript workflow features into the production HRM platform used across the company, then moved onto the Kotae product (on secondment to Tokyo Techies) in the final months of the internship and was promoted to Software Engineer after nine months."
           ]
         }
@@ -246,7 +246,7 @@
           "title": "Kotae",
           "period": "Aug 2024 – Present",
           "role": "Full-Stack Engineer (release support)",
-          "team": "Tokyo Techies · team of 14",
+          "team": "Tokyo Techies (sister company, on secondment) · team of 14",
           "summary": "AI customer-support chatbot for small businesses: RAG over customer knowledge bases, run on EKS.",
           "bullets": [
             "Shipped 21 development deployments across the frontend, backend, and landing services (Nov. 2024 – Jan. 2026) through the team's GitHub Actions to Argo CD + Helm pipeline on EKS.",
@@ -258,14 +258,14 @@
         },
         "portfolio": {
           "title": "Portfolio Platform",
-          "period": "2026",
+          "period": "Sep 2025 – Present",
           "role": "Sole engineer — infrastructure, GitOps, release pipeline and application",
           "team": "Solo project",
-          "summary": "Personal production site on a one-node EKS cluster behind Cloudflare, built across three public repositories.",
+          "summary": "Personal site live since Sep 2025, moved from a self-hosted VPS to a single-node EKS cluster behind Cloudflare in 2026 (not HA; scheduled off nights and Sundays for cost), built across three public repositories.",
           "bullets": [
             "Provisioned AWS and Cloudflare in Terraform (67 resource blocks, 6 modules): VPC, EKS with a private API via Session Manager, Pod Identity, ECR, and a Cloudflare-only security group for the controller-managed ALB; CI runs TFLint and Trivy, with actions pinned by SHA.",
             "Ran the cluster as GitOps: Argo CD ApplicationSets deploy 5 Helm charts (Argo CD, Load Balancer Controller, External Secrets, Prometheus, the app with an HPA), validated with kubeconform.",
-            "Automated releases in GitHub Actions: OIDC to AWS, approval-gated SHA-tagged images in ECR, the tag committed to GitOps, then a version check, smoke test, and auto-revert on failure.",
+            "Automated releases in GitHub Actions: OIDC to AWS, approval-gated SHA-tagged images in ECR, the tag committed to GitOps, then a version check and smoke test, restoring the last verified tag on failure.",
             "Shipped 119 filtered Prometheus metrics to 18 upstream Grafana Cloud dashboards, with CloudWatch node-down and scheduler-error alarms — the night-shutdown scheduler (EventBridge + a Python Lambda reconciling every 15 minutes) halves node uptime (84 of 168 hours a week).",
             "Wrote 19 ADRs and 7 runbooks, kept in a private workspace repository (available on request)."
           ]

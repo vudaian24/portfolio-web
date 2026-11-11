@@ -182,7 +182,7 @@
             "date": "10/2024"
           },
           "bullets": [
-            "Thực hiện công việc DevOps và hạ tầng cho ba sản phẩm — chịu trách nhiệm chính về hạ tầng và pipeline triển khai của một nền tảng đặt lịch nhiều phòng khám cho khách hàng, đồng thời hỗ trợ release và môi trường cho Kotae (SaaS AI chatbot của Tokyo Techies, được biệt phái) và StarLive (streaming thời gian thực, dự án khách hàng nhiều vendor) trong các team 14–15 người, làm việc trực tiếp bằng tiếng Anh với product owner nước ngoài.",
+            "Thực hiện công việc DevOps và hạ tầng cho ba sản phẩm — chịu trách nhiệm chính về hạ tầng và pipeline triển khai của một nền tảng đặt lịch nhiều phòng khám cho khách hàng, đồng thời hỗ trợ release và môi trường cho Kotae (SaaS AI chatbot của Tokyo Techies, được biệt phái) và StarLive (streaming thời gian thực, dự án khách hàng nhiều vendor) trong các team 5–15 người, làm việc trực tiếp bằng tiếng Anh với product owner nước ngoài.",
             "Xây dựng pipeline triển khai trên GitHub Actions và duy trì các pipeline Jenkinsfile sẵn có trên Jenkins; ở StarLive, chuyển app admin sang monorepo Turborepo, tối ưu Docker build bằng BuildKit cache mount, thống nhất Node 24 và thêm SonarQube vào CI.",
             "Thu hẹp khác biệt giữa môi trường local, CI và production của nền tảng đặt lịch phòng khám — thay MinIO bằng LocalStack để test dùng cùng S3 API với dịch vụ đã triển khai.",
             "Viết script Bash tự động hóa triển khai, migration và cấp phát môi trường.",
@@ -194,7 +194,7 @@
           "company": "Tokyo Tech Lab Viet Nam",
           "period": "01/2024 — 10/2024",
           "bullets": [
-            "Xây dựng Gitman, công cụ quản lý repository Git nội bộ, từ commit đầu tiên đến khi phát hành toàn công ty — giao diện Vue.js và TypeScript trên API Nest.js và MongoDB — tự đảm nhận toàn bộ với tư cách lập trình viên duy nhất.",
+            "Xây dựng Gitman, công cụ quản lý repository Git nội bộ, cùng nhóm thực tập sinh, từ commit đầu tiên đến khi phát hành toàn công ty — giao diện Vue.js và TypeScript trên API Nest.js và MongoDB.",
             "Phát triển tính năng workflow bằng Vue 3 và TypeScript cho nền tảng HRM production dùng toàn công ty; trong những tháng cuối kỳ thực tập chuyển sang sản phẩm Kotae (biệt phái sang Tokyo Techies) và được lên Software Engineer sau chín tháng."
           ]
         }
@@ -246,7 +246,7 @@
           "title": "Kotae",
           "period": "08/2024 – Hiện tại",
           "role": "Full-Stack Engineer (release support)",
-          "team": "Tokyo Techies · team 14 người",
+          "team": "Tokyo Techies (công ty anh em, được biệt phái) · team 14 người",
           "summary": "Chatbot AI chăm sóc khách hàng cho doanh nghiệp nhỏ, dùng RAG, chạy trên EKS.",
           "bullets": [
             "Thực hiện 21 lần deploy môi trường development cho các service frontend, backend và landing (11/2024 – 01/2026) qua pipeline GitHub Actions sang Argo CD + Helm của team trên EKS.",
@@ -258,14 +258,14 @@
         },
         "portfolio": {
           "title": "Portfolio Platform",
-          "period": "2026",
+          "period": "09/2025 – Hiện tại",
           "role": "Kỹ sư duy nhất — hạ tầng, GitOps, pipeline release và ứng dụng",
           "team": "Dự án cá nhân",
-          "summary": "Website cá nhân chạy production trên cụm EKS một node sau Cloudflare, xây dựng trên ba repository public.",
+          "summary": "Website cá nhân hoạt động từ 09/2025, chuyển từ VPS tự host sang cụm EKS một node sau Cloudflare năm 2026 (không HA; tắt theo lịch vào ban đêm và Chủ nhật để tiết kiệm chi phí), xây dựng trên ba repository public.",
           "bullets": [
             "Cấp phát AWS và Cloudflare bằng Terraform (67 khối resource, 6 module): VPC, EKS với API private qua Session Manager, Pod Identity, ECR và security group chỉ nhận traffic từ Cloudflare cho ALB do controller tạo; CI chạy TFLint và Trivy, action pin theo SHA.",
             "Vận hành cluster theo GitOps: Argo CD ApplicationSet triển khai 5 Helm chart (Argo CD, Load Balancer Controller, External Secrets, Prometheus, ứng dụng kèm HPA), kiểm tra bằng kubeconform.",
-            "Tự động hóa release bằng GitHub Actions: OIDC vào AWS, image gắn tag SHA trong ECR có bước phê duyệt, commit tag vào GitOps, rồi kiểm tra phiên bản, smoke test và tự revert khi lỗi.",
+            "Tự động hóa release bằng GitHub Actions: OIDC vào AWS, image gắn tag SHA trong ECR có bước phê duyệt, commit tag vào GitOps, rồi kiểm tra phiên bản, smoke test và khôi phục tag đã xác nhận gần nhất khi lỗi.",
             "Đẩy 119 metric Prometheus đã lọc lên 18 dashboard Grafana Cloud upstream, kèm alarm CloudWatch khi node down và khi scheduler lỗi — scheduler tắt node ban đêm (EventBridge + Lambda Python, reconcile mỗi 15 phút) giảm một nửa giờ chạy node (84/168 giờ mỗi tuần).",
             "Viết 19 ADR và 7 runbook, lưu trong repository workspace private (cung cấp khi được yêu cầu)."
           ]

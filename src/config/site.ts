@@ -252,7 +252,7 @@ export const PROJECTS: readonly ProjectConfig[] = [
 ] as const;
 
 /** DevOps CV, the only CV the site offers */
-export const CV_PATH = "/cv.pdf";
+export const CV_PATH = "/cv-devops.pdf";
 
 export const CONTACT_API_PATH = "/web-api/contact";
 

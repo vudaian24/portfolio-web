@@ -331,7 +331,7 @@ jobs:
         # Each path must answer 200 itself (a redirect does not count) and
         # gets three tries, so one network blip does not revert a good release.
         run: |
-          for path in / /vi /sitemap.xml /robots.txt /cv.pdf; do
+          for path in / /vi /sitemap.xml /robots.txt /cv-devops.pdf; do
             code=""
             for attempt in 1 2 3; do
               code="$(curl -sS --max-time 20 -o /dev/null -w '%{http_code}' "$SITE_URL$path")" || code="000"

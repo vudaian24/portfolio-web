@@ -266,8 +266,7 @@
             "Cấp phát AWS và Cloudflare bằng Terraform (67 khối resource, 6 module): VPC, EKS với API private qua Session Manager, Pod Identity, ECR và security group chỉ nhận traffic từ Cloudflare cho ALB do controller tạo; CI chạy TFLint và Trivy, action pin theo SHA.",
             "Vận hành cluster theo GitOps: Argo CD ApplicationSet triển khai 5 Helm chart (Argo CD, Load Balancer Controller, External Secrets, Prometheus, ứng dụng kèm HPA), kiểm tra bằng kubeconform.",
             "Tự động hóa release bằng GitHub Actions: OIDC vào AWS, image gắn tag SHA trong ECR có bước phê duyệt, commit tag vào GitOps, rồi kiểm tra phiên bản, smoke test và khôi phục tag đã xác nhận gần nhất khi lỗi.",
-            "Đẩy 119 metric Prometheus đã lọc lên 18 dashboard Grafana Cloud upstream, kèm alarm CloudWatch khi node down và khi scheduler lỗi — scheduler tắt node ban đêm (EventBridge + Lambda Python, reconcile mỗi 15 phút) giảm một nửa giờ chạy node (84/168 giờ mỗi tuần).",
-            "Viết 19 ADR và 7 runbook, lưu trong repository workspace private (cung cấp khi được yêu cầu)."
+            "Đẩy 119 metric Prometheus đã lọc lên 18 dashboard Grafana Cloud upstream, kèm alarm CloudWatch khi node down và khi scheduler lỗi — scheduler tắt node ban đêm (EventBridge + Lambda Python, reconcile mỗi 15 phút) giảm một nửa giờ chạy node (84/168 giờ mỗi tuần)."
           ]
         }
       }

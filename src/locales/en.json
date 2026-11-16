@@ -266,8 +266,7 @@
             "Provisioned AWS and Cloudflare in Terraform (67 resource blocks, 6 modules): VPC, EKS with a private API via Session Manager, Pod Identity, ECR, and a Cloudflare-only security group for the controller-managed ALB; CI runs TFLint and Trivy, with actions pinned by SHA.",
             "Ran the cluster as GitOps: Argo CD ApplicationSets deploy 5 Helm charts (Argo CD, Load Balancer Controller, External Secrets, Prometheus, the app with an HPA), validated with kubeconform.",
             "Automated releases in GitHub Actions: OIDC to AWS, approval-gated SHA-tagged images in ECR, the tag committed to GitOps, then a version check and smoke test, restoring the last verified tag on failure.",
-            "Shipped 119 filtered Prometheus metrics to 18 upstream Grafana Cloud dashboards, with CloudWatch node-down and scheduler-error alarms — the night-shutdown scheduler (EventBridge + a Python Lambda reconciling every 15 minutes) halves node uptime (84 of 168 hours a week).",
-            "Wrote 19 ADRs and 7 runbooks, kept in a private workspace repository (available on request)."
+            "Shipped 119 filtered Prometheus metrics to 18 upstream Grafana Cloud dashboards, with CloudWatch node-down and scheduler-error alarms — the night-shutdown scheduler (EventBridge + a Python Lambda reconciling every 15 minutes) halves node uptime (84 of 168 hours a week)."
           ]
         }
       }
